@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Log in</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body ng-app="app" ng-controller="connection">
+    <form name="login" ng-submit="submitForm()" novalidate>
+        <div class="form-group" ng-class="{ 'has-error' : login.email.$invalid && !login.email.$pristine }">
+            <label>Email</label>
+            <input type="email" class="form-control" name="email" ng-model="user.email" required>
+            <p ng-show="login.email.$invalid && !login.email.$pristine" class="help-block">An email valid is required</p>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error' : login.password.$invalid && !login.password.$pristine }">
+            <label>Password</label>
+            <input type="password" name="password" class="form-control" ng-model="user.password" required>
+        </div>
+        <input type="submit" class="btn btn-primary" ng-disabled="login.$invalid" value="Log In">
+        <input ng-click="linkFacebook()" class="btn btn-primary" value="Log In with facebook">
+    </form>
+    <div ng-show="showError" class="alert alert-danger">
+        <strong>Error! </strong>Email or password incorrect.
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"   integrity="sha256-DI6NdAhhFRnO2k51mumYeDShet3I8AKCQf/tf7ARNhI="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="/js/facebookService.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/oauth.js"></script>
+    <script src="/js/connection.js"></script>
+</body>
+</html>
