@@ -10,5 +10,6 @@ libraryDependencies ++= Seq(
   javaJdbc,
   cache,
   ws,
+  "org.postgresql" % "postgresql" % "9.3-1102-jdbc4",
   "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
 )

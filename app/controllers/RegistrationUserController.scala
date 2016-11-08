@@ -21,12 +21,12 @@ class RegistrationUserController @Inject() extends Controller {
     tuple(
       "email" -> email,
       "password" -> nonEmptyText(minLength = 5),
-      "postalCode" -> number,
-      "street" -> nonEmptyText,
-      "city" -> nonEmptyText,
-      "streetNumber" -> nonEmptyText,
-      "firstName" -> nonEmptyText,
-      "lastName" -> nonEmptyText
+      "postalCode" -> nonEmptyText(minLength = 5),
+      "street" -> nonEmptyText(minLength = 1),
+      "city" -> nonEmptyText(minLength = 1),
+      "streetNumber" -> nonEmptyText(minLength = 1),
+      "firstName" -> nonEmptyText(minLength = 1),
+      "lastName" -> nonEmptyText(minLength = 1)
     )
   )
 
@@ -34,12 +34,12 @@ class RegistrationUserController @Inject() extends Controller {
     tuple(
       "email" -> email,
       "password" -> nonEmptyText(minLength = 5),
-      "postalCode" -> number,
-      "street" -> nonEmptyText,
-      "city" -> nonEmptyText,
-      "streetNumber" -> number,
-      "siret" -> bigDecimal,
-      "companyName" -> nonEmptyText
+      "postalCode" -> nonEmptyText(minLength = 5),
+      "street" -> nonEmptyText(minLength = 1),
+      "city" -> nonEmptyText(minLength = 1),
+      "streetNumber" -> nonEmptyText(minLength = 1),
+      "siret" -> nonEmptyText(minLength = 14),
+      "companyName" -> nonEmptyText(minLength = 1)
     )
   )
 
@@ -47,8 +47,8 @@ class RegistrationUserController @Inject() extends Controller {
     tuple(
       "email" -> email,
       "password" -> nonEmptyText(minLength = 5),
-      "firstName" -> nonEmptyText,
-      "lastName" -> nonEmptyText
+      "firstName" -> nonEmptyText(minLength = 1),
+      "lastName" -> nonEmptyText(minLength = 1)
     )
   )
 
@@ -87,7 +87,7 @@ class RegistrationUserController @Inject() extends Controller {
       formWithErrors => BadRequest(jsonErrorForm),
       formData => {
         val (email, password, postalCode, street, city, streetNumber, firstName, lastName) = formData
-        val su = SimpleUser(email, password, postalCode.toString, street, city, streetNumber.toString, firstName, lastName)
+        val su = SimpleUser(email, password, postalCode, street, city, streetNumber, firstName, lastName)
         SimpleUser.save(su) match {
           case true => Created(jsonUserCreated)
           case false => Conflict(jsonErrorUserExist)
@@ -97,12 +97,11 @@ class RegistrationUserController @Inject() extends Controller {
   }
 
   def registrationSellerCompany = Action { implicit request =>
-    println(parameterRegistrationSellerCompany.bindFromRequest().errors)
     parameterRegistrationSellerCompany.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorForm),
       formData => {
         val (email, password, postalCode, street, city, streetNumber, siret, companyName) = formData
-        val sc = SellerCompany(email, password, postalCode.toString, street, city, streetNumber.toString, siret.toString, companyName)
+        val sc = SellerCompany(email, password, postalCode, street, city, streetNumber, siret, companyName)
         SellerCompany.save(sc) match {
           case true => Created(jsonUserCreated)
           case false => Conflict(jsonErrorUserExist)

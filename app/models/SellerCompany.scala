@@ -41,6 +41,8 @@ case class SellerCompany() extends Model with UserIdentification with UserAdress
   var tokenAuthentification : Token =_
   @OneToOne
   var tokenReinitialisationEmail : Token =_
+  @OneToMany(cascade = Array(CascadeType.ALL))
+  var products : java.util.List[Product] =_
 }
 
 object SellerCompany extends SellerCompanyDAO {

@@ -77,21 +77,21 @@ app.controller('adminAccount', function($scope, $filter, $http, $window) {
         if (row.kindOfUser == "Simple User") {
             rqt = {
                 method : 'DELETE',
-                url : '/simpleUser/delete/'+row.id,
+                url : '/simpleUser/'+row.id,
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
             };
         }
         else if (row.kindOfUser == "Seller Company") {
             rqt = {
                 method : 'DELETE',
-                url : '/sellerCompany/delete/'+row.id,
+                url : '/sellerCompany/'+row.id,
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
             };
         }
         else {
             rqt = {
                 method : 'DELETE',
-                url : '/admin/delete/'+row.id,
+                url : '/admin/'+row.id,
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
             };
         }

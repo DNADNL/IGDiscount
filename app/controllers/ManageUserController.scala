@@ -57,7 +57,6 @@ class ManageUserController @Inject() extends Controller {
 
   val parameterSimpleUserWithoutPassword = Form(
     tuple(
-      "id" -> longNumber,
       "email" -> email,
       "postalCode" -> nonEmptyText,
       "street" -> nonEmptyText,
@@ -70,7 +69,6 @@ class ManageUserController @Inject() extends Controller {
 
   val parameterSellerCompanyWithoutPassword = Form(
     tuple(
-      "id" -> longNumber,
       "email" -> email,
       "postalCode" -> nonEmptyText,
       "street" -> nonEmptyText,
@@ -83,7 +81,6 @@ class ManageUserController @Inject() extends Controller {
 
   val parameterAdminWithoutPassword = Form(
     tuple(
-      "id" -> longNumber,
       "email" -> email,
       "firstName" -> nonEmptyText,
       "lastName" -> nonEmptyText
@@ -91,10 +88,7 @@ class ManageUserController @Inject() extends Controller {
   )
 
   val parameterChangePassword = Form(
-    tuple(
-      "id" -> longNumber,
-      "password" -> nonEmptyText(minLength = 5)
-    )
+    "password" -> nonEmptyText(minLength = 5)
   )
 
   def getSimpleUser(id : Long) = Action { implicit request =>
@@ -237,11 +231,11 @@ class ManageUserController @Inject() extends Controller {
     }
   }
 
-  def updateSimpleUserWithoutPassword = Action { implicit request =>
+  def updateSimpleUserWithoutPassword(id : Long) = Action { implicit request =>
     parameterSimpleUserWithoutPassword.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorParameter),
       formData => {
-        val (id, email, postalCode, street, city, streetNumber, firstName, lastName) = formData
+        val (email, postalCode, street, city, streetNumber, firstName, lastName) = formData
         val su = SimpleUser(id, email, null, postalCode, street, city, streetNumber, firstName, lastName)
         request.cookies.get("token") match {
           case Some(c) => Token.isValid(c.value) match {
@@ -273,11 +267,11 @@ class ManageUserController @Inject() extends Controller {
     )
   }
 
-  def updateSellerCompanyWithoutPassword = Action { implicit request =>
+  def updateSellerCompanyWithoutPassword(id : Long) = Action { implicit request =>
     parameterSellerCompanyWithoutPassword.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorParameter),
       formData => {
-        val (id, email, postalCode, street, city, streetNumber, siret, companyName) = formData
+        val (email, postalCode, street, city, streetNumber, siret, companyName) = formData
         val sc = SellerCompany(id, email, null, postalCode, street, city, streetNumber, siret, companyName)
         request.cookies.get("token") match {
           case Some(c) => Token.isValid(c.value) match {
@@ -309,11 +303,11 @@ class ManageUserController @Inject() extends Controller {
     )
   }
 
-  def updateAdminWithoutPassword = Action { implicit request =>
+  def updateAdminWithoutPassword(id : Long) = Action { implicit request =>
     parameterAdminWithoutPassword.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorParameter),
       formData => {
-        val (id, email, firstName, lastName) = formData
+        val (email, firstName, lastName) = formData
         val a = Admin(id, email, null, firstName, lastName)
         request.cookies.get("token") match {
           case Some(c) => Token.isValid(c.value) match {
@@ -334,11 +328,11 @@ class ManageUserController @Inject() extends Controller {
     )
   }
 
-  def updateSimpleUserPassword = Action { implicit request =>
+  def updateSimpleUserPassword(id : Long) = Action { implicit request =>
     parameterChangePassword.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorParameter),
       formData => {
-        val (id, password) = formData
+        val (password) = formData
         val su = SimpleUser(id, password, null , null, null, null, null, null, null)
         request.cookies.get("token") match {
           case Some(c) => Token.isValid(c.value) match {
@@ -370,11 +364,11 @@ class ManageUserController @Inject() extends Controller {
     )
   }
 
-  def updateSellerCompanyPassword = Action { implicit request =>
+  def updateSellerCompanyPassword(id : Long) = Action { implicit request =>
     parameterChangePassword.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorParameter),
       formData => {
-        val (id, password) = formData
+        val (password) = formData
         val sc = SellerCompany(id, null, password, null, null, null, null, null, null)
         request.cookies.get("token") match {
           case Some(c) => Token.isValid(c.value) match {
@@ -406,11 +400,11 @@ class ManageUserController @Inject() extends Controller {
     )
   }
 
-  def updateAdminPassword = Action { implicit request =>
+  def updateAdminPassword(id : Long) = Action { implicit request =>
     parameterChangePassword.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorParameter),
       formData => {
-        val (id, password) = formData
+        val (password) = formData
         val a = Admin(id, null, password, null, null)
         request.cookies.get("token") match {
           case Some(c) => Token.isValid(c.value) match {

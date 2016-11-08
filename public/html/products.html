@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body ng-app="app" ng-controller="listProduct">
+    <table st-table="displayedCollection" st-safe-src="productRows" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th st-sort="seller">Seller</th>
+            <th st-sort="name">Name</th>
+            <th st-sort="price">Price</th>
+            <th st-sort="quantity">Quantity</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>
+                <input st-search="seller" placeholder="Search for seller" class="input-sm form-control" type="search"/>
+            </th>
+            <th>
+                <input st-search="name" placeholder="Search for name" class="input-sm form-control" type="search"/>
+            </th>
+            <th>
+                <input st-search="price" placeholder="Search for price" class="input-sm form-control" type="search"/>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in displayedCollection" ng-click="show($index)">
+            <td class="col-md-2"><img ng-src="{{row.image}}" class="img-responsive"></td>
+            <td>{{row.seller}}</td>
+            <td>{{row.name}}</td>
+            <td>{{row.price}}</td>
+            <td>{{row.quantity}}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td class="text-center" st-pagination="" st-items-by-page="10" colspan="5">
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+    <div class="modal fade" id="modal-product" tabindex="-1" role="dialog" aria-labelledby="modal-product">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <h1>{{product.name}}</h1>
+                <img ng-src="{{product.image}}" class="img-responsive">
+                <p>Price : {{product.price}}</p>
+                <p>Quantity : {{product.quantity}}</p>
+                <p>{{product.description}}</p>
+            </div>
+        </div>
+    </div>
+</body>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"   integrity="sha256-DI6NdAhhFRnO2k51mumYeDShet3I8AKCQf/tf7ARNhI="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="/lib/smart-table.min.js"></script>
+    <script src="/js/listProduct.js"></script>
+</html>

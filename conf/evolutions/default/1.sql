@@ -4,7 +4,7 @@
 # --- !Ups
 
 create table admin (
-  id                            bigint auto_increment not null,
+  id                            bigserial not null,
   email                         varchar(255),
   password                      varchar(255),
   first_name                    varchar(255),
@@ -17,8 +17,30 @@ create table admin (
   constraint pk_admin primary key (id)
 );
 
+create table image (
+  id                            bigserial not null,
+  name                          varchar(255),
+  mime                          varchar(255),
+  content                       bytea,
+  product_id                    bigint,
+  constraint uq_image_product_id unique (product_id),
+  constraint pk_image primary key (id)
+);
+
+create table product (
+  id                            bigserial not null,
+  description                   varchar(255),
+  name                          varchar(255),
+  price                         float,
+  quantity                      bigint,
+  seller_id                     bigint,
+  image_id                      bigint,
+  constraint uq_product_image_id unique (image_id),
+  constraint pk_product primary key (id)
+);
+
 create table seller_company (
-  id                            bigint auto_increment not null,
+  id                            bigserial not null,
   email                         varchar(255),
   password                      varchar(255),
   postal_code                   varchar(255),
@@ -36,7 +58,7 @@ create table seller_company (
 );
 
 create table simple_user (
-  id                            bigint auto_increment not null,
+  id                            bigserial not null,
   email                         varchar(255),
   password                      varchar(255),
   postal_code                   varchar(255),
@@ -54,7 +76,7 @@ create table simple_user (
 );
 
 create table token (
-  id                            bigint auto_increment not null,
+  id                            bigserial not null,
   expiration_date               timestamp,
   token                         varchar(255),
   constraint uq_token_token unique (token),
@@ -64,6 +86,13 @@ create table token (
 alter table admin add constraint fk_admin_token_authentification_id foreign key (token_authentification_id) references token (id) on delete restrict on update restrict;
 
 alter table admin add constraint fk_admin_token_reinitialisation_email_id foreign key (token_reinitialisation_email_id) references token (id) on delete restrict on update restrict;
+
+alter table image add constraint fk_image_product_id foreign key (product_id) references product (id) on delete restrict on update restrict;
+
+alter table product add constraint fk_product_seller_id foreign key (seller_id) references seller_company (id) on delete restrict on update restrict;
+create index ix_product_seller_id on product (seller_id);
+
+alter table product add constraint fk_product_image_id foreign key (image_id) references image (id) on delete restrict on update restrict;
 
 alter table seller_company add constraint fk_seller_company_token_authentification_id foreign key (token_authentification_id) references token (id) on delete restrict on update restrict;
 
@@ -76,23 +105,34 @@ alter table simple_user add constraint fk_simple_user_token_reinitialisation_ema
 
 # --- !Downs
 
-alter table admin drop constraint if exists fk_admin_token_authentification_id;
+alter table if exists admin drop constraint if exists fk_admin_token_authentification_id;
 
-alter table admin drop constraint if exists fk_admin_token_reinitialisation_email_id;
+alter table if exists admin drop constraint if exists fk_admin_token_reinitialisation_email_id;
 
-alter table seller_company drop constraint if exists fk_seller_company_token_authentification_id;
+alter table if exists image drop constraint if exists fk_image_product_id;
 
-alter table seller_company drop constraint if exists fk_seller_company_token_reinitialisation_email_id;
+alter table if exists product drop constraint if exists fk_product_seller_id;
+drop index if exists ix_product_seller_id;
 
-alter table simple_user drop constraint if exists fk_simple_user_token_authentification_id;
+alter table if exists product drop constraint if exists fk_product_image_id;
 
-alter table simple_user drop constraint if exists fk_simple_user_token_reinitialisation_email_id;
+alter table if exists seller_company drop constraint if exists fk_seller_company_token_authentification_id;
 
-drop table if exists admin;
+alter table if exists seller_company drop constraint if exists fk_seller_company_token_reinitialisation_email_id;
 
-drop table if exists seller_company;
+alter table if exists simple_user drop constraint if exists fk_simple_user_token_authentification_id;
 
-drop table if exists simple_user;
+alter table if exists simple_user drop constraint if exists fk_simple_user_token_reinitialisation_email_id;
 
-drop table if exists token;
+drop table if exists admin cascade;
+
+drop table if exists image cascade;
+
+drop table if exists product cascade;
+
+drop table if exists seller_company cascade;
+
+drop table if exists simple_user cascade;
+
+drop table if exists token cascade;
 

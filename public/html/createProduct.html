@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="/lib/dropzone.css">
+</head>
+<body ng-app="app" ng-controller="product">
+    <form name="productForm" ng-submit="submitForm()" novalidate>
+        <div class="form-group" ng-class="{ 'has-error' : productForm.name.$invalid && !productForm.name.$pristine }">
+            <label>Name product</label>
+            <input type="name" class="form-control" ng-minlength="1" ng-maxlength="40" name="name" ng-model="product.name" required>
+            <p ng-show="productForm.name.$error.minlength && !productForm.name.$pristine" class="help-block">Name is too short</p>
+            <p ng-show="productForm.name.$error.maxlength && !productForm.name.$pristine" class="help-block">Name is too long</p>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error' : productForm.quantity.$invalid && !productForm.quantity.$pristine }">
+            <label>Quantity</label>
+            <input type="number" min="0" ng-min="0" ng-max="10000" name="quantity" class="form-control" ng-model="product.quantity" required>
+            <p ng-show="productForm.quantity.$error.min && !productForm.quantity.$pristine" class="help-block">Quantity have to be positive</p>
+            <p ng-show="productForm.quantity.$error.max && !productForm.quantity.$pristine" class="help-block">Quantity have to be less than 10000</p>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error' : productForm.price.$invalid && !productForm.price.$pristine }">
+            <label>Price</label>
+            <input type="number" step="0.01" min="0" ng-min="0" ng-max="10000" name="price" class="form-control" ng-model="product.price" required>
+            <p ng-show="productForm.price.$error.min && !productForm.price.$pristine" class="help-block">Price must be positive</p>
+            <p ng-show="productForm.price.$error.max && !productForm.price.$pristine" class="help-block">Price have to be less than 10000€</p>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error' : productForm.description.$invalid && !productForm.description.$pristine }">
+            <label>Description</label>
+            <textarea name="description" ng-minlength="1" ng-maxlength="1000" class="form-control" ng-model="product.description" required></textarea>
+            <p ng-show="productForm.description.$error.minlength && !productForm.description.$pristine" class="help-block">Description is too short</p>
+            <p ng-show="productForm.description.$error.maxlength && !productForm.description.$pristine" class="help-block">Description is too long</p>
+        </div>
+        <div class="form-group">
+            <label>Add description image (optional)</label>
+            <div class="dropzone" id="dropzoneProduct"></div>
+        </div>
+        <input type="submit" class="btn btn-primary" ng-disabled="productForm.$invalid || disable" value="Create product">
+    </form>
+    <div ng-show="showError" class="alert alert-danger">
+        <strong>Error! </strong>Impossible to create the product.
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"   integrity="sha256-DI6NdAhhFRnO2k51mumYeDShet3I8AKCQf/tf7ARNhI="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="/lib/dropzone.js"></script>
+    <script src="/js/facebookService.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/product.js"></script>
+    <script src="/js/oauth.js"></script>
+</body>
+</html>

@@ -6,12 +6,25 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body ng-app="app" ng-controller="adminAccount">
-    <table st-table="displayedCollection" st-safe-src="userRows" class="table table-condensed">
+    <table st-table="displayedCollection" st-safe-src="userRows" class="table table-striped">
         <thead>
         <tr>
             <th st-sort="name">Name</th>
             <th st-sort="email">Email</th>
             <th st-sort="getters.kindOfUser">Kind of user</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        <tr>
+            <th>
+                <input st-search="name" placeholder="Search for name" class="input-sm form-control" type="search"/>
+            </th>
+            <th>
+                <input st-search="email" placeholder="Search for email" class="input-sm form-control" type="search"/>
+            </th>
+            <th>
+                <input st-search="kindOfUser" placeholder="Search for kind of user" class="input-sm form-control" type="search"/>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -33,6 +46,12 @@
             </td>
         </tr>
         </tbody>
+        <tfoot>
+        <tr>
+            <td class="text-center" st-pagination="" st-items-by-page="10" colspan="5">
+            </td>
+        </tr>
+        </tfoot>
     </table>
     <script src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"   integrity="sha256-DI6NdAhhFRnO2k51mumYeDShet3I8AKCQf/tf7ARNhI="   crossorigin="anonymous"></script>

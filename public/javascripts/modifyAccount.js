@@ -64,18 +64,17 @@ app.controller('modifyAccount', function($scope, $http, $window, $location, face
 
     $scope.submitFormPassword = function() {
         if ($scope.kindOfUser == "Simple User") {
-            var url = '/simpleUser/update/password'
+            var url = '/simpleUser/'+$scope.id+'/password'
         }
         else if ($scope.kindOfUser == "Admin") {
-            var url = '/admin/update/password'
+            var url = '/admin/'+$scope.id+'/password'
         }
         else {
-            var url = '/sellerCompany/update/password'
+            var url = '/sellerCompany/'+$scope.id+'/password'
         }
         var rqt = {
             method : 'PUT',
             data : $.param({
-                     id: $scope.id,
                      password : $scope.user.password,
                  }),
             url : url,
@@ -152,10 +151,9 @@ app.controller('modifyAccount', function($scope, $http, $window, $location, face
     $scope.submitAdminForm = function() {
         var rqt = {
             method : 'PUT',
-            url : '/admin/update',
+            url : '/admin/'+$scope.id,
             data : $.param({
                 email: $scope.admin.email,
-                id: $scope.id,
                 firstName : $scope.admin.firstName,
                 lastName : $scope.admin.lastName,
             }),
@@ -170,10 +168,9 @@ app.controller('modifyAccount', function($scope, $http, $window, $location, face
     $scope.submitSimpleUserForm = function() {
             var rqt = {
                 method : 'PUT',
-                url : '/simpleUser/update',
+                url : '/simpleUser/'+$scope.id,
                 data : $.param({
                     email: $scope.simpleUser.email,
-                    id: $scope.id,
                     firstName : $scope.simpleUser.firstName,
                     lastName : $scope.simpleUser.lastName,
                     street : $scope.simpleUser.adress,
@@ -192,10 +189,9 @@ app.controller('modifyAccount', function($scope, $http, $window, $location, face
     $scope.submitSellerCompanyForm = function() {
                 var rqt = {
                     method : 'PUT',
-                    url : '/sellerCompany/update',
+                    url : '/sellerCompany/'+$scope.id,
                     data : $.param({
                         email: $scope.sellerCompany.email,
-                        id: $scope.id,
                         siret : $scope.sellerCompany.siret,
                         companyName : $scope.sellerCompany.companyName,
                         street : $scope.sellerCompany.adress,

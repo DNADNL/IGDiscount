@@ -24,18 +24,25 @@ GET     /admin/:id                  controllers.ManageUserController.getAdmin(id
 GET     /simpleUser                 controllers.ManageUserController.getAllSimpleUser
 GET     /sellerCompany              controllers.ManageUserController.getAllSellerCompany
 GET     /admin                      controllers.ManageUserController.getAllAdmin
-DELETE     /simpleUser/delete/:id       controllers.ManageUserController.deleteSimpleUser(id: Long)
-DELETE     /sellerCompany/delete/:id    controllers.ManageUserController.deleteSellerCompany(id: Long)
-DELETE     /admin/delete/:id            controllers.ManageUserController.deleteAdmin(id: Long)
-PUT     /simpleUser/update        controllers.ManageUserController.updateSimpleUserWithoutPassword
-PUT     /sellerCompany/update     controllers.ManageUserController.updateSellerCompanyWithoutPassword
-PUT     /admin/update             controllers.ManageUserController.updateAdminWithoutPassword
-PUT     /simpleUser/update/password        controllers.ManageUserController.updateSimpleUserPassword
-PUT     /sellerCompany/update/password     controllers.ManageUserController.updateSellerCompanyPassword
-PUT     /admin/update/password             controllers.ManageUserController.updateAdminPassword
+DELETE     /simpleUser/:id     controllers.ManageUserController.deleteSimpleUser(id: Long)
+DELETE     /sellerCompany/:id    controllers.ManageUserController.deleteSellerCompany(id: Long)
+DELETE     /admin/:id            controllers.ManageUserController.deleteAdmin(id: Long)
+PUT     /simpleUser/:id        controllers.ManageUserController.updateSimpleUserWithoutPassword(id : Long)
+PUT     /sellerCompany/:id     controllers.ManageUserController.updateSellerCompanyWithoutPassword(id : Long)
+PUT     /admin/:id             controllers.ManageUserController.updateAdminWithoutPassword(id : Long)
+PUT     /simpleUser/:id/password        controllers.ManageUserController.updateSimpleUserPassword(id : Long)
+PUT     /sellerCompany/:id/password     controllers.ManageUserController.updateSellerCompanyPassword(id : Long)
+PUT     /admin/:id/password             controllers.ManageUserController.updateAdminPassword(id : Long)
 
 #API Utils
 GET     /kindOfUser                 controllers.UtilsController.kindOfUser
+
+#API Product
+POST /product/create                controllers.ManageProductController.createProduct
+POST /product/image/create          controllers.ManageProductController.createImage
+GET  /product                      controllers.ManageProductController.allProducts
+GET  /product/:id/image            controllers.ManageProductController.image(id : Long)
+GET  /product/:id                   controllers.ManageProductController.product(id : Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
@@ -44,10 +51,10 @@ GET     /                           controllers.Assets.at(path="/public/html", f
 GET		/connection				    controllers.Assets.at(path="/public/html", file="connection.html")
 GET		/account				    controllers.Assets.at(path="/public/html", file="modifyAccount.html")
 GET		/accounts				    controllers.Assets.at(path="/public/html", file="adminAccount.html")
+GET		/products				    controllers.Assets.at(path="/public/html", file="products.html")
+GET		/createProduct				    controllers.Assets.at(path="/public/html", file="createProduct.html")
 GET		/js/*file				    controllers.Assets.at(path="/public/javascripts", file)
 GET		/lib/*file				    controllers.Assets.at(path="/public/lib", file)
 
 # A supprimer
 GET     /install                    controllers.HomeController.createUser
-GET     /test                    controllers.HomeController.test
-GET		/oauth/*file				    controllers.Assets.at(path="/public/oauth", file)
