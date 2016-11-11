@@ -95,10 +95,12 @@ app.controller('adminAccount', function($scope, $filter, $http, $window) {
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
             };
         }
-        $http(rqt).success(function(data){console.log(data)});
-        var index = $scope.displayedCollection.indexOf(row);
-        if (index !== -1) {
-            $scope.displayedCollection.splice(index, 1);
-        }
+        $http(rqt).success(function(data){
+            var index = $scope.displayedCollection.indexOf(row);
+            if (index !== -1) {
+                $scope.displayedCollection.splice(index, 1);
+            }
+        });
+
     }
 })

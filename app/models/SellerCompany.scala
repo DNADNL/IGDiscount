@@ -10,7 +10,7 @@ import javax.persistence._
 import DAO.{SellerCompanyDAO, SimpleUserDAO}
 import com.avaje.ebean.{Ebean, Model}
 import com.avaje.ebean.Model.Finder
-import controllers.{UserIdentification, UserAdress}
+import controllers.{UserAdress, UserIdentification}
 import play.api.libs.json.{Json, Writes}
 import play.api.libs.openid.Errors.AUTH_CANCEL
 
@@ -41,7 +41,7 @@ case class SellerCompany() extends Model with UserIdentification with UserAdress
   var tokenAuthentification : Token =_
   @OneToOne
   var tokenReinitialisationEmail : Token =_
-  @OneToMany(cascade = Array(CascadeType.ALL))
+  @OneToMany(cascade = Array(CascadeType.ALL, CascadeType.REMOVE))
   var products : java.util.List[Product] =_
 }
 

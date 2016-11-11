@@ -1,6 +1,6 @@
 var app = angular.module('app', ['smart-table']);
 
-app.controller('listProduct', function($scope, $filter, $http, $window) {
+app.controller('productAdmin', function($scope, $filter, $http, $window) {
 
     $scope.productRows = []
     $scope.product = {}
@@ -36,17 +36,25 @@ app.controller('listProduct', function($scope, $filter, $http, $window) {
          })
     })
 
-    $scope.show = function(id) {
-        $scope.product.name = $scope.productRows[id].name
-        $scope.product.image = $scope.productRows[id].image
-        $scope.product.price = $scope.productRows[id].price
-        $scope.product.quantity = $scope.productRows[id].quantity
-        $scope.product.description = $scope.productRows[id].description
-        $('#modal-product').modal();
-        $('#modal-product').modal('show');
+    $scope.update = function(row) {
+        $window.location.href = '/createProduct#?id='+row.id
     }
 
-     $scope.displayedCollection = [].concat($scope.productRows);
+    $scope.removeRow = function removeRow(row) {
+        var rqt = {
+            method : 'DELETE',
+            url : '/product/'+row.id,
+            headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+        }
+        $http(rqt).success(function(data){
+            var index = $scope.displayedCollection.indexOf(row);
+            if (index !== -1) {
+                $scope.displayedCollection.splice(index, 1);
+            }
+        });
+    }
+
+    $scope.displayedCollection = [].concat($scope.productRows);
 
 
 })

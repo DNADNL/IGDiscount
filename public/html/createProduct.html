@@ -34,7 +34,8 @@
         </div>
         <div class="form-group">
             <label>Add description image (optional)</label>
-            <div class="dropzone" id="dropzoneProduct"></div>
+            <div class="dropzone" id="dropzoneProduct" ng-show="creatingMode"></div>
+            <div class="dropzone" id="dropzoneUpdate" ng-show="!creatingMode"></div>
         </div>
         <input type="submit" class="btn btn-primary" ng-disabled="productForm.$invalid || disable" value="Create product">
     </form>

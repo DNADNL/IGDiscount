@@ -53,9 +53,24 @@ class ManageProductController @Inject() extends Controller {
     "message" -> "Your session is expired"
   )
 
+  val imageUpdated = Json.obj(
+    "error" -> false,
+    "message" -> "Image updated"
+  )
+
   val jsonProductCreated = Json.obj(
     "error" -> false,
     "message" -> "Product created"
+  )
+
+  val jsonProductDeleted = Json.obj(
+    "error" -> false,
+    "message" -> "Product deleted"
+  )
+
+  val jsonRequiredAdmin = Json.obj(
+    "error" -> true,
+    "message" -> "You cannot the permission"
   )
 
   val jsonImageCreated = Json.obj(
@@ -66,6 +81,11 @@ class ManageProductController @Inject() extends Controller {
   val jsonProductNotFound = Json.obj(
     "error" -> true,
     "messafe" -> "Product not found"
+  )
+
+  val jsonProductUpdated = Json.obj(
+    "error" -> false,
+    "message" -> "Product updated"
   )
 
   val imageMime = List("image/jpg", "image/png", "image/jpeg")
@@ -92,19 +112,51 @@ class ManageProductController @Inject() extends Controller {
     }
   }
 
-  def createImage = Action {implicit request =>
-    parameterId.bindFromRequest.fold(
-      formWithErrors => BadRequest(jsonErrorForm),
-      formData => {
+  def deleteProduct(id: Long) = Action {implicit request =>
+    Product.find(id) match {
+      case None => NotFound(jsonProductNotFound)
+      case Some(p) => {
+        request.cookies.get("token") match {
+          case Some(c) => Token.isValid(c.value) match {
+            case true => Token.getUser(c.value).get match {
+              case sc: SellerCompany => {
+                SellerCompany.tokenConform(c.value, sc) match {
+                  case false => Unauthorized(jsonRequiredAdmin)
+                  case true => {
+                    p.quantity = -1
+                    p.update()
+                    Ok(jsonProductDeleted)
+                  }
+                }
+              }
+              case a : Admin => {
+                p.delete()
+                Ok(jsonProductDeleted)
+              }
+              case _ => Unauthorized(jsonRequiredAdmin)
+            }
+            case _ => Unauthorized(jsonTokenExpired)
+          }
+          case _ => Forbidden(jsonNoToken)
+        }
+      }
+    }
+  }
+
+  def updateImage(id: Long) = Action {implicit request =>
+    Product.find(id) match {
+      case None => NotFound(jsonProductNotFound)
+      case Some(p) => {
+        val i = Image.findByProduct(p).get
         request.body.asMultipartFormData match {
           case Some(mf) => mf.file("image") match {
             case Some(file) => {
               (imageMime.contains(file.contentType.get) && (file.ref.file.length().toFloat/(1024*1024).toFloat) <= 5) match {
                 case true => {
-                  val (id) = formData
-                  val i = Image(file.filename, file.contentType.get, file.ref.file, Product.find(id).get)
-                  i.save()
-                  Created(jsonImageCreated)
+                  i.name = file.filename
+                  i.content = Files.readAllBytes(file.ref.file.toPath)
+                  i.mime = file.contentType.get
+                  p.image = i
                 }
                 case false => BadRequest(jsonErrorForm)
               }
@@ -113,8 +165,86 @@ class ManageProductController @Inject() extends Controller {
           }
           case _ => BadRequest(jsonErrorForm)
         }
+        request.cookies.get("token") match {
+          case Some(c) => Token.isValid(c.value) match {
+            case true => Token.getUser(c.value).get match {
+              case u: SellerCompany =>
+                SellerCompany.tokenConform(c.value, u) match {
+                  case false => Unauthorized(jsonRequiredAdmin)
+                  case true => {
+                    i.update()
+                    p.update()
+                    Created(imageUpdated)
+                  }
+                }
+              case a : Admin => {
+                i.update()
+                p.update()
+                Created(imageUpdated)
+              }
+              case _ => Unauthorized(jsonRequiredAdmin)
+            }
+            case _ => Unauthorized(jsonTokenExpired)
+          }
+          case _ => Forbidden(jsonNoToken)
+        }
       }
-    )
+    }
+  }
+
+  def updateProduct(id : Long) = Action {implicit request =>
+    request.cookies.get("token") match {
+      case Some(c) => Token.isValid(c.value) match {
+        case true => Token.getUser(c.value).get match {
+          case sc : SellerCompany => {
+            SellerCompany.tokenConform(c.value, sc) match {
+              case false => Unauthorized(jsonRequiredAdmin)
+              case true => {
+                parameterCreateProduct.bindFromRequest.fold(
+                  formWithErrors => BadRequest(jsonErrorForm),
+                  formData => {
+                    val (description, name, price, quantity) = formData
+                    Product.find(id) match {
+                      case None => NotFound(jsonProductNotFound)
+                      case Some(p) => {
+                        p.name = name
+                        p.description = description
+                        p.price = price.toFloat
+                        p.quantity = quantity
+                        Product.update(p)
+                        Ok(jsonProductUpdated)
+                      }
+                    }
+                  }
+                )
+              }
+            }
+          }
+          case a : Admin => {
+            parameterCreateProduct.bindFromRequest.fold(
+              formWithErrors => BadRequest(jsonErrorForm),
+              formData => {
+                val (description, name, price, quantity) = formData
+                Product.find(id) match {
+                  case None => NotFound(jsonProductNotFound)
+                  case Some(p) => {
+                    p.name = name
+                    p.description = description
+                    p.price = price.toFloat
+                    p.quantity = quantity
+                    Product.update(p)
+                    Ok(jsonProductUpdated)
+                  }
+                }
+              }
+            )
+          }
+          case _ => Unauthorized(jsonPermission)
+        }
+        case _ => Unauthorized(jsonTokenExpired)
+      }
+      case _ => Forbidden(jsonNoToken)
+    }
   }
 
   def createProduct = Action {implicit request =>
@@ -159,5 +289,4 @@ class ManageProductController @Inject() extends Controller {
       case _ => Forbidden(jsonNoToken)
     }
   }
-
 }

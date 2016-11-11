@@ -18,14 +18,15 @@ case class Product() extends Model {
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   var id : Long =_
+  @Column(length=1000)
   var description : String =_
   var name : String =_
   var price : Float =_
   var quantity : Long =_
 
-  @ManyToOne(cascade = Array(CascadeType.ALL))
+  @ManyToOne
   var seller : SellerCompany =_
-  @OneToOne
+  @OneToOne(cascade = Array(CascadeType.ALL, CascadeType.REMOVE))
   var image : Image =_
 
 }
