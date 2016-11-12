@@ -43,6 +43,11 @@ class ManageProductController @Inject() extends Controller {
     "message" -> "Authentification required"
   )
 
+  val jsonNoSeller =Json.obj(
+    "error" -> true,
+    "message" -> "Seller not found"
+  )
+
   val jsonPermission = Json.obj(
     "error" -> true,
     "message" -> "You cannot the permission"
@@ -80,7 +85,7 @@ class ManageProductController @Inject() extends Controller {
 
   val jsonProductNotFound = Json.obj(
     "error" -> true,
-    "messafe" -> "Product not found"
+    "message" -> "Product not found"
   )
 
   val jsonProductUpdated = Json.obj(
@@ -92,6 +97,24 @@ class ManageProductController @Inject() extends Controller {
 
   def allProducts = Action{implicit request =>
     Ok(Json.toJson(Product.findAll()))
+  }
+
+  def allProductsByAvailable() = Action{implicit request =>
+    Ok(Json.toJson(Product.findAll(true)))
+  }
+
+  def allProductsBySeller(id: Long) = Action{implicit request =>
+    SellerCompany.find(id) match {
+      case None => NotFound(jsonNoSeller)
+      case Some(s) => Ok(Json.toJson(Product.findBySeller(s)))
+    }
+  }
+
+  def allProductsBySellerAndAvailable(id: Long) = Action{implicit request =>
+    SellerCompany.find(id) match {
+      case None => NotFound(jsonNoSeller)
+      case Some(s) => Ok(Json.toJson(Product.findBySellerAvailability(s, true)))
+    }
   }
 
   def allImages = Action{implicit request =>
@@ -107,7 +130,7 @@ class ManageProductController @Inject() extends Controller {
 
   def product(id: Long) = Action{implicit request =>
     Product.find(id) match {
-      case Some(p) => Ok(Json.toJson(p))
+      case Some(p) => {Ok(Json.toJson(p))}
       case _ => NotFound(jsonProductNotFound)
     }
   }
@@ -123,7 +146,7 @@ class ManageProductController @Inject() extends Controller {
                 SellerCompany.tokenConform(c.value, sc) match {
                   case false => Unauthorized(jsonRequiredAdmin)
                   case true => {
-                    p.quantity = -1
+                    p.available = false
                     p.update()
                     Ok(jsonProductDeleted)
                   }

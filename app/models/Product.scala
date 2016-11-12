@@ -23,6 +23,7 @@ case class Product() extends Model {
   var name : String =_
   var price : Float =_
   var quantity : Long =_
+  var available : Boolean=_
 
   @ManyToOne
   var seller : SellerCompany =_
@@ -41,6 +42,7 @@ object Product extends ProductDAO {
              seller : SellerCompany): Product = {
     val p = new Product()
     p.description = description
+    p.available = true
     p.name = name
     p.price = price
     p.quantity = quantity
@@ -59,6 +61,7 @@ object Product extends ProductDAO {
     p.id = id
     p.description = description
     p.name = name
+    p.available = true
     p.price = price
     p.quantity = quantity
     p.seller = seller
@@ -73,7 +76,8 @@ object Product extends ProductDAO {
       "price" -> p.price,
       "quantity" -> p.quantity,
       "seller" -> p.seller,
-      "image" -> p.image
+      "image" -> p.image,
+      "available" -> p.available
     )
   }
 

@@ -9,7 +9,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window) {
 
         var rqt = {
             method : 'GET',
-            url : '/product',
+            url : '/product/available',
             headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
         };
 

@@ -11,7 +11,7 @@ app.controller('product', function($scope, $http, $window, $location, facebookSe
         $scope.id = $location.search().id
         dropzoneCreate = new Dropzone("#dropzoneProduct",{
           paramName: 'image',
-          url:'/product/create',
+          url:'/product',
           method: 'POST',
           maxFilesize: 5,
           maxFiles: 1,

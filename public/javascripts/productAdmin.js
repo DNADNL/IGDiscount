@@ -24,6 +24,7 @@ app.controller('productAdmin', function($scope, $filter, $http, $window) {
 
 
                 $scope.productRows.push({
+                    available : data[i].available,
                     id : data[i].id,
                     image: imageUrl,
                     seller: data[i].seller.companyName,
@@ -37,7 +38,7 @@ app.controller('productAdmin', function($scope, $filter, $http, $window) {
     })
 
     $scope.update = function(row) {
-        $window.location.href = '/createProduct#?id='+row.id
+        $window.location.href = '/product/update/#?id='+row.id
     }
 
     $scope.removeRow = function removeRow(row) {

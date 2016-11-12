@@ -38,13 +38,16 @@ PUT     /admin/:id/password             controllers.ManageUserController.updateA
 GET     /kindOfUser                 controllers.UtilsController.kindOfUser
 
 #API Product
-POST /product/create                controllers.ManageProductController.createProduct
+POST /product                      controllers.ManageProductController.createProduct
 PUT  /product/:id/image            controllers.ManageProductController.updateImage(id: Long)
 GET  /product                      controllers.ManageProductController.allProducts
 GET  /product/:id/image            controllers.ManageProductController.image(id : Long)
 GET  /product/:id                   controllers.ManageProductController.product(id : Long)
 PUT  /product/:id                   controllers.ManageProductController.updateProduct(id : Long)
-DELETE  /product/:id                   controllers.ManageProductController.deleteProduct(id : Long)
+DELETE  /product/:id                controllers.ManageProductController.deleteProduct(id : Long)
+GET  /sellerCompany/:id/product     controllers.ManageProductController.allProductsBySeller(id : Long)
+GET  /sellerCompany/:id/product/available     controllers.ManageProductController.allProductsBySellerAndAvailable(id : Long)
+GET  /product/available           controllers.ManageProductController.allProductsByAvailable()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
@@ -52,12 +55,15 @@ GET		/registration				controllers.Assets.at(path="/public/html", file="registrat
 GET     /                           controllers.Assets.at(path="/public/html", file="index.html")
 GET		/connection				    controllers.Assets.at(path="/public/html", file="connection.html")
 GET		/account				    controllers.Assets.at(path="/public/html", file="modifyAccount.html")
-GET		/accounts				    controllers.Assets.at(path="/public/html", file="adminAccount.html")
+GET		/account/manage				    controllers.Assets.at(path="/public/html", file="adminAccount.html")
 GET		/products				    controllers.Assets.at(path="/public/html", file="products.html")
-GET		/createProduct				controllers.Assets.at(path="/public/html", file="createProduct.html")
-GET		/manageProduct				controllers.Assets.at(path="/public/html", file="productAdmin.html")
+GET		/product/create/				controllers.Assets.at(path="/public/html", file="createProduct.html")
+GET		/product/update/				controllers.Assets.at(path="/public/html", file="createProduct.html")
+GET		/product/manage/admin	    controllers.Assets.at(path="/public/html", file="productAdmin.html")
+GET		/product/manage/sellercompany	    controllers.Assets.at(path="/public/html", file="productSeller.html")
 GET		/js/*file				    controllers.Assets.at(path="/public/javascripts", file)
 GET		/lib/*file				    controllers.Assets.at(path="/public/lib", file)
+GET		/images/*file				controllers.Assets.at(path="/public/images", file)
 
 # A supprimer
 GET     /install                    controllers.HomeController.createUser
