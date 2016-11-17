@@ -27,8 +27,10 @@ case class Product() extends Model {
 
   @ManyToOne
   var seller : SellerCompany =_
-  @OneToOne(cascade = Array(CascadeType.ALL, CascadeType.REMOVE))
+  @OneToOne(cascade = Array(CascadeType.ALL))
   var image : Image =_
+  @OneToMany(cascade = Array(CascadeType.ALL))
+  var basketRow : java.util.List[BasketRow] =_
 
 }
 

@@ -17,125 +17,118 @@
     <div class="box">
         <div class="col-lg-12">
             <hr>
-            <h2 class="intro-text text-center">Account Settings
-            </h2>
+                <h2 class="intro-text text-center">Account Settings</h2>
             <hr>
-    <form name="passwordForm" ng-submit="submitFormPassword()" novalidate>
-        <div class="form-group" ng-class="{ 'has-error' : passwordForm.password.$invalid && !passwordForm.password.$pristine }">
-            <label>Password</label>
-            <input type="password" ng-minlength="5" name="password" class="form-control" ng-model="user.password" required>
-            <p ng-show="passwordForm.password.$error.minlength && !passwordForm.password.$pristine" class="help-block">Password is too short</p>
-        </div>
-        <div  class="form-group" ng-class="{ 'has-error' : user.repeatPassword != user.password && !passwordForm.repeatPassword.$pristine }">
-            <label>Repeat Password</label>
-            <input type="password" name="repeatPassword" class="form-control" ng-model="user.repeatPassword" required>
-            <p ng-show="user.repeatPassword != user.password && !passwordForm.repeatPassword.$pristine" class="help-block">The password must be equal</p>
-        </div>
-        <button type="submit" class="btn btn-primary" ng-disabled="(passwordForm.$invalid || user.repeatPassword != user.password)">Update password</button>
-    </form>
-    <div ng-show="enableSuccesPassword" class="alert alert-success">
-        Password updated
-    </div>
-    <form name="simpleUserForm" ng-submit="submitSimpleUserForm()" ng-show="enableSimpleUserForm" novalidate>
-        <div class="form-group" ng-class="{ 'has-error' : simpleUserForm.firstName.$invalid && !simpleUserForm.firstName.$pristine }">
-            <label>First name</label>
-            <input type="text" class="form-control" name="firstName" ng-model="simpleUser.firstName" required>
-            <p ng-show="simpleUserForm.firstName.$invalid && !simpleUserForm.firstName.$pristine" class="help-block">Your first name is required</p>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error' : simpleUserForm.lastName.$invalid && !simpleUserForm.lastName.$pristine }">
-            <label>Last name</label>
-            <input type="text" name="lastName" class="form-control" ng-model="simpleUser.lastName" required>
-            <p ng-show="simpleUserForm.lastName.$invalid && !simpleUserForm.lastName.$pristine" class="help-block">Your last name is required</p>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error' : simpleUserForm.email.$invalid && !simpleUserForm.email.$pristine }">
-            <label>Email</label>
-            <input type="email" class="form-control" name="email" ng-model="simpleUser.email" ng-disabled="disableEmail" required>
-            <p ng-show="simpleUserForm.email.$invalid && !simpleUserForm.email.$pristine" class="help-block">Your email is required</p>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error' : simpleUserForm.adress.$invalid && !simpleUserForm.adress.$pristine }">
-            <label>Adress</label>
-            <input type="text" name="adress" class="form-control" ng-model="simpleUser.adress" required>
-            <p ng-show="simpleUserForm.adress.$invalid && !simpleUserForm.adress.$pristine" class="help-block">Your adress is required</p>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error' : simpleUserForm.streetNumber.$invalid && !simpleUserForm.streetNumber.$pristine }">
-            <label>Street Number</label>
-            <input type="number" name="streetNumber" class="form-control" ng-model="simpleUser.streetNumber" required>
-            <p ng-show="simpleUserForm.streetNumber.$invalid && !simpleUserForm.streetNumber.$pristine" class="help-block">Your street number is required</p>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error' : (simpleUserForm.postalCode.$error.minlength || simpleUserForm.postalCode.$error.maxlength) && !simpleUserForm.postalCode.$pristine}">
-            <label>Postal code</label>
-            <input type="number" ng-minlength="5" ng-maxlength="5" name="postalCode" class="form-control" ng-model="simpleUser.postalCode" required>
-            <p ng-show="(simpleUserForm.postalCode.$error.minlength || simpleUserForm.postalCode.$error.maxlength) && !simpleUserForm.postalCode.$pristine" class="help-block">A valid postal code is required</p>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error' : simpleUserForm.city.$invalid && !simpleUserForm.city.$pristine }">
-            <label>City</label>
-            <input type="text" name="city" class="form-control" ng-model="simpleUser.city" required>
-            <p ng-show="simpleUserForm.city.$invalid && !simpleUserForm.city.$pristine" class="help-block">Your postal city is required</p>
-        </div>
-        <button type="submit" class="btn btn-primary" ng-disabled="simpleUserForm.$invalid">Update my account</button>
-    </form>
-    <form name="sellerCompanyForm" ng-submit="submitSellerCompanyForm()" ng-show="enableSellerCompanyForm" novalidate>
-        <div class="form-group" ng-class="{ 'has-error' : sellerCompanyForm.firstName.$invalid && !sellerCompanyForm.firstName.$pristine }">
-            <label>Company name</label>
-            <input type="text" class="form-control" name="sellerCompanyForm" ng-model="sellerCompany.companyName" required>
-            <p ng-show="sellerCompanyForm.sellerCompanyForm.$invalid && !sellerCompanyForm.sellerCompanyForm.$pristine" class="help-block">Your company name is required</p>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error' : (sellerCompanyForm.siret.$error.minlength || sellerCompanyForm.siret.$error.maxlength) && !sellerCompanyForm.siret.$pristine}">
-            <label>SIRET</label>
-            <input type="number" ng-minlength="14" ng-maxlength="14" name="siret" class="form-control" ng-model="sellerCompany.siret" required>
-            <p ng-show="(sellerCompanyForm.siret.$error.minlength || sellerCompanyForm.siret.$error.maxlength) && !sellerCompanyForm.siret.$pristine" class="help-block">The size of SIRET must be 14 characters</p>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error' : sellerCompanyForm.email.$invalid && !sellerCompanyForm.email.$pristine }">
-            <label>Email</label>
-            <input type="email" class="form-control" name="email" ng-model="sellerCompany.email" ng-disabled="disableEmail" required>
-            <p ng-show="sellerCompanyForm.email.$invalid && !sellerCompanyForm.email.$pristine" class="help-block">Your email is required</p>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error' : sellerCompanyForm.adress.$invalid && !sellerCompanyForm.adress.$pristine }">
-            <label>Adress</label>
-            <input type="text" name="adress" class="form-control" ng-model="sellerCompany.adress" required>
-            <p ng-show="sellerCompanyForm.adress.$invalid && !sellerCompanyForm.adress.$pristine" class="help-block">Your adress is required</p>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error' : sellerCompanyForm.streetNumber.$invalid && !sellerCompanyForm.streetNumber.$pristine }">
-            <label>Street Number</label>
-            <input type="number" name="streetNumber" class="form-control" ng-model="sellerCompany.streetNumber" required>
-            <p ng-show="sellerCompanyForm.streetNumber.$invalid && !sellerCompanyForm.streetNumber.$pristine" class="help-block">Your street number is required</p>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error' : (sellerCompanyForm.postalCode.$error.minlength || sellerCompanyForm.postalCode.$error.maxlength) && !sellerCompanyForm.postalCode.$pristine}">
-            <label>Postal code</label>
-            <input type="number" ng-minlength="5" ng-maxlength="5" name="postalCode" class="form-control" ng-model="sellerCompany.postalCode" required>
-            <p ng-show="(sellerCompanyForm.postalCode.$error.minlength || sellerCompanyForm.postalCode.$error.maxlength) && !sellerCompanyForm.postalCode.$pristine" class="help-block">A valid postal code is required</p>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error' : sellerCompanyForm.city.$invalid && !sellerCompanyForm.city.$pristine }">
-            <label>City</label>
-            <input type="text" name="city" class="form-control" ng-model="sellerCompany.city" required>
-            <p ng-show="sellerCompanyForm.city.$error.invalid && !sellerCompanyForm.city.$pristine" class="help-block">Your postal city is required</p>
-        </div>
-        <button type="submit" class="btn btn-primary" ng-disabled="sellerCompanyForm.$invalid">Update my account</button>
-    </form>
-    <form name="adminForm" ng-submit="submitAdminForm()" ng-show="enableAdminForm" novalidate>
-        <div class="form-group" ng-class="{ 'has-error' : adminForm.firstName.$invalid && !adminForm.firstName.$pristine }">
-            <label>First name</label>
-            <input type="text" class="form-control" name="firstName" ng-model="admin.firstName" required>
-            <p ng-show="adminForm.firstName.$invalid && !adminForm.firstName.$pristine" class="help-block">Your first name is required</p>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error' : adminForm.lastName.$invalid && !adminForm.lastName.$pristine }">
-            <label>Last name</label>
-            <input type="text" name="lastName" class="form-control" ng-model="admin.lastName" required>
-            <p ng-show="adminForm.lastName.$invalid && !adminForm.lastName.$pristine" class="help-block">Your last name is required</p>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error' : adminForm.email.$invalid && !adminForm.email.$pristine }">
-            <label>Email</label>
-            <input type="email" class="form-control" name="email" ng-model="admin.email" required>
-            <p ng-show="adminForm.email.$invalid && !adminForm.email.$pristine" class="help-block">Your email is required</p>
-        </div>
-        <button type="submit" class="btn btn-primary" ng-disabled="adminForm.$invalid">Update account</button>
-    </form>
-    <div ng-show="enableSuccesAccount" class="alert alert-success">
-        Account is updated
-    </div>
-            </div>
+            <form name="passwordForm" ng-submit="submitFormPassword()" novalidate>
+                <div class="form-group" ng-class="{ 'has-error' : passwordForm.password.$invalid && !passwordForm.password.$pristine }">
+                    <label>Password</label>
+                    <input type="password" ng-minlength="5" name="password" class="form-control" ng-model="user.password" required>
+                    <p ng-show="passwordForm.password.$error.minlength && !passwordForm.password.$pristine" class="help-block">Password is too short</p>
+                </div>
+                <div  class="form-group" ng-class="{ 'has-error' : user.repeatPassword != user.password && !passwordForm.repeatPassword.$pristine }">
+                    <label>Repeat Password</label>
+                    <input type="password" name="repeatPassword" class="form-control" ng-model="user.repeatPassword" required>
+                    <p ng-show="user.repeatPassword != user.password && !passwordForm.repeatPassword.$pristine" class="help-block">The password must be equal</p>
+                </div>
+                <button type="submit" class="btn btn-primary" ng-disabled="(passwordForm.$invalid || user.repeatPassword != user.password)">Update password</button>
+            </form>
+            <form name="simpleUserForm" ng-submit="submitSimpleUserForm()" ng-show="enableSimpleUserForm" novalidate>
+                <div class="form-group" ng-class="{ 'has-error' : simpleUserForm.firstName.$invalid && !simpleUserForm.firstName.$pristine }">
+                    <label>First name</label>
+                    <input type="text" class="form-control" name="firstName" ng-model="simpleUser.firstName" required>
+                    <p ng-show="simpleUserForm.firstName.$invalid && !simpleUserForm.firstName.$pristine" class="help-block">Your first name is required</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : simpleUserForm.lastName.$invalid && !simpleUserForm.lastName.$pristine }">
+                    <label>Last name</label>
+                    <input type="text" name="lastName" class="form-control" ng-model="simpleUser.lastName" required>
+                    <p ng-show="simpleUserForm.lastName.$invalid && !simpleUserForm.lastName.$pristine" class="help-block">Your last name is required</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : simpleUserForm.email.$invalid && !simpleUserForm.email.$pristine }">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email" ng-model="simpleUser.email" ng-disabled="disableEmail" required>
+                    <p ng-show="simpleUserForm.email.$invalid && !simpleUserForm.email.$pristine" class="help-block">Your email is required</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : simpleUserForm.adress.$invalid && !simpleUserForm.adress.$pristine }">
+                    <label>Adress</label>
+                    <input type="text" name="adress" class="form-control" ng-model="simpleUser.adress" required>
+                    <p ng-show="simpleUserForm.adress.$invalid && !simpleUserForm.adress.$pristine" class="help-block">Your adress is required</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : simpleUserForm.streetNumber.$invalid && !simpleUserForm.streetNumber.$pristine }">
+                    <label>Street Number</label>
+                    <input type="number" name="streetNumber" class="form-control" ng-model="simpleUser.streetNumber" required>
+                    <p ng-show="simpleUserForm.streetNumber.$invalid && !simpleUserForm.streetNumber.$pristine" class="help-block">Your street number is required</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : (simpleUserForm.postalCode.$error.minlength || simpleUserForm.postalCode.$error.maxlength) && !simpleUserForm.postalCode.$pristine}">
+                    <label>Postal code</label>
+                    <input type="number" ng-minlength="5" ng-maxlength="5" name="postalCode" class="form-control" ng-model="simpleUser.postalCode" required>
+                    <p ng-show="(simpleUserForm.postalCode.$error.minlength || simpleUserForm.postalCode.$error.maxlength) && !simpleUserForm.postalCode.$pristine" class="help-block">A valid postal code is required</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : simpleUserForm.city.$invalid && !simpleUserForm.city.$pristine }">
+                    <label>City</label>
+                    <input type="text" name="city" class="form-control" ng-model="simpleUser.city" required>
+                    <p ng-show="simpleUserForm.city.$invalid && !simpleUserForm.city.$pristine" class="help-block">Your postal city is required</p>
+                </div>
+                <button type="submit" class="btn btn-primary" ng-disabled="simpleUserForm.$invalid">Update my account</button>
+            </form>
+            <form name="sellerCompanyForm" ng-submit="submitSellerCompanyForm()" ng-show="enableSellerCompanyForm" novalidate>
+                <div class="form-group" ng-class="{ 'has-error' : sellerCompanyForm.firstName.$invalid && !sellerCompanyForm.firstName.$pristine }">
+                    <label>Company name</label>
+                    <input type="text" class="form-control" name="sellerCompanyForm" ng-model="sellerCompany.companyName" required>
+                    <p ng-show="sellerCompanyForm.sellerCompanyForm.$invalid && !sellerCompanyForm.sellerCompanyForm.$pristine" class="help-block">Your company name is required</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : (sellerCompanyForm.siret.$error.minlength || sellerCompanyForm.siret.$error.maxlength) && !sellerCompanyForm.siret.$pristine}">
+                    <label>SIRET</label>
+                    <input type="number" ng-minlength="14" ng-maxlength="14" name="siret" class="form-control" ng-model="sellerCompany.siret" required>
+                    <p ng-show="(sellerCompanyForm.siret.$error.minlength || sellerCompanyForm.siret.$error.maxlength) && !sellerCompanyForm.siret.$pristine" class="help-block">The size of SIRET must be 14 characters</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : sellerCompanyForm.email.$invalid && !sellerCompanyForm.email.$pristine }">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email" ng-model="sellerCompany.email" ng-disabled="disableEmail" required>
+                    <p ng-show="sellerCompanyForm.email.$invalid && !sellerCompanyForm.email.$pristine" class="help-block">Your email is required</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : sellerCompanyForm.adress.$invalid && !sellerCompanyForm.adress.$pristine }">
+                    <label>Adress</label>
+                    <input type="text" name="adress" class="form-control" ng-model="sellerCompany.adress" required>
+                    <p ng-show="sellerCompanyForm.adress.$invalid && !sellerCompanyForm.adress.$pristine" class="help-block">Your adress is required</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : sellerCompanyForm.streetNumber.$invalid && !sellerCompanyForm.streetNumber.$pristine }">
+                    <label>Street Number</label>
+                    <input type="number" name="streetNumber" class="form-control" ng-model="sellerCompany.streetNumber" required>
+                    <p ng-show="sellerCompanyForm.streetNumber.$invalid && !sellerCompanyForm.streetNumber.$pristine" class="help-block">Your street number is required</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : (sellerCompanyForm.postalCode.$error.minlength || sellerCompanyForm.postalCode.$error.maxlength) && !sellerCompanyForm.postalCode.$pristine}">
+                    <label>Postal code</label>
+                    <input type="number" ng-minlength="5" ng-maxlength="5" name="postalCode" class="form-control" ng-model="sellerCompany.postalCode" required>
+                    <p ng-show="(sellerCompanyForm.postalCode.$error.minlength || sellerCompanyForm.postalCode.$error.maxlength) && !sellerCompanyForm.postalCode.$pristine" class="help-block">A valid postal code is required</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : sellerCompanyForm.city.$invalid && !sellerCompanyForm.city.$pristine }">
+                    <label>City</label>
+                    <input type="text" name="city" class="form-control" ng-model="sellerCompany.city" required>
+                    <p ng-show="sellerCompanyForm.city.$error.invalid && !sellerCompanyForm.city.$pristine" class="help-block">Your postal city is required</p>
+                </div>
+                <button type="submit" class="btn btn-primary" ng-disabled="sellerCompanyForm.$invalid">Update my account</button>
+            </form>
+            <form name="adminForm" ng-submit="submitAdminForm()" ng-show="enableAdminForm" novalidate>
+                <div class="form-group" ng-class="{ 'has-error' : adminForm.firstName.$invalid && !adminForm.firstName.$pristine }">
+                    <label>First name</label>
+                    <input type="text" class="form-control" name="firstName" ng-model="admin.firstName" required>
+                    <p ng-show="adminForm.firstName.$invalid && !adminForm.firstName.$pristine" class="help-block">Your first name is required</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : adminForm.lastName.$invalid && !adminForm.lastName.$pristine }">
+                    <label>Last name</label>
+                    <input type="text" name="lastName" class="form-control" ng-model="admin.lastName" required>
+                    <p ng-show="adminForm.lastName.$invalid && !adminForm.lastName.$pristine" class="help-block">Your last name is required</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : adminForm.email.$invalid && !adminForm.email.$pristine }">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email" ng-model="admin.email" required>
+                    <p ng-show="adminForm.email.$invalid && !adminForm.email.$pristine" class="help-block">Your email is required</p>
+                </div>
+                <button type="submit" class="btn btn-primary" ng-disabled="adminForm.$invalid">Update account</button>
+            </form>
         </div>
     </div>
+</div>
 
 
 <div id="footer"></div>
@@ -148,7 +141,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-
+<script src="/lib/angular-ui-notification.min.js"></script>
 <script src="/js/facebookService.js"></script>
 <script src="/js/app.js"></script>
 <script src="/js/oauth.js"></script>

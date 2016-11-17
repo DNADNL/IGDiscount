@@ -5,11 +5,13 @@ package models
   */
 package models
 
+import java.nio.charset.StandardCharsets
 import javax.persistence._
 
 import DAO.{SellerCompanyDAO, SimpleUserDAO}
 import com.avaje.ebean.{Ebean, Model}
 import com.avaje.ebean.Model.Finder
+import com.google.common.hash.Hashing
 import controllers.{UserAdress, UserIdentification}
 import play.api.libs.json.{Json, Writes}
 import play.api.libs.openid.Errors.AUTH_CANCEL
@@ -41,7 +43,7 @@ case class SellerCompany() extends Model with UserIdentification with UserAdress
   var tokenAuthentification : Token =_
   @OneToOne
   var tokenReinitialisationEmail : Token =_
-  @OneToMany(cascade = Array(CascadeType.ALL, CascadeType.REMOVE))
+  @OneToMany(cascade = Array(CascadeType.ALL))
   var products : java.util.List[Product] =_
 }
 
@@ -58,7 +60,7 @@ object SellerCompany extends SellerCompanyDAO {
              companyName: String): SellerCompany = {
     val sc = new SellerCompany()
     sc.email = email
-    sc.password = password
+    sc.password = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString()
     sc.postalCode = postalCode
     sc.street = street
     sc.city = city
@@ -81,7 +83,7 @@ object SellerCompany extends SellerCompanyDAO {
     val sc = new SellerCompany()
     sc.id = id
     sc.email = email
-    sc.password = password
+    sc.password = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString()
     sc.postalCode = postalCode
     sc.street = street
     sc.city = city

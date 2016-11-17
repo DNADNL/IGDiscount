@@ -1,8 +1,10 @@
 package DAO
 
+import java.nio.charset.StandardCharsets
 import java.util.UUID
 
 import com.avaje.ebean.{Ebean, Expr}
+import com.google.common.hash.Hashing
 import models.{Admin, SimpleUser, Token}
 import models.models.SellerCompany
 
@@ -12,7 +14,7 @@ import models.models.SellerCompany
 class AdminDAO extends DAO(classOf[Admin], classOf[Long]) with UserDAO[Admin] {
 
   override def findByLogin(email : String, psw : String) : Option[Admin] = {
-    Ebean.find(classOf[Admin]).where(Expr.and(Expr.eq("email", email), Expr.eq("password", psw))).findUnique() match {
+    Ebean.find(classOf[Admin]).where(Expr.and(Expr.eq("email", email), Expr.eq("password", Hashing.sha256().hashString(psw, StandardCharsets.UTF_8).toString()))).findUnique() match {
       case null => None
       case x => Some(x)
     }

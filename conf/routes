@@ -9,9 +9,10 @@ GET     /count                      controllers.CountController.count
 GET     /message                    controllers.AsyncController.message
 
 # API Registration
-POST    /simpleUser/create      controllers.RegistrationUserController.registrationSimpleUser
-POST    /sellerCompany/create   controllers.RegistrationUserController.registrationSellerCompany
-POST    /admin/create           controllers.RegistrationUserController.registrationAdmin
+POST    /simpleUser      controllers.RegistrationUserController.registrationSimpleUser
+POST    /simpleUser/facebook      controllers.RegistrationUserController.registrationSimpleUserFacebook
+POST    /sellerCompany   controllers.RegistrationUserController.registrationSellerCompany
+POST    /admin           controllers.RegistrationUserController.registrationAdmin
 
 #API Sign In
 POST    /signin     controllers.SignInController.signIn
@@ -37,8 +38,15 @@ PUT     /admin/:id/password             controllers.ManageUserController.updateA
 #API Utils
 GET     /kindOfUser                 controllers.UtilsController.kindOfUser
 
+#API Basket
+POST /simpleUser/:id1/product/:id2                    controllers.ManageBasketRowController.createBasketRow(id1 : Long, id2 : Long)
+PUT /simpleUser/:id1/product/:id2/quantity            controllers.ManageBasketRowController.updateBasket(id1 : Long, id2 : Long)
+DELETE /simpleUser/:id1/product/:id2                  controllers.ManageBasketRowController.deleteBasket(id1 : Long, id2 : Long)
+GET /simpleUser/:id/product                           controllers.ManageBasketRowController.getBasket(id : Long)
+
 #API Product
 POST /product                      controllers.ManageProductController.createProduct
+GET  /product/available           controllers.ManageProductController.allProductsByAvailable
 PUT  /product/:id/image            controllers.ManageProductController.updateImage(id: Long)
 GET  /product                      controllers.ManageProductController.allProducts
 GET  /product/:id/image            controllers.ManageProductController.image(id : Long)
@@ -47,7 +55,6 @@ PUT  /product/:id                   controllers.ManageProductController.updatePr
 DELETE  /product/:id                controllers.ManageProductController.deleteProduct(id : Long)
 GET  /sellerCompany/:id/product     controllers.ManageProductController.allProductsBySeller(id : Long)
 GET  /sellerCompany/:id/product/available     controllers.ManageProductController.allProductsBySellerAndAvailable(id : Long)
-GET  /product/available           controllers.ManageProductController.allProductsByAvailable()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
@@ -61,6 +68,7 @@ GET		/product/create/				controllers.Assets.at(path="/public/html", file="create
 GET		/product/update/				controllers.Assets.at(path="/public/html", file="createProduct.html")
 GET		/product/manage/admin	    controllers.Assets.at(path="/public/html", file="productAdmin.html")
 GET		/product/manage/sellercompany	    controllers.Assets.at(path="/public/html", file="productSeller.html")
+GET		/cart               	    controllers.Assets.at(path="/public/html", file="cart.html")
 GET		/js/*file				    controllers.Assets.at(path="/public/javascripts", file)
 GET		/lib/*file				    controllers.Assets.at(path="/public/lib", file)
 GET		/images/*file				controllers.Assets.at(path="/public/images", file)

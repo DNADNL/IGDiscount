@@ -1,20 +1,11 @@
-app.controller('modifyAccount', function($scope, $http, $window, $location, facebookServices) {
+app.controller('modifyAccount', function($scope, $http, $window, $location, facebookServices, Notification) {
 
     $scope.enableSimpleUserForm = false
     $scope.enableSellerCompanyForm = false
     $scope.enableAdminForm = false
     $scope.kindOkUser
-    $scope.enableSuccesPassword = false
-    $scope.enableSuccesAccount = false
 
     facebookServices.initialize()
-
-    if (facebookServices.isReady()) {
-        $scope.disableEmail = true
-    }
-    else {
-        $scope.disableEmail = false
-    }
 
     angular.element(document).ready(function() {
         $scope.id = $location.search().id
@@ -82,7 +73,7 @@ app.controller('modifyAccount', function($scope, $http, $window, $location, face
         };
         $http(rqt)
             .success(function(data){
-                $scope.enableSuccesPassword = true
+                Notification.success("Password of the account updated")
             })
     }
 
@@ -102,6 +93,12 @@ app.controller('modifyAccount', function($scope, $http, $window, $location, face
                 $scope.simpleUser.city = data.city
                 $scope.simpleUser.streetNumber = parseInt(data.streetNumber)
                 $scope.simpleUser.postalCode = parseInt(data.postalCode)
+                if (data.logFacebook) {
+                    $scope.disableEmail = true
+                }
+                else {
+                    $scope.disableEmail = false
+                }
             })
             .error(function(data){
                 $window.location.href = '/';
@@ -161,7 +158,7 @@ app.controller('modifyAccount', function($scope, $http, $window, $location, face
         };
         $http(rqt)
             .success(function(data){
-                $scope.enableSuccesAccount = true
+                Notification.success("Information of the account are updated")
             })
     };
 
@@ -182,7 +179,7 @@ app.controller('modifyAccount', function($scope, $http, $window, $location, face
             };
             $http(rqt)
                 .success(function(data){
-                    $scope.enableSuccesAccount = true
+                    Notification.success("Information of the account are updated")
                 })
         };
 
@@ -203,7 +200,7 @@ app.controller('modifyAccount', function($scope, $http, $window, $location, face
                 };
                 $http(rqt)
                     .success(function(data){
-                        $scope.enableSuccesAccount = true
+                        Notification.success("Information of the account are updated")
                     })
             };
 })

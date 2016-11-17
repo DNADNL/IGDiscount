@@ -4,23 +4,40 @@ import javax.inject.{Inject, Singleton}
 
 import models.{Admin, SimpleUser, Token}
 import models.models.SellerCompany
+import play.api.Configuration
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.mvc.{Action, Controller, Result}
+import play.api.mvc.{Action, Controller, Cookie, Result}
 import play.api.libs.json.Json
+import play.api.libs.ws.{WSClient, WSResponse}
 import play.mvc.Results
 import views.html.defaultpages.notFound
+
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
 /**
   * Created by kevin on 29/10/16.
   */
 @Singleton
-class RegistrationUserController @Inject() extends Controller {
+class RegistrationUserController @Inject() (ws: WSClient, configuration: Configuration) extends Controller {
 
   val parameterRegistrationSimpleUser = Form(
     tuple(
       "email" -> email,
       "password" -> nonEmptyText(minLength = 5),
+      "postalCode" -> nonEmptyText(minLength = 5),
+      "street" -> nonEmptyText(minLength = 1),
+      "city" -> nonEmptyText(minLength = 1),
+      "streetNumber" -> nonEmptyText(minLength = 1),
+      "firstName" -> nonEmptyText(minLength = 1),
+      "lastName" -> nonEmptyText(minLength = 1)
+    )
+  )
+
+  val parameterRegistrationSimpleUserFacebook = Form(
+    tuple(
+      "tokenFacebook" -> nonEmptyText,
       "postalCode" -> nonEmptyText(minLength = 5),
       "street" -> nonEmptyText(minLength = 1),
       "city" -> nonEmptyText(minLength = 1),
@@ -82,6 +99,11 @@ class RegistrationUserController @Inject() extends Controller {
     "message" -> "Authentification required"
   )
 
+  val jsonFacebookError =Json.obj(
+    "error" -> true,
+    "message" -> "Facebook failed"
+  )
+
   def registrationSimpleUser = Action { implicit request =>
     parameterRegistrationSimpleUser.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorForm),
@@ -91,6 +113,34 @@ class RegistrationUserController @Inject() extends Controller {
         SimpleUser.save(su) match {
           case true => Created(jsonUserCreated)
           case false => Conflict(jsonErrorUserExist)
+        }
+      }
+    )
+  }
+
+  def registrationSimpleUserFacebook = Action { implicit request =>
+    parameterRegistrationSimpleUserFacebook.bindFromRequest.fold(
+      formWithErrors => BadRequest(jsonErrorForm),
+      formData => {
+        val (tokenFacebook, postalCode, street, city, streetNumber, firstName, lastName) = formData
+        val futureResultEmail: Future[WSResponse] = ws.url("https://graph.facebook.com/me").withQueryString("fields" -> "email").withQueryString("access_token" -> tokenFacebook).get()
+        val futureResultId: Future[WSResponse] = ws.url("https://graph.facebook.com/app").withQueryString("fields" -> "id").withQueryString("access_token" -> tokenFacebook).get()
+
+        val jsonEmail = Await.result(futureResultEmail, Duration.Inf).json
+        val jsonId = Await.result(futureResultId, Duration.Inf).json
+        (jsonId \ ("id")).toOption match {
+          case Some(publicKey) => {
+            (jsonEmail \ ("email")).toOption match {
+              case Some(emailRes) => {
+                val su = SimpleUser(emailRes.toString().replace("\"", ""), "", postalCode, street, city, streetNumber, firstName, lastName)
+                su.logFacebook = true
+                su.save()
+                Created(jsonUserCreated)
+              }
+              case _ => NotFound(jsonFacebookError)
+            }
+          }
+          case _ => NotFound(jsonFacebookError)
         }
       }
     )

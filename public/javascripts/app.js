@@ -1,1 +1,1 @@
-var app = angular.module('app', ['app.facebookServices']);
+var app = angular.module('app', ['app.facebookServices', 'ui-notification']);

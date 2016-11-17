@@ -1,10 +1,12 @@
 package models
 
+import java.nio.charset.StandardCharsets
 import javax.persistence._
 
 import DAO.SimpleUserDAO
 import com.avaje.ebean.{Ebean, Model}
 import com.avaje.ebean.Model.Finder
+import com.google.common.hash.Hashing
 import controllers.{UserAdress, UserIdentification, UserName}
 import play.api.libs.json.{Json, Writes}
 
@@ -30,11 +32,14 @@ case class SimpleUser() extends Model with UserIdentification with UserAdress wi
   var streetNumber : String =_
   var firstName : String =_
   var lastName : String =_
+  var logFacebook : Boolean =_
 
   @OneToOne
   var tokenAuthentification : Token =_
   @OneToOne
   var tokenReinitialisationEmail : Token =_
+  @OneToMany(cascade = Array(CascadeType.ALL))
+  var basketRow : java.util.List[BasketRow] =_
 
 }
 
@@ -51,7 +56,8 @@ object SimpleUser extends SimpleUserDAO {
              lastName: String): SimpleUser = {
     val u = new SimpleUser()
     u.email = email
-    u.password = password
+    u.logFacebook = false
+    u.password = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString()
     u.postalCode = postalCode
     u.street = street
     u.city = city
@@ -73,8 +79,9 @@ object SimpleUser extends SimpleUserDAO {
              lastName: String): SimpleUser = {
     val u = new SimpleUser()
     u.id = id
+    u.logFacebook = false
     u.email = email
-    u.password = password
+    u.password = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString()
     u.postalCode = postalCode
     u.street = street
     u.city = city
@@ -93,7 +100,8 @@ object SimpleUser extends SimpleUserDAO {
       "streetNumber" -> su.streetNumber,
       "city" -> su.city,
       "firstName" -> su.firstName,
-      "lastName" -> su.lastName
+      "lastName" -> su.lastName,
+      "logFacebook" -> su.logFacebook
     )
   }
 

@@ -1,6 +1,4 @@
-app.controller('connection', function($scope, $http, $window, facebookServices) {
-
-    $scope.showError = false
+app.controller('connection', function($scope, $http, $window, facebookServices, Notification) {
 
     facebookServices.initialize()
 
@@ -23,7 +21,7 @@ app.controller('connection', function($scope, $http, $window, facebookServices) 
                         })
                         .error(function(data){
                             facebookServices.clearCache()
-                            $scope.showError = true
+                            Notification.error("Email or password incorrect")
                         })
                 });
             }
@@ -45,7 +43,7 @@ app.controller('connection', function($scope, $http, $window, facebookServices) 
                 $window.location.href = '/';
             })
             .error(function(data){
-                $scope.showError = true
+                Notification.error("Email or password incorrect")
             })
     };
 

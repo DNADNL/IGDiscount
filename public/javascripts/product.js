@@ -1,11 +1,19 @@
-app.controller('product', function($scope, $http, $window, $location, facebookServices) {
+var app = angular.module('app', ['angularSpinner']);
+
+app.controller('product', function($scope, $http, $window, $location, usSpinnerService) {
 
     var dropzoneCreate;
     var dropzoneUpdate;
     $scope.showError = false;
+    $scope.showWaiting = false;
     $scope.disable= true;
     $scope.product = {};
     $scope.creatingMode = true
+
+    $scope.startSpin = function() {
+        usSpinnerService.spin('spinner-1');
+        $scope.startcounter++;
+    };
 
     angular.element(document).ready(function () {
         $scope.id = $location.search().id
@@ -35,7 +43,12 @@ app.controller('product', function($scope, $http, $window, $location, facebookSe
             formData.append("name", $scope.product.name)
             formData.append("price", Math.round($scope.product.price*100)/100)
             formData.append("quantity", parseInt($scope.product.quantity))
+            $scope.showWaiting = true;
+
+          },
+          success: function(file, response){
             $window.location.href = '/';
+            return response;
           },
           addRemoveLinks: true,
           dictDefaultMessage: 'Please put picture (JPG, PNG, JPEG), less than 5 Mo'
@@ -105,6 +118,7 @@ app.controller('product', function($scope, $http, $window, $location, facebookSe
     }
 
     $scope.submitForm = function() {
+        $scope.startSpin();
         if ($scope.creatingMode) {
             dropzoneCreate.processQueue()
         }

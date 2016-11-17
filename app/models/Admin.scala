@@ -1,9 +1,11 @@
 package models
 
+import java.nio.charset.StandardCharsets
 import javax.persistence._
 
 import DAO.{AdminDAO, SimpleUserDAO}
 import com.avaje.ebean.Model
+import com.google.common.hash.Hashing
 import controllers.{UserAdress, UserIdentification, UserName}
 import play.api.libs.json.{Json, Writes}
 
@@ -38,7 +40,7 @@ object Admin extends AdminDAO {
              lastName: String): Admin = {
     val a = new Admin()
     a.email = email
-    a.password = password
+    a.password = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString()
     a.firstName = firstName
     a.lastName = lastName
     return a
@@ -53,7 +55,7 @@ object Admin extends AdminDAO {
     val a = new Admin()
     a.id = id
     a.email = email
-    a.password = password
+    a.password = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString()
     a.firstName = firstName
     a.lastName = lastName
     return a

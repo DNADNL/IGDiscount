@@ -16,26 +16,22 @@
     <div class="box">
         <div class="col-lg-12">
             <hr>
-            <h2 class="intro-text text-center">Log In
-            </h2>
+            <h2 class="intro-text text-center">Log In</h2>
             <hr>
-    <form name="login" ng-submit="submitForm()" novalidate>
-        <div class="form-group" ng-class="{ 'has-error' : login.email.$invalid && !login.email.$pristine }">
-            <label>Email</label>
-            <input type="email" class="form-control" name="email" ng-model="user.email" required>
-            <p ng-show="login.email.$invalid && !login.email.$pristine" class="help-block">An email valid is required</p>
+            <form name="login" ng-submit="submitForm()" novalidate>
+                <div class="form-group" ng-class="{ 'has-error' : login.email.$invalid && !login.email.$pristine }">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email" ng-model="user.email" required>
+                    <p ng-show="login.email.$invalid && !login.email.$pristine" class="help-block">An email valid is required</p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : login.password.$invalid && !login.password.$pristine }">
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control" ng-model="user.password" required>
+                </div>
+                <input type="submit" class="btn btn-primary" ng-disabled="login.$invalid" value="Log In">
+                <input ng-click="linkFacebook()" class="btn btn-primary" value="Log In with facebook">
+            </form>
         </div>
-        <div class="form-group" ng-class="{ 'has-error' : login.password.$invalid && !login.password.$pristine }">
-            <label>Password</label>
-            <input type="password" name="password" class="form-control" ng-model="user.password" required>
-        </div>
-        <input type="submit" class="btn btn-primary" ng-disabled="login.$invalid" value="Log In">
-        <input ng-click="linkFacebook()" class="btn btn-primary" value="Log In with facebook">
-    </form>
-    <div ng-show="showError" class="alert alert-danger">
-        <strong>Error! </strong>Email or password incorrect.
-    </div>
-            </div>
     </div>
 </div>
 
@@ -50,6 +46,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 
+<script src="/lib/angular-ui-notification.min.js"></script>
 <script src="/js/facebookService.js"></script>
 <script src="/js/app.js"></script>
 <script src="/js/oauth.js"></script>

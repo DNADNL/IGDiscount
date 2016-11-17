@@ -56,6 +56,9 @@
     <div ng-show="showError" class="alert alert-danger">
         <strong>Error! </strong>Impossible to create the product.
     </div>
+    <div ng-show="showWaiting" class="alert alert-info">
+        Please wait <span us-spinner="{}" spinner-key="spinner-1" style="position: relative; margin-left: 30px"></span>
+    </div>
 </div>
         </div>
     </div>
@@ -72,9 +75,9 @@
             <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 
             <script src="/lib/dropzone.js"></script>
+            <script src="/lib/spin.min.js"></script>
+            <script src="/lib/angular-spinner.js"></script>
 
-            <script src="/js/facebookService.js"></script>
-            <script src="/js/app.js"></script>
             <script src="/js/product.js"></script>
             <script src="/js/oauth.js"></script>
 

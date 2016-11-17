@@ -1,7 +1,10 @@
 package DAO
 
+import java.nio.charset.StandardCharsets
+
 import com.avaje.ebean.{Ebean, Expr}
 import com.avaje.ebean.Model.Finder
+import com.google.common.hash.Hashing
 import models.models.SellerCompany
 import models.{Admin, SimpleUser, Token}
 
@@ -11,7 +14,7 @@ import models.{Admin, SimpleUser, Token}
 abstract class SimpleUserDAO extends DAO(classOf[SimpleUser], classOf[Long]) with UserDAO[SimpleUser] {
 
   override def findByLogin(email : String, psw : String) : Option[SimpleUser] = {
-    Ebean.find(classOf[SimpleUser]).where(Expr.and(Expr.eq("email", email), Expr.eq("password", psw))).findUnique() match {
+    Ebean.find(classOf[SimpleUser]).where(Expr.and(Expr.eq("email", email), Expr.eq("password", Hashing.sha256().hashString(psw, StandardCharsets.UTF_8).toString()))).findUnique() match {
       case null => None
       case x => Some(x)
     }

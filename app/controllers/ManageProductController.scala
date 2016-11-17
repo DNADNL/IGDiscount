@@ -99,7 +99,7 @@ class ManageProductController @Inject() extends Controller {
     Ok(Json.toJson(Product.findAll()))
   }
 
-  def allProductsByAvailable() = Action{implicit request =>
+  def allProductsByAvailable = Action{implicit request =>
     Ok(Json.toJson(Product.findAll(true)))
   }
 
@@ -144,7 +144,7 @@ class ManageProductController @Inject() extends Controller {
             case true => Token.getUser(c.value).get match {
               case sc: SellerCompany => {
                 SellerCompany.tokenConform(c.value, sc) match {
-                  case false => Unauthorized(jsonRequiredAdmin)
+                  case false => Forbidden(jsonRequiredAdmin)
                   case true => {
                     p.available = false
                     p.update()
@@ -156,11 +156,11 @@ class ManageProductController @Inject() extends Controller {
                 p.delete()
                 Ok(jsonProductDeleted)
               }
-              case _ => Unauthorized(jsonRequiredAdmin)
+              case _ => Forbidden(jsonRequiredAdmin)
             }
-            case _ => Unauthorized(jsonTokenExpired)
+            case _ => Forbidden(jsonTokenExpired)
           }
-          case _ => Forbidden(jsonNoToken)
+          case _ => Unauthorized(jsonNoToken)
         }
       }
     }
@@ -193,7 +193,7 @@ class ManageProductController @Inject() extends Controller {
             case true => Token.getUser(c.value).get match {
               case u: SellerCompany =>
                 SellerCompany.tokenConform(c.value, u) match {
-                  case false => Unauthorized(jsonRequiredAdmin)
+                  case false => Forbidden(jsonRequiredAdmin)
                   case true => {
                     i.update()
                     p.update()
@@ -205,11 +205,11 @@ class ManageProductController @Inject() extends Controller {
                 p.update()
                 Created(imageUpdated)
               }
-              case _ => Unauthorized(jsonRequiredAdmin)
+              case _ => Forbidden(jsonRequiredAdmin)
             }
-            case _ => Unauthorized(jsonTokenExpired)
+            case _ => Forbidden(jsonTokenExpired)
           }
-          case _ => Forbidden(jsonNoToken)
+          case _ => Unauthorized(jsonNoToken)
         }
       }
     }
@@ -221,7 +221,7 @@ class ManageProductController @Inject() extends Controller {
         case true => Token.getUser(c.value).get match {
           case sc : SellerCompany => {
             SellerCompany.tokenConform(c.value, sc) match {
-              case false => Unauthorized(jsonRequiredAdmin)
+              case false => Forbidden(jsonRequiredAdmin)
               case true => {
                 parameterCreateProduct.bindFromRequest.fold(
                   formWithErrors => BadRequest(jsonErrorForm),
@@ -262,11 +262,11 @@ class ManageProductController @Inject() extends Controller {
               }
             )
           }
-          case _ => Unauthorized(jsonPermission)
+          case _ => Forbidden(jsonPermission)
         }
-        case _ => Unauthorized(jsonTokenExpired)
+        case _ => Forbidden(jsonTokenExpired)
       }
-      case _ => Forbidden(jsonNoToken)
+      case _ => Unauthorized(jsonNoToken)
     }
   }
 
@@ -305,11 +305,11 @@ class ManageProductController @Inject() extends Controller {
               }
             )
           }
-          case _ => Unauthorized(jsonPermission)
+          case _ => Forbidden(jsonPermission)
         }
-        case _ => Unauthorized(jsonTokenExpired)
+        case _ => Forbidden(jsonTokenExpired)
       }
-      case _ => Forbidden(jsonNoToken)
+      case _ => Unauthorized(jsonNoToken)
     }
   }
 }

@@ -98,13 +98,13 @@ class ManageUserController @Inject() extends Controller {
           case a: Admin => Ok(Json.toJson(SimpleUser.find(id)))
           case su : SimpleUser => SimpleUser.tokenConform(c.value, SimpleUser.find(id).getOrElse(new SimpleUser())) match {
             case true => Ok(Json.toJson(SimpleUser.find(id)))
-            case false => Unauthorized(jsonRequiredAdmin)
+            case false => Forbidden(jsonRequiredAdmin)
           }
-          case _ => Unauthorized(jsonRequiredAdmin)
+          case _ => Forbidden(jsonRequiredAdmin)
         }
-        case _ => Unauthorized(jsonTokenExpired)
+        case _ => Forbidden(jsonTokenExpired)
       }
-      case _ => Forbidden(jsonNoToken)
+      case _ => Unauthorized(jsonNoToken)
     }
   }
 
@@ -115,13 +115,13 @@ class ManageUserController @Inject() extends Controller {
           case a: Admin => Ok(Json.toJson(SellerCompany.find(id)))
           case sc : SellerCompany => SellerCompany.tokenConform(c.value, SellerCompany.find(id).getOrElse(new SellerCompany())) match {
             case true => Ok(Json.toJson(SellerCompany.find(id)))
-            case false => Unauthorized(jsonRequiredAdmin)
+            case false => Forbidden(jsonRequiredAdmin)
           }
-          case _ => Unauthorized(jsonRequiredAdmin)
+          case _ => Forbidden(jsonRequiredAdmin)
         }
-        case _ => Unauthorized(jsonTokenExpired)
+        case _ => Forbidden(jsonTokenExpired)
       }
-      case _ => Forbidden(jsonNoToken)
+      case _ => Unauthorized(jsonNoToken)
     }
   }
 
@@ -130,11 +130,11 @@ class ManageUserController @Inject() extends Controller {
       case Some(c) => Token.isValid(c.value) match {
         case true => Token.getUser(c.value).get match {
           case a: Admin => Ok(Json.toJson(Admin.find(id)))
-          case _ => Unauthorized(jsonRequiredAdmin)
+          case _ => Forbidden(jsonRequiredAdmin)
         }
-        case _ => Unauthorized(jsonTokenExpired)
+        case _ => Forbidden(jsonTokenExpired)
       }
-      case _ => Forbidden(jsonNoToken)
+      case _ => Unauthorized(jsonNoToken)
     }
   }
 
@@ -143,11 +143,11 @@ class ManageUserController @Inject() extends Controller {
       case Some(c) => Token.isValid(c.value) match {
         case true => Token.getUser(c.value).get match {
           case a: Admin => Ok(Json.toJson(SimpleUser.findAll()))
-          case _ => Unauthorized(jsonRequiredAdmin)
+          case _ => Forbidden(jsonRequiredAdmin)
         }
-        case _ => Unauthorized(jsonTokenExpired)
+        case _ => Forbidden(jsonTokenExpired)
       }
-      case _ => Forbidden(jsonNoToken)
+      case _ => Unauthorized(jsonNoToken)
     }
   }
 
@@ -156,11 +156,11 @@ class ManageUserController @Inject() extends Controller {
       case Some(c) => Token.isValid(c.value) match {
         case true => Token.getUser(c.value).get match {
           case a: Admin => Ok(Json.toJson(SellerCompany.findAll()))
-          case _ => Unauthorized(jsonRequiredAdmin)
+          case _ => Forbidden(jsonRequiredAdmin)
         }
-        case _ => Unauthorized(jsonTokenExpired)
+        case _ => Forbidden(jsonTokenExpired)
       }
-      case _ => Forbidden(jsonNoToken)
+      case _ => Unauthorized(jsonNoToken)
     }
   }
 
@@ -169,11 +169,11 @@ class ManageUserController @Inject() extends Controller {
       case Some(c) => Token.isValid(c.value) match {
         case true => Token.getUser(c.value).get match {
           case a: Admin => Ok(Json.toJson(Admin.findAll()))
-          case _ => Unauthorized(jsonRequiredAdmin)
+          case _ => Forbidden(jsonRequiredAdmin)
         }
-        case _ => Unauthorized(jsonTokenExpired)
+        case _ => Forbidden(jsonTokenExpired)
       }
-      case _ => Forbidden(jsonNoToken)
+      case _ => Unauthorized(jsonNoToken)
     }
   }
 
@@ -187,11 +187,11 @@ class ManageUserController @Inject() extends Controller {
               case false => NotFound(jsonUserNoDeleted)
             }
           }
-          case _ => Unauthorized(jsonRequiredAdmin)
+          case _ => Forbidden(jsonRequiredAdmin)
         }
-        case _ => Unauthorized(jsonTokenExpired)
+        case _ => Forbidden(jsonTokenExpired)
       }
-      case _ => Forbidden(jsonNoToken)
+      case _ => Unauthorized(jsonNoToken)
     }
   }
 
@@ -205,11 +205,11 @@ class ManageUserController @Inject() extends Controller {
               case false => NotFound(jsonUserNoDeleted)
             }
           }
-          case _ => Unauthorized(jsonRequiredAdmin)
+          case _ => Forbidden(jsonRequiredAdmin)
         }
-        case _ => Unauthorized(jsonTokenExpired)
+        case _ => Forbidden(jsonTokenExpired)
       }
-      case _ => Forbidden(jsonNoToken)
+      case _ => Unauthorized(jsonNoToken)
     }
   }
 
@@ -223,11 +223,11 @@ class ManageUserController @Inject() extends Controller {
               case false => NotFound(jsonUserNoDeleted)
             }
           }
-          case _ => Unauthorized(jsonRequiredAdmin)
+          case _ => Forbidden(jsonRequiredAdmin)
         }
-        case _ => Unauthorized(jsonTokenExpired)
+        case _ => Forbidden(jsonTokenExpired)
       }
-      case _ => Forbidden(jsonNoToken)
+      case _ => Unauthorized(jsonNoToken)
     }
   }
 
@@ -236,7 +236,7 @@ class ManageUserController @Inject() extends Controller {
       formWithErrors => BadRequest(jsonErrorParameter),
       formData => {
         val (email, postalCode, street, city, streetNumber, firstName, lastName) = formData
-        val su = SimpleUser(id, email, null, postalCode, street, city, streetNumber, firstName, lastName)
+        val su = SimpleUser(id, email, "", postalCode, street, city, streetNumber, firstName, lastName)
         request.cookies.get("token") match {
           case Some(c) => Token.isValid(c.value) match {
             case true => Token.getUser(c.value).get match {
@@ -254,14 +254,14 @@ class ManageUserController @Inject() extends Controller {
                       case _ => Conflict(jsonErrorEmail)
                     }
                   }
-                  case false => Unauthorized(jsonRequiredAdmin)
+                  case false => Forbidden(jsonRequiredAdmin)
                 }
               }
-              case _ => Unauthorized(jsonRequiredAdmin)
+              case _ => Forbidden(jsonRequiredAdmin)
             }
-            case _ => Unauthorized(jsonTokenExpired)
+            case _ => Forbidden(jsonTokenExpired)
           }
-          case _ => Forbidden(jsonNoToken)
+          case _ => Unauthorized(jsonNoToken)
         }
       }
     )
@@ -272,7 +272,7 @@ class ManageUserController @Inject() extends Controller {
       formWithErrors => BadRequest(jsonErrorParameter),
       formData => {
         val (email, postalCode, street, city, streetNumber, siret, companyName) = formData
-        val sc = SellerCompany(id, email, null, postalCode, street, city, streetNumber, siret, companyName)
+        val sc = SellerCompany(id, email, "", postalCode, street, city, streetNumber, siret, companyName)
         request.cookies.get("token") match {
           case Some(c) => Token.isValid(c.value) match {
             case true => Token.getUser(c.value).get match {
@@ -290,14 +290,14 @@ class ManageUserController @Inject() extends Controller {
                       case _ => Conflict(jsonErrorEmail)
                     }
                   }
-                  case false => Unauthorized(jsonRequiredAdmin)
+                  case false => Forbidden(jsonRequiredAdmin)
                 }
               }
-              case _ => Unauthorized(jsonRequiredAdmin)
+              case _ => Forbidden(jsonRequiredAdmin)
             }
-            case _ => Unauthorized(jsonTokenExpired)
+            case _ => Forbidden(jsonTokenExpired)
           }
-          case _ => Forbidden(jsonNoToken)
+          case _ => Unauthorized(jsonNoToken)
         }
       }
     )
@@ -308,7 +308,7 @@ class ManageUserController @Inject() extends Controller {
       formWithErrors => BadRequest(jsonErrorParameter),
       formData => {
         val (email, firstName, lastName) = formData
-        val a = Admin(id, email, null, firstName, lastName)
+        val a = Admin(id, email, "", firstName, lastName)
         request.cookies.get("token") match {
           case Some(c) => Token.isValid(c.value) match {
             case true => Token.getUser(c.value).get match {
@@ -318,11 +318,11 @@ class ManageUserController @Inject() extends Controller {
                   case _ => Conflict(jsonErrorEmail)
                 }
               }
-              case _ => Unauthorized(jsonRequiredAdmin)
+              case _ => Forbidden(jsonRequiredAdmin)
             }
-            case _ => Unauthorized(jsonTokenExpired)
+            case _ => Forbidden(jsonTokenExpired)
           }
-          case _ => Forbidden(jsonNoToken)
+          case _ => Unauthorized(jsonNoToken)
         }
       }
     )
@@ -351,14 +351,14 @@ class ManageUserController @Inject() extends Controller {
                       case _ => Conflict(jsonErrorEmail)
                     }
                   }
-                  case false => Unauthorized(jsonRequiredAdmin)
+                  case false => Forbidden(jsonRequiredAdmin)
                 }
               }
-              case _ => Unauthorized(jsonRequiredAdmin)
+              case _ => Forbidden(jsonRequiredAdmin)
             }
-            case _ => Unauthorized(jsonTokenExpired)
+            case _ => Forbidden(jsonTokenExpired)
           }
-          case _ => Forbidden(jsonNoToken)
+          case _ => Unauthorized(jsonNoToken)
         }
       }
     )
@@ -387,14 +387,14 @@ class ManageUserController @Inject() extends Controller {
                       case _ => Conflict(jsonErrorEmail)
                     }
                   }
-                  case false => Unauthorized(jsonRequiredAdmin)
+                  case false => Forbidden(jsonRequiredAdmin)
                 }
               }
-              case _ => Unauthorized(jsonRequiredAdmin)
+              case _ => Forbidden(jsonRequiredAdmin)
             }
-            case _ => Unauthorized(jsonTokenExpired)
+            case _ => Forbidden(jsonTokenExpired)
           }
-          case _ => Forbidden(jsonNoToken)
+          case _ => Unauthorized(jsonNoToken)
         }
       }
     )
@@ -415,11 +415,11 @@ class ManageUserController @Inject() extends Controller {
                   case _ => Conflict(jsonErrorEmail)
                 }
               }
-              case _ => Unauthorized(jsonRequiredAdmin)
+              case _ => Forbidden(jsonRequiredAdmin)
             }
-            case _ => Unauthorized(jsonTokenExpired)
+            case _ => Forbidden(jsonTokenExpired)
           }
-          case _ => Forbidden(jsonNoToken)
+          case _ => Unauthorized(jsonNoToken)
         }
       }
     )
