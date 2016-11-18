@@ -44,6 +44,11 @@ PUT /simpleUser/:id1/product/:id2/quantity            controllers.ManageBasketRo
 DELETE /simpleUser/:id1/product/:id2                  controllers.ManageBasketRowController.deleteBasket(id1 : Long, id2 : Long)
 GET /simpleUser/:id/product                           controllers.ManageBasketRowController.getBasket(id : Long)
 
+#API Order
+POST /simpleUser/:id/order                            controllers.ManageOrderController.createOrder(id : Long)
+GET  /simpleUser/:id/order                            controllers.ManageOrderController.getOrderSimpleUser(id : Long)
+GET  /sellerCompany/:id/order                         controllers.ManageOrderController.getOrderSellerCompany(id : Long)
+
 #API Product
 POST /product                      controllers.ManageProductController.createProduct
 GET  /product/available           controllers.ManageProductController.allProductsByAvailable
@@ -69,6 +74,7 @@ GET		/product/update/				controllers.Assets.at(path="/public/html", file="create
 GET		/product/manage/admin	    controllers.Assets.at(path="/public/html", file="productAdmin.html")
 GET		/product/manage/sellercompany	    controllers.Assets.at(path="/public/html", file="productSeller.html")
 GET		/cart               	    controllers.Assets.at(path="/public/html", file="cart.html")
+GET		/myorder               	    controllers.Assets.at(path="/public/html", file="orderSU.html")
 GET		/js/*file				    controllers.Assets.at(path="/public/javascripts", file)
 GET		/lib/*file				    controllers.Assets.at(path="/public/lib", file)
 GET		/images/*file				controllers.Assets.at(path="/public/images", file)

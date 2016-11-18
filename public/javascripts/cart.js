@@ -36,9 +36,9 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
                         var imageUrl = urlCreator.createObjectURL( blob );
 
                         $scope.totalAmount += (Math.round(data[i].product.price*100)/100) * data[i].quantity
-                        var lackStock = false
-
+                        $scope.error = false
                         if (data[i].quantity > data[i].product.quantity) {
+                            $scope.error = true
                             Notification.warning({message: 'Quantity of '+ data[i].product.name + ' is not available, please change quantity', delay: 20000});
                         }
 
@@ -60,6 +60,32 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
             }
          })
     })
+
+    $scope.order = function() {
+        var rqt = {
+            method : 'POST',
+            url : '/simpleUser/'+ $scope.idSimpleUser +'/order',
+            headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+        };
+        $scope.conflict()
+        if(! $scope.error) {
+            $http(rqt).success(function(data){
+                Notification.success('Order completed');
+                setTimeout(function(){
+                    $window.location.href = '/cart';
+                }, 2000);
+            })
+        }
+    }
+
+    $scope.conflict = function() {
+        for (var i = 0; i < $scope.productRows.length; i++) {
+            if ($scope.productRows.quantity > $scope.productRows.quantityMax) {
+                $scope.error = true
+                Notification.warning({message: 'Quantity of '+ data[i].product.name + ' is not available, please change quantity', delay: 20000});
+            }
+        }
+    }
 
     $scope.computeTotalAmount = function() {
         $scope.totalAmount = 0

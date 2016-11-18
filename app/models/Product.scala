@@ -31,6 +31,8 @@ case class Product() extends Model {
   var image : Image =_
   @OneToMany(cascade = Array(CascadeType.ALL))
   var basketRow : java.util.List[BasketRow] =_
+  @OneToMany(cascade = Array(CascadeType.ALL))
+  var orders : java.util.List[BasketRow] =_
 
 }
 

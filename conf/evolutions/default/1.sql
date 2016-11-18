@@ -36,6 +36,17 @@ create table image (
   constraint pk_image primary key (id)
 );
 
+create table orderproduct (
+  id                            bigserial not null,
+  quantity                      integer,
+  state_date                    timestamp,
+  state                         varchar(255),
+  price_order                   float,
+  product_id                    bigint,
+  simple_user_id                bigint,
+  constraint pk_orderproduct primary key (id)
+);
+
 create table product (
   id                            bigserial not null,
   description                   varchar(1000),
@@ -106,6 +117,12 @@ create index ix_basket_row_simple_user_id on basket_row (simple_user_id);
 
 alter table image add constraint fk_image_product_id foreign key (product_id) references product (id) on delete restrict on update restrict;
 
+alter table orderproduct add constraint fk_orderproduct_product_id foreign key (product_id) references product (id) on delete restrict on update restrict;
+create index ix_orderproduct_product_id on orderproduct (product_id);
+
+alter table orderproduct add constraint fk_orderproduct_simple_user_id foreign key (simple_user_id) references simple_user (id) on delete restrict on update restrict;
+create index ix_orderproduct_simple_user_id on orderproduct (simple_user_id);
+
 alter table product add constraint fk_product_seller_company_id foreign key (seller_company_id) references seller_company (id) on delete restrict on update restrict;
 create index ix_product_seller_company_id on product (seller_company_id);
 
@@ -134,6 +151,12 @@ drop index if exists ix_basket_row_simple_user_id;
 
 alter table if exists image drop constraint if exists fk_image_product_id;
 
+alter table if exists orderproduct drop constraint if exists fk_orderproduct_product_id;
+drop index if exists ix_orderproduct_product_id;
+
+alter table if exists orderproduct drop constraint if exists fk_orderproduct_simple_user_id;
+drop index if exists ix_orderproduct_simple_user_id;
+
 alter table if exists product drop constraint if exists fk_product_seller_company_id;
 drop index if exists ix_product_seller_company_id;
 
@@ -152,6 +175,8 @@ drop table if exists admin cascade;
 drop table if exists basket_row cascade;
 
 drop table if exists image cascade;
+
+drop table if exists orderproduct cascade;
 
 drop table if exists product cascade;
 

@@ -40,6 +40,8 @@ case class SimpleUser() extends Model with UserIdentification with UserAdress wi
   var tokenReinitialisationEmail : Token =_
   @OneToMany(cascade = Array(CascadeType.ALL))
   var basketRow : java.util.List[BasketRow] =_
+  @OneToMany(cascade = Array(CascadeType.ALL))
+  var orders : java.util.List[BasketRow] =_
 
 }
 
