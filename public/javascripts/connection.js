@@ -17,6 +17,7 @@ app.controller('connection', function($scope, $http, $window, facebookServices, 
                     };
                     $http(rqt)
                         .success(function(data){
+                            $.cookie("kindofuser", "su");
                             $window.location.href = '/';
                         })
                         .error(function(data){
@@ -40,6 +41,15 @@ app.controller('connection', function($scope, $http, $window, facebookServices, 
         };
         $http(rqt)
             .success(function(data){
+                if (data.kindOfUser == "Simple User") {
+                    $.cookie("kindofuser", "su");
+                }
+                else if (data.kindOfUser == "Admin") {
+                    $.cookie("kindofuser", "a");
+                }
+                else {
+                    $.cookie("kindofuser", "sc");
+                }
                 $window.location.href = '/';
             })
             .error(function(data){

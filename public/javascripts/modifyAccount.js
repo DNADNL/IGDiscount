@@ -94,10 +94,10 @@ app.controller('modifyAccount', function($scope, $http, $window, $location, face
                 $scope.simpleUser.streetNumber = parseInt(data.streetNumber)
                 $scope.simpleUser.postalCode = parseInt(data.postalCode)
                 if (data.logFacebook) {
-                    $scope.disableEmail = true
+                    $scope.disableFacebook = true
                 }
                 else {
-                    $scope.disableEmail = false
+                    $scope.disableFacebook = false
                 }
             })
             .error(function(data){

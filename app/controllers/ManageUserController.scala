@@ -236,7 +236,13 @@ class ManageUserController @Inject() extends Controller {
       formWithErrors => BadRequest(jsonErrorParameter),
       formData => {
         val (email, postalCode, street, city, streetNumber, firstName, lastName) = formData
-        val su = SimpleUser(id, email, "", postalCode, street, city, streetNumber, firstName, lastName)
+        val su = SimpleUser.find(id).get
+        su.email = email
+        su.postalCode = postalCode
+        su.street = street
+        su.city = city
+        su.firstName
+        su.lastName = lastName
         request.cookies.get("token") match {
           case Some(c) => Token.isValid(c.value) match {
             case true => Token.getUser(c.value).get match {

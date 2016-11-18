@@ -26,7 +26,7 @@ case class Product() extends Model {
   var available : Boolean=_
 
   @ManyToOne
-  var seller : SellerCompany =_
+  var sellerCompany : SellerCompany =_
   @OneToOne(cascade = Array(CascadeType.ALL))
   var image : Image =_
   @OneToMany(cascade = Array(CascadeType.ALL))
@@ -48,7 +48,7 @@ object Product extends ProductDAO {
     p.name = name
     p.price = price
     p.quantity = quantity
-    p.seller = seller
+    p.sellerCompany = seller
     return p
   }
 
@@ -66,7 +66,7 @@ object Product extends ProductDAO {
     p.available = true
     p.price = price
     p.quantity = quantity
-    p.seller = seller
+    p.sellerCompany = seller
     return p
   }
 
@@ -77,7 +77,7 @@ object Product extends ProductDAO {
       "name" -> p.name,
       "price" -> p.price,
       "quantity" -> p.quantity,
-      "seller" -> p.seller,
+      "seller" -> p.sellerCompany,
       "image" -> p.image,
       "available" -> p.available
     )

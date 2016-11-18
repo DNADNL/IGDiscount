@@ -1,5 +1,3 @@
-var app = angular.module('app', ['angularSpinner']);
-
 app.controller('product', function($scope, $http, $window, $location, usSpinnerService) {
 
     var dropzoneCreate;

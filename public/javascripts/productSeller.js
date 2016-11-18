@@ -1,5 +1,3 @@
-var app = angular.module('app', ['smart-table']);
-
 app.controller('productSeller', function($scope, $filter, $http, $window) {
 
     $scope.productRows = []

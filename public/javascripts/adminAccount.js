@@ -1,6 +1,6 @@
-var app = angular.module('app', ['smart-table']);
+var app = angular.module('app', ['smart-table', 'ui-notification', 'angularSpinner']);
 
-app.controller('adminAccount', function($scope, $filter, $http, $window) {
+app.controller('adminAccount', function($scope, $filter, $http, $window, Notification, usSpinnerService) {
 
     $scope.userRows = []
 
@@ -21,6 +21,8 @@ app.controller('adminAccount', function($scope, $filter, $http, $window) {
                     headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
                 };
         $scope.jsonUsers = []
+        usSpinnerService.spin('spinner-1');
+        $scope.startcounter++;
 
         $http(rqtAdmin).success(function(dataAdmin){
             for (var i = 0; i < dataAdmin.length; i++) {
@@ -49,6 +51,7 @@ app.controller('adminAccount', function($scope, $filter, $http, $window) {
                             kindOfUser : "Seller Company"
                         });
                     }
+                    usSpinnerService.stop('spinner-1');
                 })
             })
         }).error(function(data){
@@ -96,6 +99,7 @@ app.controller('adminAccount', function($scope, $filter, $http, $window) {
             };
         }
         $http(rqt).success(function(data){
+            Notification.success('User deleted');
             var index = $scope.displayedCollection.indexOf(row);
             if (index !== -1) {
                 $scope.displayedCollection.splice(index, 1);

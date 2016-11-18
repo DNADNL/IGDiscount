@@ -11,7 +11,7 @@ GET     /message                    controllers.AsyncController.message
 # API Registration
 POST    /simpleUser      controllers.RegistrationUserController.registrationSimpleUser
 POST    /simpleUser/facebook      controllers.RegistrationUserController.registrationSimpleUserFacebook
-POST    /sellerCompany   controllers.RegistrationUserController.registrationSellerCompany
+POST    /sellerCompany/create   controllers.RegistrationUserController.registrationSellerCompany
 POST    /admin           controllers.RegistrationUserController.registrationAdmin
 
 #API Sign In

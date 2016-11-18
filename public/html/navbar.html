@@ -10,22 +10,22 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
-            <a class="navbar-brand" href="http://localhost:9000/"> IG Discount</a>
+            <a class="navbar-brand" href="/">IG Discount</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="/registration">Registration</a>
+                    <a href="/registration" ng-show="enableNoConnected">Registration</a>
                 </li>
                 <li>
-                    <a href="/connection">Connection</a>
+                    <a href="/connection" ng-show="enableNoConnected">Connection</a>
                 </li>
                 <li>
-                    <a href="/account">My account</a>
+                    <a href="/account" ng-show="!enableNoConnected">My account</a>
                 </li>
                 <li>
-                    <a href="/account/manage">Account admin</a>
+                    <a href="/account/manage" ng-show="enableAdmin">Account admin</a>
                 </li>
                 <li>
                     <a href="/install">Install users</a>
@@ -34,16 +34,19 @@
                     <a href="/products">Market</a>
                 </li>
                 <li>
-                    <a href="/product/manage/admin">Manage product (Admin)</a>
+                    <a href="/product/manage/admin" ng-show="enableAdmin">Manage product</a>
                 </li>
                 <li>
-                    <a href="/product/manage/sellercompany">Manage product (Seller)</a>
+                    <a href="/product/manage/sellercompany" ng-show="enableSeller">Manage product</a>
                 </li>
                 <li>
-                    <a href="/product/create/">Create product</a>
+                    <a href="/product/create/" ng-show="enableSeller">Create product</a>
                 </li>
                 <li>
-                    <a href="/cart">Create product</a>
+                    <a href="/cart" ng-show="enableSimple">Cart</a>
+                </li>
+                <li>
+                    <a href="#" ng-click="logout()" ng-show="!enableNoConnected">Logout</a>
                 </li>
             </ul>
         </div>

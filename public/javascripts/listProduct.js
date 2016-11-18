@@ -1,5 +1,3 @@
-var app = angular.module('app', ['smart-table', 'angularSpinner', 'ui-notification']);
-
 app.controller('listProduct', function($scope, $filter, $http, $window, usSpinnerService, Notification) {
 
     $scope.productRows = []

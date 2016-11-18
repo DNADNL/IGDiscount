@@ -43,7 +43,7 @@ create table product (
   price                         float,
   quantity                      bigint,
   available                     boolean,
-  seller_id                     bigint,
+  seller_company_id             bigint,
   image_id                      bigint,
   constraint uq_product_image_id unique (image_id),
   constraint pk_product primary key (id)
@@ -106,8 +106,8 @@ create index ix_basket_row_simple_user_id on basket_row (simple_user_id);
 
 alter table image add constraint fk_image_product_id foreign key (product_id) references product (id) on delete restrict on update restrict;
 
-alter table product add constraint fk_product_seller_id foreign key (seller_id) references seller_company (id) on delete restrict on update restrict;
-create index ix_product_seller_id on product (seller_id);
+alter table product add constraint fk_product_seller_company_id foreign key (seller_company_id) references seller_company (id) on delete restrict on update restrict;
+create index ix_product_seller_company_id on product (seller_company_id);
 
 alter table product add constraint fk_product_image_id foreign key (image_id) references image (id) on delete restrict on update restrict;
 
@@ -134,8 +134,8 @@ drop index if exists ix_basket_row_simple_user_id;
 
 alter table if exists image drop constraint if exists fk_image_product_id;
 
-alter table if exists product drop constraint if exists fk_product_seller_id;
-drop index if exists ix_product_seller_id;
+alter table if exists product drop constraint if exists fk_product_seller_company_id;
+drop index if exists ix_product_seller_company_id;
 
 alter table if exists product drop constraint if exists fk_product_image_id;
 

@@ -24,7 +24,6 @@ app.controller('registration', function($scope, $http, $window, facebookServices
         facebookServices.connectFacebook().then(function(dataToken) {
             if (facebookServices.isReady()) {
                 facebookServices.getInformation().then(function(data) {
-                    console.log(dataToken)
                     $scope.tokenFacebook = dataToken.access_token
                     $scope.user.email = data.email
                     $scope.disableFacebook = true
@@ -65,7 +64,6 @@ app.controller('registration', function($scope, $http, $window, facebookServices
                 })
          }
          else {
-            console.log($scope.tokenFacebook)
             var rqt = {
                 method : 'POST',
                 url : '/simpleUser/facebook',

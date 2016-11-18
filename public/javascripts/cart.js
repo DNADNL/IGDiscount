@@ -1,5 +1,3 @@
-var app = angular.module('app', ['smart-table', 'angularSpinner', 'ui-notification']);
-
 app.controller('listProduct', function($scope, $filter, $http, $window, usSpinnerService, Notification) {
 
     $scope.productRows = []
@@ -64,6 +62,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
     })
 
     $scope.computeTotalAmount = function() {
+        $scope.totalAmount = 0
         for (var i = 0; i < $scope.productRows.length; i++) {
             $scope.totalAmount += (Math.round($scope.productRows[i].price*100)/100) * $scope.productRows[i].quantity
         }
