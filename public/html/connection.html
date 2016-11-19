@@ -12,29 +12,30 @@
 <div id="headtitle"></div>
 <div id="navbar" ng-controller="headerController"></div>
 
-<div class="row">
-    <div class="box">
-        <div class="col-lg-12">
-            <hr>
-            <h2 class="intro-text text-center">Log In</h2>
-            <hr>
-            <form name="login" ng-submit="submitForm()" novalidate>
-                <div class="form-group" ng-class="{ 'has-error' : login.email.$invalid && !login.email.$pristine }">
-                    <label>Email</label>
-                    <input type="email" class="form-control" name="email" ng-model="user.email" required>
-                    <p ng-show="login.email.$invalid && !login.email.$pristine" class="help-block">An email valid is required</p>
-                </div>
-                <div class="form-group" ng-class="{ 'has-error' : login.password.$invalid && !login.password.$pristine }">
-                    <label>Password</label>
-                    <input type="password" name="password" class="form-control" ng-model="user.password" required>
-                </div>
-                <input type="submit" class="btn btn-primary" ng-disabled="login.$invalid" value="Log In">
-                <input ng-click="linkFacebook()" class="btn btn-primary" value="Log In with facebook">
-            </form>
+<div class="container">
+    <div class="row">
+        <div class="box">
+            <div class="col-lg-12">
+                <hr>
+                <h2 class="intro-text text-center">Log In</h2>
+                <hr>
+                <form name="login" ng-submit="submitForm()" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error' : login.email.$invalid && !login.email.$pristine }">
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="email" ng-model="user.email" required>
+                        <p ng-show="login.email.$invalid && !login.email.$pristine" class="help-block">An email valid is required</p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : login.password.$invalid && !login.password.$pristine }">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" ng-model="user.password" required>
+                    </div>
+                    <input type="submit" class="btn btn-primary" ng-disabled="login.$invalid" value="Log In">
+                    <input type="button" ng-click="linkFacebook()" class="btn btn-primary" value="Log In with facebook">
+                </form>
+            </div>
         </div>
     </div>
 </div>
-
 
 <div id="footer"></div>
 

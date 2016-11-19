@@ -12,67 +12,69 @@
 <div id="headtitle"></div>
 <div id="navbar" ng-controller="headerController"></div>
 
-<div class="row">
-    <div class="box">
-        <div class="col-lg-12">
-            <hr>
-            <h2 class="intro-text text-center">Products</h2>
-            <hr>
-            <table st-table="displayedCollection" st-safe-src="productRows" class="table table-striped">
-                <span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner-1"></span>
-                <thead>
-                <tr>
-                    <th>Image</th>
-                    <th st-sort="seller">Seller</th>
-                    <th st-sort="name">Name</th>
-                    <th st-sort="price">Price</th>
-                    <th st-sort="quantity">Quantity</th>
-                </tr>
-                <tr>
-                    <th></th>
-                    <th>
-                        <input st-search="seller" placeholder="Search for seller" class="input-sm form-control" type="search"/>
-                    </th>
-                    <th>
-                        <input st-search="name" placeholder="Search for name" class="input-sm form-control" type="search"/>
-                    </th>
-                    <th>
-                        <input st-search="price" placeholder="Search for price" class="input-sm form-control" type="search"/>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="row in displayedCollection" ng-click="show($index)">
-                    <td class="col-md-2"><img ng-src="{{row.image}}" class="img-responsive"></td>
-                    <td>{{row.seller}}</td>
-                    <td>{{row.name}}</td>
-                    <td>{{row.price}}</td>
-                    <td>{{row.quantity}}</td>
-                </tr>
-                </tbody>
-                <tfoot>
-                <tr>
-                    <td class="text-center" st-pagination="" st-items-by-page="10" colspan="5">
-                    </td>
-                </tr>
-                </tfoot>
-            </table>
-            <div class="modal fade" id="modal-product" tabindex="-1" role="dialog" aria-labelledby="modal-product">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <h2>{{product.name}}</h2>
-                        <img ng-src="{{product.image}}" class="img-responsive">
-                        <p>Price : {{product.price}}</p>
-                        <p>Quantity : {{product.quantity}}</p>
-                        <p>Description : {{product.description}}</p>
-                        <form name="cartForm" ng-submit="submitForm(product.id)" ng-show="cartMode" novalidate>
-                            <div class="form-group">
-                                <label>Quantity</label>
-                                <input type="number" min="1" max="{{product.quantity}}" ng-minlength="1" ng-maxlength="product.quantity" name="quantity" class="form-control" ng-model="quantityCart" required>
-                                <p ng-show="cartForm.$invalid && !cartForm.quantity.$pristine" class="text-danger">Quantity is not available</p>
-                                <input type="submit" class="btn btn-primary" value="Add cart">
-                            </div>
-                        </form>
+<div class="container">
+    <div class="row">
+        <div class="box">
+            <div class="col-lg-12">
+                <hr>
+                <h2 class="intro-text text-center">Products</h2>
+                <hr>
+                <table st-table="displayedCollection" st-safe-src="productRows" class="table table-striped">
+                    <span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner-1"></span>
+                    <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th st-sort="seller">Seller</th>
+                        <th st-sort="name">Name</th>
+                        <th st-sort="price">Price</th>
+                        <th st-sort="quantity">Quantity</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>
+                            <input st-search="seller" placeholder="Search for seller" class="input-sm form-control" type="search"/>
+                        </th>
+                        <th>
+                            <input st-search="name" placeholder="Search for name" class="input-sm form-control" type="search"/>
+                        </th>
+                        <th>
+                            <input st-search="price" placeholder="Search for price" class="input-sm form-control" type="search"/>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in displayedCollection" ng-click="show($index)">
+                        <td class="col-md-2"><img ng-src="{{row.image}}" class="img-responsive"></td>
+                        <td>{{row.seller}}</td>
+                        <td>{{row.name}}</td>
+                        <td>{{row.price}}</td>
+                        <td>{{row.quantity}}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td class="text-center" st-pagination="" st-items-by-page="10" colspan="5">
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+                <div class="modal fade" id="modal-product" tabindex="-1" role="dialog" aria-labelledby="modal-product">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <h2>{{product.name}}</h2>
+                            <img ng-src="{{product.image}}" class="img-responsive">
+                            <p>Price : {{product.price}}</p>
+                            <p>Quantity : {{product.quantity}}</p>
+                            <p>Description : {{product.description}}</p>
+                            <form name="cartForm" ng-submit="submitForm(product.id)" ng-show="cartMode" novalidate>
+                                <div class="form-group">
+                                    <label>Quantity</label>
+                                    <input type="number" min="1" max="{{product.quantity}}" ng-minlength="1" ng-maxlength="product.quantity" name="quantity" class="form-control" ng-model="quantityCart" required>
+                                    <p ng-show="cartForm.$invalid && !cartForm.quantity.$pristine" class="text-danger">Quantity is not available</p>
+                                    <input type="submit" class="btn btn-primary" value="Add cart">
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
