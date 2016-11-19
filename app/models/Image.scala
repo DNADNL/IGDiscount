@@ -4,7 +4,7 @@ import java.io.File
 import java.nio.file.Files
 import javax.persistence._
 
-import DAO.{ImageDAO}
+import DAO.ImageDAO
 import com.avaje.ebean.Model
 import play.api.libs.json.{Json, Writes}
 /**

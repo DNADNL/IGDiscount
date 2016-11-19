@@ -1,12 +1,10 @@
 package DAO
 
 import java.nio.charset.StandardCharsets
-import java.util.UUID
 
 import com.avaje.ebean.{Ebean, Expr}
 import com.google.common.hash.Hashing
-import models.{Admin, SimpleUser, Token}
-import models.models.SellerCompany
+import models.{Admin, Token}
 
 /**
   * Created by kevin on 30/10/16.

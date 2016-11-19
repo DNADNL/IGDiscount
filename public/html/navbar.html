@@ -49,6 +49,15 @@
                     <a href="/myorder" ng-show="enableSimple">My orders</a>
                 </li>
                 <li>
+                    <a href="/manage/order/pending" ng-show="enableSeller">Orders pending</a>
+                </li>
+                <li>
+                    <a href="/manage/order/completed" ng-show="enableSeller">Orders completed</a>
+                </li>
+                <li>
+                    <a href="/manage/order/confirmed" ng-show="enableAdmin">Confirm orders</a>
+                </li>
+                <li>
                     <a href="#" ng-click="logout()" ng-show="!enableNoConnected">Logout</a>
                 </li>
             </ul>

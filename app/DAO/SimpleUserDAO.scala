@@ -3,10 +3,8 @@ package DAO
 import java.nio.charset.StandardCharsets
 
 import com.avaje.ebean.{Ebean, Expr}
-import com.avaje.ebean.Model.Finder
 import com.google.common.hash.Hashing
-import models.models.SellerCompany
-import models.{Admin, SimpleUser, Token}
+import models.{SimpleUser, Token}
 
 /**
   * Created by kevin on 24/10/16.

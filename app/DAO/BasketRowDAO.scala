@@ -2,6 +2,7 @@ package DAO
 
 import com.avaje.ebean.{Ebean, Expr}
 import models.{BasketRow, Product, SimpleUser}
+
 import scala.collection.JavaConverters._
 
 /**

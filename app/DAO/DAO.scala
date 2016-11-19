@@ -4,8 +4,6 @@ import com.avaje.ebean.Ebean
 import com.avaje.ebean.Model.Finder
 
 import scala.collection.JavaConverters._
-import models.SimpleUser
-
 import scala.reflect.ClassTag
 
 /**

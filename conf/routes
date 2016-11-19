@@ -11,7 +11,7 @@ GET     /message                    controllers.AsyncController.message
 # API Registration
 POST    /simpleUser      controllers.RegistrationUserController.registrationSimpleUser
 POST    /simpleUser/facebook      controllers.RegistrationUserController.registrationSimpleUserFacebook
-POST    /sellerCompany/create   controllers.RegistrationUserController.registrationSellerCompany
+POST    /sellerCompany   controllers.RegistrationUserController.registrationSellerCompany
 POST    /admin           controllers.RegistrationUserController.registrationAdmin
 
 #API Sign In
@@ -48,6 +48,11 @@ GET /simpleUser/:id/product                           controllers.ManageBasketRo
 POST /simpleUser/:id/order                            controllers.ManageOrderController.createOrder(id : Long)
 GET  /simpleUser/:id/order                            controllers.ManageOrderController.getOrderSimpleUser(id : Long)
 GET  /sellerCompany/:id/order                         controllers.ManageOrderController.getOrderSellerCompany(id : Long)
+GET  /order/confirmed                                 controllers.ManageOrderController.getOrderConfirmed
+PUT  /order/:id/paid                                  controllers.ManageOrderController.updateOrderPaid(id : Long)
+GET  /sellerCompany/:id/order/cancelledOrPaid         controllers.ManageOrderController.getOrderSellerCompanyCancelledOrPaid(id : Long)
+PUT  /simpleUser/:id1/order/:id2/state/confirm        controllers.ManageOrderController.updateOrderConfirm(id1 : Long, id2 : Long)
+PUT  /simpleUser/:id1/order/:id2/state/cancel         controllers.ManageOrderController.updateOrderCancel(id1 : Long, id2 : Long)
 
 #API Product
 POST /product                      controllers.ManageProductController.createProduct
@@ -75,6 +80,9 @@ GET		/product/manage/admin	    controllers.Assets.at(path="/public/html", file="
 GET		/product/manage/sellercompany	    controllers.Assets.at(path="/public/html", file="productSeller.html")
 GET		/cart               	    controllers.Assets.at(path="/public/html", file="cart.html")
 GET		/myorder               	    controllers.Assets.at(path="/public/html", file="orderSU.html")
+GET		/manage/order/pending       controllers.Assets.at(path="/public/html", file="orderPending.html")
+GET		/manage/order/completed      controllers.Assets.at(path="/public/html", file="orderCompleted.html")
+GET		/manage/order/confirmed      controllers.Assets.at(path="/public/html", file="orderConfirmed.html")
 GET		/js/*file				    controllers.Assets.at(path="/public/javascripts", file)
 GET		/lib/*file				    controllers.Assets.at(path="/public/lib", file)
 GET		/images/*file				controllers.Assets.at(path="/public/images", file)

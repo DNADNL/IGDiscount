@@ -1,1 +1,1 @@
-var app = angular.module('app', ['app.facebookServices', 'ui-notification', 'smart-table', 'angularSpinner']);
+var app = angular.module('app', ['app.facebookServices', 'ui-notification', 'smart-table', 'angularSpinner', 'angular.filter']);

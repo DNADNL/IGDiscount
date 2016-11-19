@@ -3,20 +3,14 @@ package models
 /**
   * Created by kevin on 30/10/16.
   */
-package models
-
 import java.nio.charset.StandardCharsets
 import javax.persistence._
 
-import DAO.{SellerCompanyDAO, SimpleUserDAO}
-import com.avaje.ebean.{Ebean, Model}
-import com.avaje.ebean.Model.Finder
+import DAO.SellerCompanyDAO
+import com.avaje.ebean.Model
 import com.google.common.hash.Hashing
 import controllers.{UserAdress, UserIdentification}
 import play.api.libs.json.{Json, Writes}
-import play.api.libs.openid.Errors.AUTH_CANCEL
-
-import scala.collection.JavaConverters._
 
 /**
   * Created by kevin on 24/10/16.

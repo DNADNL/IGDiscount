@@ -1,17 +1,12 @@
 package models
 
-import java.security.SecureRandom
 import java.sql.Timestamp
 import java.util.{Calendar, Date, UUID}
 import javax.persistence._
 
-import DAO.{SimpleUserDAO, TokenDAO}
+import DAO.TokenDAO
 import com.avaje.ebean.Model
-import com.avaje.ebean.Model.Finder
-import org.h2.engine.User
 import play.api.libs.json.{Json, Writes}
-
-import scala.util.Random
 
 /**
   * Created by kevin on 30/10/16.

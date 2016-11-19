@@ -1,18 +1,13 @@
 package controllers
 
-import java.io.FileOutputStream
 import java.nio.file.Files
 import javax.inject.{Inject, Singleton}
 
-import akka.util.ByteString
 import models._
-import models.SellerCompany
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.http.HttpEntity
 import play.api.libs.json.Json
-import play.api.mvc.{Action, Controller, ResponseHeader, Result}
-import play.mvc.Result
+import play.api.mvc.{Action, Controller}
 
 /**
   * Created by kevin on 05/11/16.

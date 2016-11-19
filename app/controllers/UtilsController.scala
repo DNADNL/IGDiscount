@@ -2,8 +2,7 @@ package controllers
 
 import javax.inject.{Inject, Singleton}
 
-import models.models.SellerCompany
-import models.{Admin, SimpleUser, Token}
+import models.{Admin, SellerCompany, SimpleUser, Token}
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 

@@ -2,14 +2,11 @@ package controllers
 
 import javax.inject._
 
-import models.models.SellerCompany
-import models.{Admin, SimpleUser}
+import models.{Admin, SellerCompany, SimpleUser}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.libs.json.Json
 import play.api.mvc._
-
-import scala.concurrent.Future
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -24,12 +21,6 @@ class HomeController @Inject() extends Controller {
    * will be called when the application receives a `GET` request with
    * a path of `/`.
    */
-  def index = Action {
-    //val s = SimpleUser("","","","","","","","")
-    //s.save()
-    Ok(views.html.index("Your new application is ready."))
-    //OK(Json.toJson(SimpleUser.getAll()))
-  }
 
   val signInForm = Form(tuple(
     "email" -> email,
