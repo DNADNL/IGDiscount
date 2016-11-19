@@ -58,3 +58,7 @@ tr > td {
 .modal-content {
     padding: 20px;
 }
+
+.center-text {
+    text-align:center;
+}
