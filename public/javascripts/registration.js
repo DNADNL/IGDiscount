@@ -6,6 +6,25 @@ app.controller('registration', function($scope, $http, $window, facebookServices
     $scope.user = {}
     $scope.simpleUser = {}
 
+    angular.element(document).ready(function() {
+
+        if ($.cookie("kindofuser") == "a") {
+            $scope.adminMode = true
+            $scope.createOrBecome = 'Create'
+        }
+        else {
+            $scope.adminMode = false
+            $scope.createOrBecome = 'Become'
+        }
+
+    })
+
+    $scope.clickCreateAdmin = function() {
+        $scope.enableSimpleUserForm = false
+        $scope.enableSellerCompanyForm = false
+        $scope.enableAdminForm = true
+    }
+
     facebookServices.initialize()
 
     $scope.showError = false
@@ -124,4 +143,29 @@ app.controller('registration', function($scope, $http, $window, facebookServices
                 Notification.error("Email already exists")
             })
     };
+
+    $scope.submitAdminForm = function() {
+            var rqt = {
+                method : 'POST',
+                url : '/admin',
+                data : $.param({
+                    email: $scope.user.email,
+                    password: $scope.user.password,
+                    firstName : $scope.admin.firstName,
+                    lastName : $scope.admin.lastName
+                }),
+                headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+            };
+            $http(rqt)
+                .success(function(data){
+                    facebookServices.clearCache()
+                    Notification.success('Account has been created <br> You are going be redirected automaticaly');
+                    setTimeout(function(){
+                         $window.location.href = '/';
+                    }, 2000);
+                })
+                .error(function(data){
+                    Notification.error("Email already exists")
+                })
+        };
 })

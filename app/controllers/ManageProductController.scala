@@ -169,7 +169,7 @@ class ManageProductController @Inject() extends Controller {
         request.body.asMultipartFormData match {
           case Some(mf) => mf.file("image") match {
             case Some(file) => {
-              (imageMime.contains(file.contentType.get) && (file.ref.file.length().toFloat/(1024*1024).toFloat) <= 5) match {
+              (imageMime.contains(file.contentType.get) && (file.ref.file.length().toFloat/(1024*1024).toFloat) <= 0.1) match {
                 case true => {
                   i.name = file.filename
                   i.content = Files.readAllBytes(file.ref.file.toPath)
@@ -279,7 +279,7 @@ class ManageProductController @Inject() extends Controller {
                 request.body.asMultipartFormData match {
                   case Some(mf) => mf.file("image") match {
                     case Some(file) => {
-                      (imageMime.contains(file.contentType.get) && (file.ref.file.length().toFloat/(1024*1024).toFloat) <= 5) match {
+                      (imageMime.contains(file.contentType.get) && (file.ref.file.length().toFloat/(1024*1024).toFloat) <= 0.1) match {
                         case true => {
                           val i = Image(file.filename, file.contentType.get, file.ref.file, p)
                           i.save()
