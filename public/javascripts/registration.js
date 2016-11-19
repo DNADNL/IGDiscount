@@ -57,7 +57,10 @@ app.controller('registration', function($scope, $http, $window, facebookServices
             $http(rqt)
                 .success(function(data){
                     facebookServices.clearCache()
-                    $window.location.href = '/';
+                    Notification.success('Your account has been created <br> You are going be redirected automaticaly');
+                    setTimeout(function(){
+                         $window.location.href = '/';
+                    }, 2000);
                 })
                 .error(function(data){
                     Notification.error("Email already exists")
@@ -81,7 +84,10 @@ app.controller('registration', function($scope, $http, $window, facebookServices
             $http(rqt)
                 .success(function(data){
                     facebookServices.clearCache()
-                    $window.location.href = '/';
+                    Notification.success('Your account has been created <br> You are going be redirected automaticaly');
+                    setTimeout(function(){
+                         $window.location.href = '/';
+                    }, 2000);
                 })
                 .error(function(data){
                     Notification.error("Email already exists")
@@ -109,7 +115,10 @@ app.controller('registration', function($scope, $http, $window, facebookServices
         $http(rqt)
             .success(function(data){
                 facebookServices.clearCache()
-                $window.location.href = '/';
+                Notification.success('Your account has been created <br> You are going be redirected automaticaly');
+                setTimeout(function(){
+                     $window.location.href = '/';
+                }, 2000);
             })
             .error(function(data){
                 Notification.error("Email already exists")

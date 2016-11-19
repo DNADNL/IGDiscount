@@ -1,13 +1,10 @@
 package models
 
-import java.sql.Blob
 import javax.persistence._
 
-import DAO.{AdminDAO, ProductDAO}
+import DAO.ProductDAO
 import com.avaje.ebean.Model
-import controllers.{UserIdentification, UserName}
 import play.api.libs.json.{Json, Writes}
-import models.SellerCompany
 
 /**
   * Created by kevin on 05/11/16.

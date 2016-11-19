@@ -1,10 +1,7 @@
 package DAO
 
-import com.avaje.ebean.{Ebean, Expr}
 import controllers.UserIdentification
-import models.{Admin, Token}
-
-import scala.reflect.ClassTag
+import models.Token
 
 /**
   * Created by kevin on 03/11/16.

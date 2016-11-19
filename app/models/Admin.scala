@@ -3,10 +3,10 @@ package models
 import java.nio.charset.StandardCharsets
 import javax.persistence._
 
-import DAO.{AdminDAO, SimpleUserDAO}
+import DAO.AdminDAO
 import com.avaje.ebean.Model
 import com.google.common.hash.Hashing
-import controllers.{UserAdress, UserIdentification, UserName}
+import controllers.{UserIdentification, UserName}
 import play.api.libs.json.{Json, Writes}
 
 /**

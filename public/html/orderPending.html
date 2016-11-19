@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My orders</title>
+    <title>Orders pending</title>
 
-    <div id="header"></div>
+    <link rel="import" href="/assets/html/header.html">
 
 </head>
 <body ng-app="app" ng-controller="listProduct">
@@ -12,87 +12,27 @@
 <div id="headtitle" ng-controller="headerController"></div>
 <div id="navbar"></div>
 
-<<<<<<< HEAD
-
-<div class="container">
-    <div class="row">
-        <div class="box">
-            <div class="col-lg-12">
-                <hr>
-                <h2 class="intro-text text-center">My orders</h2>
-                <hr>
-                <table st-table="displayedCollection" st-safe-src="orderRows" class="table table-striped">
-                    <span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner-1"></span>
-                    <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th st-sort="seller">Seller</th>
-                        <th st-sort="name">Name</th>
-                        <th st-sort="price">Price</th>
-                        <th st-sort="quantity">Quantity</th>
-                        <th st-sort="state">State</th>
-                        <th st-sort="date">Date</th>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <th>
-                            <input st-search="seller" placeholder="Search for seller" class="input-sm form-control" type="search"/>
-                        </th>
-                        <th>
-                            <input st-search="name" placeholder="Search for name" class="input-sm form-control" type="search"/>
-                        </th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="row in displayedCollection" ng-click="show($index)">
-                        <td class="col-md-2"><img ng-src="{{row.image}}" class="img-responsive"></td>
-                        <td>{{row.seller}}</td>
-                        <td>{{row.name}}</td>
-                        <td>{{row.price}} €</td>
-                        <td>{{row.quantity}}</td>
-                        <td>{{row.state}}</td>
-                        <td>{{row.date}}</td>
-                    </tr>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td class="text-center" st-pagination="" st-items-by-page="10" colspan="5">
-                        </td>
-                    </tr>
-                    </tfoot>
-                </table>
-            </div>
-=======
 <div class="row">
     <div class="box">
         <div class="col-lg-12">
             <hr>
-            <h2 class="intro-text text-center">My orders</h2>
+            <h2 class="intro-text text-center">Orders pending</h2>
             <hr>
             <div class="form-group">
                 <label>Group by</label>
                 <select class="form-control" name="group" ng-model="groupProperty">
                     <option value="">No group</option>
+                    <option value="name">Name product</option>
+                    <option value="customer">Customer</option>
                     <option value="day">Day</option>
-                    <option value="month">Month</option>
-                    <option value="year">Year</option>
-                    <option value="seller">Seller</option>
-                    <option value="state">State</option>
                 </select>
             </div>
             <div class="form-group">
                 <label>Filter by</label>
                 <select class="form-control" name="group" ng-model="filterProperty">
                     <option value="">No filter</option>
-                    <option value="Cancelled by seller">Cancelled</option>
                     <option value="Paid">Paid</option>
-                    <option value="Confirmed by seller">Confirmed</option>
                     <option value="Pending">Pending</option>
-                    <option value="Shipped">Shipped</option>
                 </select>
             </div>
             <table st-table="displayedCollection" st-safe-src="orderRows" class="table table-striped">
@@ -100,12 +40,15 @@
                 <thead>
                 <tr>
                     <th>Image</th>
-                    <th st-sort="seller">Seller</th>
+                    <th st-sort="customer">Customer</th>
                     <th st-sort="name">Name</th>
                     <th st-sort="price">Price</th>
                     <th st-sort="quantity">Quantity</th>
                     <th st-sort="state">State</th>
                     <th st-sort="date">Date</th>
+                    <th>Mark confirmed</th>
+                    <th>Mark cancelled</th>
+                    <th>Mark shipped</th>
                 </tr>
                 <tr>
                     <th></th>
@@ -119,20 +62,45 @@
                     <th></th>
                     <th></th>
                     <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 </thead>
-                <tbody ng-if="!isLoading" ng-repeat="(key, value) in displayedCollection | groupBy: groupProperty">
+                <tbody ng-if="!mc.isLoading" ng-repeat="(key, value) in displayedCollection | groupBy: groupProperty">
                 <tr ng-if="key !== 'undefined'" class="text-center text-uppercase">
-                    <td colspan="7">{{key}}</td>
+                    <td colspan="10">
+                        {{key}}
+                        <button class="btn btn-primary" ng-if="groupProperty=='customer' || groupProperty=='day'" ng-click="confirmAll(value)">Mark confirm all</button>
+                        <button class="btn btn-warning" ng-if="groupProperty=='customer' || groupProperty=='day'" ng-click="shipAll(value)">Mark ship all</button>
+                    </td>
                 </tr>
-                <tr ng-repeat="row in value  | filterBy: ['state']: filterProperty" ng-click="show($index)">
+                <tr ng-repeat="row in value" ng-click="show($index)">
                     <td class="col-md-2"><img ng-src="{{row.image}}" class="img-responsive"></td>
-                    <td>{{row.seller}}</td>
+                    <td>{{row.customer}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.price}} €</td>
-                    <td>{{row.quantity}}</td>
+                    <td>{{row.quantity}} / {{row.quantityMax}}</td>
                     <td>{{row.state}}</td>
                     <td>{{row.date}}</td>
+                    <td>
+                        <button ng-disabled="row.state != 'Pending'" type="button" ng-click="confirm(row)" class="btn btn-sm btn-success">
+                            <i class="glyphicon glyphicon-ok">
+                            </i>
+                        </button>
+                    </td>
+                    <td>
+                        <button ng-disabled="row.state != 'Pending'" type="button" ng-click="cancel(row)" class="btn btn-sm btn-danger">
+                            <i class="glyphicon glyphicon-remove-circle">
+                            </i>
+                        </button>
+                    </td>
+                    <td>
+                        <button ng-disabled="row.state != 'Paid'" type="button" ng-click="ship(row)" class="btn btn-sm btn-success">
+                            <i class="glyphicon glyphicon-ok">
+                            </i>
+                        </button>
+                    </td>
                 </tr>
                 </tbody>
                 <tfoot>
@@ -142,11 +110,9 @@
                 </tr>
                 </tfoot>
             </table>
->>>>>>> 611a982b14729c648d31376b5fe9a22b6e13ef70
         </div>
     </div>
 </div>
-
 
 <div id="footer"></div>
 
@@ -155,7 +121,7 @@
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"   integrity="sha256-DI6NdAhhFRnO2k51mumYeDShet3I8AKCQf/tf7ARNhI="   crossorigin="anonymous"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="/lib/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 <script src="/lib/jquery.cookie.js"></script>
@@ -168,12 +134,11 @@
 <script src="/js/app.js"></script>
 <script src="/js/oauth.js"></script>
 <script src="/js/header.js"></script>
-<script src="/js/orderSU.js"></script>
+<script src="/js/orderPending.js"></script>
 
 <script>
-        $( "#header" ).load( "/assets/html/header.html" );
         $( "#headtitle" ).load( "/assets/html/headtitle.html" );
         $( "#footer" ).load( "/assets/html/footer.html" );
-</script>
+    </script>
 </body>
 </html>

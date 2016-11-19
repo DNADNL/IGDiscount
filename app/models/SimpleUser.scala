@@ -4,13 +4,10 @@ import java.nio.charset.StandardCharsets
 import javax.persistence._
 
 import DAO.SimpleUserDAO
-import com.avaje.ebean.{Ebean, Model}
-import com.avaje.ebean.Model.Finder
+import com.avaje.ebean.Model
 import com.google.common.hash.Hashing
 import controllers.{UserAdress, UserIdentification, UserName}
 import play.api.libs.json.{Json, Writes}
-
-import scala.collection.JavaConverters._
 
 /**
   * Created by kevin on 24/10/16.

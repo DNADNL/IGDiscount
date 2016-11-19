@@ -1,10 +1,11 @@
 app.controller('listProduct', function($scope, $filter, $http, $window, usSpinnerService, Notification) {
 
-    $scope.orderRows = []
-    $scope.order = {}
-
     angular.element(document).ready(function() {
+        $scope.all = false
+        $scope.load()
+    })
 
+    $scope.load = function() {
         var rqtKindOfUser = {
             method : 'GET',
             url : '/kindOfUser',
@@ -15,10 +16,12 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
         $scope.startcounter++;
 
         $http(rqtKindOfUser).success(function(data){
-            if (data.kindOfUser == "Simple User") {
+            $scope.orderRows = []
+            $scope.order = {}
+            if (data.kindOfUser == "Admin") {
                 var rqtProduct = {
                     method : 'GET',
-                    url : '/simpleUser/'+ data.id +'/order',
+                    url : '/order/confirmed',
                     headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
                 }
 
@@ -44,27 +47,49 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
 
                         $scope.orderRows.push({
                             id : data[i].id,
+                            customerId : data[i].simpleUser.id,
+                            customer : data[i].simpleUser.firstName + " " + data[i].simpleUser.lastName,
+                            image: imageUrl,
                             seller : data[i].product.seller.companyName,
                             day : date + " " + month + " " + year,
-                            month : month + " " + year,
-                            year : year,
-                            image: imageUrl,
                             date: date + " " + month + " " + year + ", " + hour + ":" +min,
                             name : data[i].product.name,
-                            price : (Math.round(data[i].product.price*100)/100),
-                            quantity : data[i].quantity,
-                            state : data[i].state
+                            price : (Math.round(data[i].product.price*100)/100) * data[i].quantity,
+                            disabled : false
                         });
                     }
+                    $scope.groupProperty = "day"
                     usSpinnerService.stop('spinner-1');
-                    $scope.groupProperty = 'day'
+
                 })
 
             }
          })
-    })
+     }
 
-     $scope.displayedCollection = [].concat($scope.orderRows);
+    $scope.confirm = function(row) {
+
+        var rqt = {
+            method : 'PUT',
+            url : '/order/' + row.id + '/paid',
+            headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+        };
+        row.disabled = true
+        Notification.info({message: 'Payment '+ row.price +'€ waiting...', delay: 4000});
+        setTimeout(function(){
+            $http(rqt).success(function(data){
+                Notification.success('Your account has been credited : ' + row.price + ' €');
+            })
+        }, 4000);
+    }
+
+    $scope.confirmAll = function(rows) {
+        for (var i = 0; i < rows.length; i++) {
+            $scope.confirm(rows[i])
+        }
+    }
+
+    $scope.displayedCollection = [].concat($scope.orderRows);
 
 
 })

@@ -67,5 +67,5 @@ object OrderState {
   val CONFIRMED_BY_SELLER = "Confirmed by seller"
   val CANCELLED_BY_SELLER = "Cancelled by seller"
   val PAID = "Paid"
-  val SHIPPED = "SHIPPED"
+  val SHIPPED = "Shipped"
 }

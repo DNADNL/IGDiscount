@@ -2,13 +2,11 @@ package controllers
 
 import javax.inject.{Inject, Singleton}
 
-import com.fasterxml.jackson.annotation.JsonValue
-import models.{Admin, SimpleUser, Token}
-import models.models.SellerCompany
+import models.{Admin, SellerCompany, SimpleUser, Token}
 import play.api.Configuration
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.Json
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.{Action, Controller, Cookie}
 

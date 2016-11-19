@@ -22,7 +22,7 @@ app.controller('connection', function($scope, $http, $window, facebookServices, 
                         })
                         .error(function(data){
                             facebookServices.clearCache()
-                            Notification.error("Email or password incorrect")
+                            $window.location.href = '/registration';
                         })
                 });
             }

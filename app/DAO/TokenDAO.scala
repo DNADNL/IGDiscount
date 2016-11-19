@@ -2,8 +2,7 @@ package DAO
 
 import com.avaje.ebean.{Ebean, Expr}
 import controllers.UserIdentification
-import models.models.SellerCompany
-import models.{Admin, SimpleUser, Token}
+import models.{Admin, SellerCompany, SimpleUser, Token}
 
 /**
   * Created by kevin on 30/10/16.
