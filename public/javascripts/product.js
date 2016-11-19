@@ -19,7 +19,7 @@ app.controller('product', function($scope, $http, $window, $location, usSpinnerS
           paramName: 'image',
           url:'/product',
           method: 'POST',
-          maxFilesize: 5,
+          maxFilesize: 0.1,
           maxFiles: 1,
           autoProcessQueue: false,
           acceptedFiles: '.jpg, .png, .jpeg',
@@ -52,7 +52,7 @@ app.controller('product', function($scope, $http, $window, $location, usSpinnerS
             return response;
           },
           addRemoveLinks: true,
-          dictDefaultMessage: 'Please put picture (JPG, PNG, JPEG), less than 5 Mo'
+          dictDefaultMessage: 'Please put picture (JPG, PNG, JPEG), less than 100 Ko'
         });
 
         if (!angular.isUndefined($scope.id)) {
@@ -62,7 +62,7 @@ app.controller('product', function($scope, $http, $window, $location, usSpinnerS
               paramName: 'image',
               url:'/product/'+$scope.id+'/image',
               method: 'PUT',
-              maxFilesize: 5,
+              maxFilesize: 0.1,
               maxFiles: 1,
               autoProcessQueue: true,
               acceptedFiles: '.jpg, .png, .jpeg',
@@ -81,7 +81,7 @@ app.controller('product', function($scope, $http, $window, $location, usSpinnerS
               },
               sending: function(file, xhr, formData) {},
               addRemoveLinks: true,
-              dictDefaultMessage: 'Please put picture (JPG, PNG, JPEG), less than 5 Mo'
+              dictDefaultMessage: 'Please put picture (JPG, PNG, JPEG), less than 100 Ko'
             });
 
             var rqt = {

@@ -23,3 +23,38 @@ a.neutral-link:link, a.neutral-link:visited, a.neutral-link:hover, a.neutral-lin
     color: #fff;
     text-decoration: none;
 }
+
+tr > td {
+    max-width: 20%
+}
+
+.modal-content > img {
+    margin: 0 auto;
+    width: 20%;
+}
+
+.modal-content > h2 {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 40px;
+}
+
+.modal-content > form > div > input {
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+    margin-top: 5px;
+}
+
+.modal-content > form {
+    margin-top: 25px;
+}
+
+.modal-content > span {
+    text-align: justify;
+    display: block;
+}
+
+.modal-content {
+    padding: 20px;
+}

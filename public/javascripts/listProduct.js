@@ -104,6 +104,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
         $scope.product.image = $scope.productRows[id].image
         $scope.product.price = $scope.productRows[id].price
         $scope.product.quantity = $scope.productRows[id].quantity
+        $scope.product.seller = $scope.productRows[id].seller
         $scope.product.description = $scope.productRows[id].description
         $('#modal-product').modal();
         $('#modal-product').modal('show');
