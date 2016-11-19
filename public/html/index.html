@@ -4,51 +4,51 @@
     <meta charset="UTF-8">
     <title>Home</title>
 
-    <link rel="import" href="/assets/html/header.html">
+    <div id="header"></div>
 
 </head>
 <body ng-app="app" ng-controller="indexController">
 
-        <div id="headtitle"></div>
-        <div id="navbar" ng-controller="headerController"></div>
+<div id="headtitle"></div>
+<div id="navbar" ng-controller="headerController"></div>
 
-        <div class="row">
-            <div class="box">
-                <div class="col-lg-12">
-                    <hr>
-                    <h2 class="intro-text text-center">What is <strong>IG Discount</strong> ?
-                    </h2>
-                    <hr>
-                    <p>Use as many boxes as you like, and put anything you want in them! They are great for just about anything, the sky's the limit!</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-                </div>
-            </div>
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12">
+            <hr>
+            <h2 class="intro-text text-center">What is <strong>IG Discount</strong> ?
+            </h2>
+            <hr>
+            <p>Use as many boxes as you like, and put anything you want in them! They are great for just about anything, the sky's the limit!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
         </div>
     </div>
+</div>
+</div>
 
-    <div class="row">
-        <div class="box">
-            <div class="col-lg-12">
-                <hr>
-                <h2 class="intro-text text-center">Accounts
-                </h2>
-                <hr>
-                <span>Admin : admin@gmail.com/admin</span>
-                <br>
-                <span>Seller : seller@gmail.com/seller</span>
-                <br>
-                <span>User : user@gmail.com/user</span>
-            </div>
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12">
+            <hr>
+            <h2 class="intro-text text-center">Accounts
+            </h2>
+            <hr>
+            <span>Admin : admin@gmail.com/admin</span>
+            <br>
+            <span>Seller : seller@gmail.com/seller</span>
+            <br>
+            <span>User : user@gmail.com/user</span>
         </div>
     </div>
-    <!-- /.container -->
+</div>
+<!-- /.container -->
 
 <div id="footer"></div>
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
 <!-- Bootstrap Core JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="/lib/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 <script src="/lib/jquery.cookie.js"></script>
 <script src="/lib/angular-ui-notification.min.js"></script>
@@ -62,10 +62,10 @@
 <script src="/js/header.js"></script>
 <script src="/js/index.js"></script>
 <script>
-    $( "#headtitle" ).load( "/assets/html/headtitle.html" );
-    $( "#footer" ).load( "/assets/html/footer.html" );
+        $( "#header" ).load( "/assets/html/header.html" );
+        $( "#headtitle" ).load( "/assets/html/headtitle.html" );
+        $( "#footer" ).load( "/assets/html/footer.html" );
 </script>
-
 
 </body>
 </html>

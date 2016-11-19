@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Products</title>
-    <link rel="import" href="/assets/html/header.html">
+
+    <div id="header"></div>
 
 </head>
 <body ng-app="app" ng-controller="productSeller">
@@ -15,7 +16,7 @@
     <div class="box">
         <div class="col-lg-12">
             <hr>
-                <h2 class="intro-text text-center">Products Seller</h2>
+            <h2 class="intro-text text-center">Products Seller</h2>
             <hr>
             <table st-table="displayedCollection" st-safe-src="productRows" class="table table-striped">
                 <thead>
@@ -78,7 +79,7 @@
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"   integrity="sha256-DI6NdAhhFRnO2k51mumYeDShet3I8AKCQf/tf7ARNhI="   crossorigin="anonymous"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="/lib/bootstrap.min.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 
@@ -95,9 +96,10 @@
 <script src="/js/productSeller.js"></script>
 
 <script>
+        $( "#header" ).load( "/assets/html/header.html" );
         $( "#headtitle" ).load( "/assets/html/headtitle.html" );
         $( "#footer" ).load( "/assets/html/footer.html" );
-    </script>
+</script>
 
 </body>
 </html>
