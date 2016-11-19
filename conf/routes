@@ -51,8 +51,10 @@ GET  /sellerCompany/:id/order                         controllers.ManageOrderCon
 GET  /order/confirmed                                 controllers.ManageOrderController.getOrderConfirmed
 PUT  /order/:id/paid                                  controllers.ManageOrderController.updateOrderPaid(id : Long)
 GET  /sellerCompany/:id/order/cancelledOrPaid         controllers.ManageOrderController.getOrderSellerCompanyCancelledOrPaid(id : Long)
+GET  /sellerCompany/:id/order/pendingOrPaid           controllers.ManageOrderController.getOrderSellerCompanyPendingOrPaid(id : Long)
 PUT  /simpleUser/:id1/order/:id2/state/confirm        controllers.ManageOrderController.updateOrderConfirm(id1 : Long, id2 : Long)
 PUT  /simpleUser/:id1/order/:id2/state/cancel         controllers.ManageOrderController.updateOrderCancel(id1 : Long, id2 : Long)
+PUT  /simpleUser/:id1/order/:id2/state/ship           controllers.ManageOrderController.updateOrderShip(id1 : Long, id2 : Long)
 
 #API Product
 POST /product                      controllers.ManageProductController.createProduct

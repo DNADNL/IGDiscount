@@ -55,7 +55,10 @@
                 </thead>
                 <tbody ng-if="!mc.isLoading" ng-repeat="(key, value) in displayedCollection | groupBy: groupProperty">
                 <tr ng-if="key !== 'undefined'" class="text-center text-uppercase">
-                    <td colspan="10">{{key}}</td>
+                    <td colspan="10">
+                        {{key}}
+                        <button class="btn btn-primary" ng-if="groupProperty != ''" ng-click="confirmAll(value)">Accept all payment</button>
+                    </td>
                 </tr>
                 <tr ng-repeat="row in value" ng-click="show($index)">
                     <td class="col-md-2"><img ng-src="{{row.image}}" class="img-responsive"></td>

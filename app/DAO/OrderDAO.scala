@@ -22,6 +22,10 @@ class OrderDAO extends DAO(classOf[Order], classOf[Long]){
     Ebean.find(classOf[Order]).where(Expr.and(Expr.eq("product.sellerCompany",sellerCompany), Expr.or(Expr.eq("state", OrderState.CANCELLED_BY_SELLER), Expr.eq("state", OrderState.PAID)) )).findList().asScala.toList
   }
 
+  def findAllPendingOrPaid(sellerCompany : SellerCompany) : List[Order] = {
+    Ebean.find(classOf[Order]).where(Expr.and(Expr.eq("product.sellerCompany",sellerCompany), Expr.or(Expr.eq("state", OrderState.PENDING), Expr.eq("state", OrderState.PAID)) )).findList().asScala.toList
+  }
+
   def findAllConfirmed() : List[Order] = {
     Ebean.find(classOf[Order]).where(Expr.eq("state", OrderState.CONFIRMED_BY_SELLER)).findList().asScala.toList
   }

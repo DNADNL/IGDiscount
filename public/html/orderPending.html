@@ -22,8 +22,17 @@
                 <label>Group by</label>
                 <select class="form-control" name="group" ng-model="groupProperty">
                     <option value="">No group</option>
-                    <option value="name">Name</option>
+                    <option value="name">Name product</option>
                     <option value="customer">Customer</option>
+                    <option value="day">Day</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Filter by</label>
+                <select class="form-control" name="group" ng-model="filterProperty">
+                    <option value="">No filter</option>
+                    <option value="Paid">Paid</option>
+                    <option value="Pending">Pending</option>
                 </select>
             </div>
             <table st-table="displayedCollection" st-safe-src="orderRows" class="table table-striped">
@@ -60,7 +69,11 @@
                 </thead>
                 <tbody ng-if="!mc.isLoading" ng-repeat="(key, value) in displayedCollection | groupBy: groupProperty">
                 <tr ng-if="key !== 'undefined'" class="text-center text-uppercase">
-                    <td colspan="10">{{key}}  <button class="btn btn-success" ng-if="groupProperty=='customer'" ng-click="confirmAll(value)">Confirm all</button></td>
+                    <td colspan="10">
+                        {{key}}
+                        <button class="btn btn-primary" ng-if="groupProperty=='customer' || groupProperty=='day'" ng-click="confirmAll(value)">Mark confirm all</button>
+                        <button class="btn btn-warning" ng-if="groupProperty=='customer' || groupProperty=='day'" ng-click="shipAll(value)">Mark ship all</button>
+                    </td>
                 </tr>
                 <tr ng-repeat="row in value" ng-click="show($index)">
                     <td class="col-md-2"><img ng-src="{{row.image}}" class="img-responsive"></td>

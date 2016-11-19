@@ -60,7 +60,7 @@
                     <th></th>
                 </tr>
                 </thead>
-                <tbody ng-if="!mc.isLoading" ng-repeat="(key, value) in displayedCollection | groupBy: groupProperty">
+                <tbody ng-if="!isLoading" ng-repeat="(key, value) in displayedCollection | groupBy: groupProperty">
                 <tr ng-if="key !== 'undefined'" class="text-center text-uppercase">
                     <td colspan="7">{{key}}</td>
                 </tr>

@@ -1,4 +1,4 @@
-app.controller('productSeller', function($scope, $filter, $http, $window) {
+app.controller('productSeller', function($scope, $filter, $http, $window, usSpinnerService) {
 
     $scope.productRows = []
     $scope.product = {}
@@ -11,6 +11,8 @@ app.controller('productSeller', function($scope, $filter, $http, $window) {
             headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
         };
         $http(rqt).success(function(data){
+            usSpinnerService.spin('spinner-1');
+            $scope.startcounter++;
             if (data.kindOfUser != "Seller Company") {
                 $window.location.href = '/';
             }
@@ -40,7 +42,8 @@ app.controller('productSeller', function($scope, $filter, $http, $window) {
                             description : data[i].description
                         });
                     }
-                         })
+                    usSpinnerService.stop('spinner-1');
+                 })
             }
         })
     })

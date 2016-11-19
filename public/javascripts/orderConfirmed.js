@@ -83,31 +83,13 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
         }, 4000);
     }
 
-    /*$scope.confirmAll = function(rows) {
-        $scope.all = true
+    $scope.confirmAll = function(rows) {
         for (var i = 0; i < rows.length; i++) {
-            if (rows[i].state == 'Pending') {
-                $scope.confirm(rows[i])
-            }
+            $scope.confirm(rows[i])
         }
-        $scope.load()
     }
 
-    $scope.cancel = function(row) {
-
-        var rqt = {
-            method : 'PUT',
-            url : '/simpleUser/' + row.customerId + '/order/' + row.id + '/state/cancel',
-            headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
-        };
-
-        $http(rqt).success(function(data){
-            Notification.success('Order cancelled');
-            $scope.load()
-        })
-    }*/
-
-     $scope.displayedCollection = [].concat($scope.orderRows);
+    $scope.displayedCollection = [].concat($scope.orderRows);
 
 
 })

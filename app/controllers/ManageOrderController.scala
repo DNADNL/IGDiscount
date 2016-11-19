@@ -147,6 +147,26 @@ class ManageOrderController @Inject() extends Controller {
     }
   }
 
+  def getOrderSellerCompanyPendingOrPaid(idSellerCompany : Long) = Action { implicit request =>
+    request.cookies.get("token") match {
+      case Some(c) => Token.isValid(c.value) match {
+        case true => Token.getUser(c.value).get match {
+          case sc : SellerCompany => {
+            SellerCompany.tokenConform(c.value, sc) match {
+              case true => {
+                Ok(Json.toJson(Order.findAllPendingOrPaid(sc)))
+              }
+              case false => Forbidden(jsonRequiredOwner)
+            }
+          }
+          case _ => Forbidden(jsonRequiredOwner)
+        }
+        case _ => Forbidden(jsonTokenExpired)
+      }
+      case _ => Unauthorized(jsonNoToken)
+    }
+  }
+
   def updateOrderConfirm(idSimpleUser : Long, idOrder : Long) = Action { implicit request =>
     request.cookies.get("token") match {
       case Some(c) => Token.isValid(c.value) match {
@@ -225,8 +245,37 @@ class ManageOrderController @Inject() extends Controller {
             SellerCompany.tokenConform(c.value, sc) match {
               case true => {
                 val o = Order.find(idOrder).get
-                if (o.state == OrderState.PENDING && o.quantity <= o.product.quantity) {
+                if (o.state == OrderState.PENDING) {
                   o.state = OrderState.CANCELLED_BY_SELLER
+                  o.stateDate = new Timestamp(new Date().getTime)
+                  o.update()
+                  Ok(jsonOrderUpdated)
+                }
+                else {
+                  Conflict(jsonInsufficientStock)
+                }
+              }
+              case false => Forbidden(jsonRequiredOwner)
+            }
+          }
+          case _ => Forbidden(jsonRequiredOwner)
+        }
+        case _ => Forbidden(jsonTokenExpired)
+      }
+      case _ => Unauthorized(jsonNoToken)
+    }
+  }
+
+  def updateOrderShip(idSimpleUser : Long, idOrder : Long) = Action { implicit request =>
+    request.cookies.get("token") match {
+      case Some(c) => Token.isValid(c.value) match {
+        case true => Token.getUser(c.value).get match {
+          case sc : SellerCompany => {
+            SellerCompany.tokenConform(c.value, sc) match {
+              case true => {
+                val o = Order.find(idOrder).get
+                if (o.state == OrderState.PAID) {
+                  o.state = OrderState.SHIPPED
                   o.stateDate = new Timestamp(new Date().getTime)
                   o.update()
                   Ok(jsonOrderUpdated)

@@ -1,4 +1,4 @@
-app.controller('product', function($scope, $http, $window, $location, usSpinnerService) {
+app.controller('product', function($scope, $http, $window, $location, usSpinnerService, Notification) {
 
     var dropzoneCreate;
     var dropzoneUpdate;
@@ -45,7 +45,10 @@ app.controller('product', function($scope, $http, $window, $location, usSpinnerS
 
           },
           success: function(file, response){
-            $window.location.href = '/';
+            Notification.success('Product created! <br> You are going be redirected automaticaly');
+            setTimeout(function(){
+                 $window.location.href = '/';
+            }, 2000);
             return response;
           },
           addRemoveLinks: true,
@@ -134,31 +137,11 @@ app.controller('product', function($scope, $http, $window, $location, usSpinnerS
             };
 
             $http(rqtUpdate).success(function(data){
-                $window.location.href = '/';
+                Notification.success('Product updated! <br> You are going be redirected automaticaly');
+                setTimeout(function(){
+                     $window.location.href = '/';
+                }, 2000);
             })
         }
     }
-
-    /*//NE PAS EFFACER
-    var xhr = new XMLHttpRequest();
-
-    // Use JSFiddle logo as a sample image to avoid complicating
-    // this example with cross-domain issues.
-    xhr.open( "GET", "/retrieve", true );
-
-    // Ask for the result as an ArrayBuffer.
-    xhr.responseType = "arraybuffer";
-
-    xhr.onload = function( e ) {
-        console.log(this.response)
-        // Obtain a blob: URL for the image data.
-        var arrayBufferView = new Uint8Array( this.response );
-        var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
-        var urlCreator = window.URL || window.webkitURL;
-        var imageUrl = urlCreator.createObjectURL( blob );
-        var img = document.querySelector( "#image" );
-        img.src = imageUrl;
-    };
-
-    xhr.send();*/
 })

@@ -21,13 +21,12 @@ app.controller('headerController', function($scope, $http, $compile, $window, fa
     }
 
     $scope.logout = function() {
-        $.removeCookie("token");
-        $.removeCookie("kindofuser");
-        $scope.enableAdmin = false
-        $scope.enableSimple = false
-        $scope.enableSeller = false
-        $scope.enableNoConnected = true
-        $window.location.href = '/';
+        $.removeCookie("token", { path: '/' });
+        $.removeCookie("kindofuser", { path: '/' });
+        Notification.success('You are going be redirected automaticaly');
+        setTimeout(function(){
+             $window.location.href = '/';
+        }, 2000);
     }
 
 })

@@ -45,6 +45,9 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
                         $scope.orderRows.push({
                             id : data[i].id,
                             seller : data[i].product.seller.companyName,
+                            day : date + " " + month + " " + year,
+                            month : month + " " + year,
+                            year : year,
                             image: imageUrl,
                             date: date + " " + month + " " + year + ", " + hour + ":" +min,
                             name : data[i].product.name,
@@ -54,7 +57,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
                         });
                     }
                     usSpinnerService.stop('spinner-1');
-
+                    $scope.groupProperty = 'day'
                 })
 
             }
