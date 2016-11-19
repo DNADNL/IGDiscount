@@ -1,5 +1,3 @@
-var app = angular.module('app', ['smart-table', 'ui-notification', 'angularSpinner']);
-
 app.controller('adminAccount', function($scope, $filter, $http, $window, Notification, usSpinnerService) {
 
     $scope.userRows = []

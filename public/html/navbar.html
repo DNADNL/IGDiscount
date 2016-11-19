@@ -25,34 +25,55 @@
                     <a href="/account" ng-show="!enableNoConnected">My account</a>
                 </li>
                 <li>
-                    <a href="/account/manage" ng-show="enableAdmin">Account admin</a>
-                </li>
-                <li>
-                    <a href="/install">Install users</a>
-                </li>
-                <li>
                     <a href="/products">Market</a>
                 </li>
-                <li>
-                    <a href="/product/manage/admin" ng-show="enableAdmin">Manage product</a>
+                <li role="presentation" class="dropdown" ng-show="enableAdmin">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        Manage <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/product/manage/admin">Update / Delete product</a>
+                        </li>
+                        <li>
+                            <a href="/account/manage">Update / Delete account</a>
+                        </li>
+                        <li>
+                            <a href="/registration">Create account</a>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <a href="/product/manage/sellercompany" ng-show="enableSeller">Manage product</a>
+                <li role="presentation" class="dropdown" ng-show="enableSeller">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        My market <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/product/manage/sellercompany">My products</a>
+                        </li>
+                        <li>
+                            <a href="/product/create/" ng-show="enableSeller">Sell product</a>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <a href="/product/create/" ng-show="enableSeller">Create product</a>
+                <li role="presentation" class="dropdown" ng-show="enableSeller">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        Orders <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/manage/order/pending">Orders pending</a>
+                        </li>
+                        <li>
+                            <a href="/manage/order/completed" ng-show="enableSeller">Orders completed</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="/cart" ng-show="enableSimple">Cart</a>
                 </li>
                 <li>
                     <a href="/myorder" ng-show="enableSimple">My orders</a>
-                </li>
-                <li>
-                    <a href="/manage/order/pending" ng-show="enableSeller">Orders pending</a>
-                </li>
-                <li>
-                    <a href="/manage/order/completed" ng-show="enableSeller">Orders completed</a>
                 </li>
                 <li>
                     <a href="/manage/order/confirmed" ng-show="enableAdmin">Confirm orders</a>
