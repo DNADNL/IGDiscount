@@ -13,51 +13,52 @@
 <div id="headtitle"></div>
 <div id="navbar" ng-controller="headerController"></div>
 
-
-<div class="row">
-    <div class="box">
-        <div class="col-lg-12">
-            <hr>
-            <h2 class="intro-text text-center">Product Manage
-            </h2>
-            <hr>
-            <form name="productForm" ng-submit="submitForm()" novalidate>
-                <div class="form-group" ng-class="{ 'has-error' : productForm.name.$invalid && !productForm.name.$pristine }">
-                    <label>Name product</label>
-                    <input type="name" class="form-control" ng-minlength="1" ng-maxlength="40" name="name" ng-model="product.name" required>
-                    <p ng-show="productForm.name.$error.minlength && !productForm.name.$pristine" class="help-block">Name is too short</p>
-                    <p ng-show="productForm.name.$error.maxlength && !productForm.name.$pristine" class="help-block">Name is too long</p>
+<div class="container">
+    <div class="row">
+        <div class="box">
+            <div class="col-lg-12">
+                <hr>
+                <h2 class="intro-text text-center">Product Manage
+                </h2>
+                <hr>
+                <form name="productForm" ng-submit="submitForm()" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error' : productForm.name.$invalid && !productForm.name.$pristine }">
+                        <label>Name product</label>
+                        <input type="name" class="form-control" ng-minlength="1" ng-maxlength="40" name="name" ng-model="product.name" required>
+                        <p ng-show="productForm.name.$error.minlength && !productForm.name.$pristine" class="help-block">Name is too short</p>
+                        <p ng-show="productForm.name.$error.maxlength && !productForm.name.$pristine" class="help-block">Name is too long</p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : productForm.quantity.$invalid && !productForm.quantity.$pristine }">
+                        <label>Quantity</label>
+                        <input type="number" min="0" ng-min="0" ng-max="10000" name="quantity" class="form-control" ng-model="product.quantity" required>
+                        <p ng-show="productForm.quantity.$error.min && !productForm.quantity.$pristine" class="help-block">Quantity have to be positive</p>
+                        <p ng-show="productForm.quantity.$error.max && !productForm.quantity.$pristine" class="help-block">Quantity have to be less than 10000</p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : productForm.price.$invalid && !productForm.price.$pristine }">
+                        <label>Price</label>
+                        <input type="number" step="0.01" min="0" ng-min="0" ng-max="10000" name="price" class="form-control" ng-model="product.price" required>
+                        <p ng-show="productForm.price.$error.min && !productForm.price.$pristine" class="help-block">Price must be positive</p>
+                        <p ng-show="productForm.price.$error.max && !productForm.price.$pristine" class="help-block">Price have to be less than 10000€</p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : productForm.description.$invalid && !productForm.description.$pristine }">
+                        <label>Description</label>
+                        <textarea name="description" ng-minlength="1" ng-maxlength="1000" class="form-control" ng-model="product.description" required></textarea>
+                        <p ng-show="productForm.description.$error.minlength && !productForm.description.$pristine" class="help-block">Description is too short</p>
+                        <p ng-show="productForm.description.$error.maxlength && !productForm.description.$pristine" class="help-block">Description is too long</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Add description image (optional)</label>
+                        <div class="dropzone" id="dropzoneProduct" ng-show="creatingMode"></div>
+                        <div class="dropzone" id="dropzoneUpdate" ng-show="!creatingMode"></div>
+                    </div>
+                    <input type="submit" class="btn btn-primary" ng-disabled="productForm.$invalid || disable" value="Create product">
+                </form>
+                <div ng-show="showError" class="alert alert-danger">
+                    <strong>Error! </strong>Impossible to create the product.
                 </div>
-                <div class="form-group" ng-class="{ 'has-error' : productForm.quantity.$invalid && !productForm.quantity.$pristine }">
-                    <label>Quantity</label>
-                    <input type="number" min="0" ng-min="0" ng-max="10000" name="quantity" class="form-control" ng-model="product.quantity" required>
-                    <p ng-show="productForm.quantity.$error.min && !productForm.quantity.$pristine" class="help-block">Quantity have to be positive</p>
-                    <p ng-show="productForm.quantity.$error.max && !productForm.quantity.$pristine" class="help-block">Quantity have to be less than 10000</p>
+                <div ng-show="showWaiting" class="alert alert-info">
+                    Please wait <span us-spinner="{}" spinner-key="spinner-1" style="position: relative; margin-left: 30px"></span>
                 </div>
-                <div class="form-group" ng-class="{ 'has-error' : productForm.price.$invalid && !productForm.price.$pristine }">
-                    <label>Price</label>
-                    <input type="number" step="0.01" min="0" ng-min="0" ng-max="10000" name="price" class="form-control" ng-model="product.price" required>
-                    <p ng-show="productForm.price.$error.min && !productForm.price.$pristine" class="help-block">Price must be positive</p>
-                    <p ng-show="productForm.price.$error.max && !productForm.price.$pristine" class="help-block">Price have to be less than 10000€</p>
-                </div>
-                <div class="form-group" ng-class="{ 'has-error' : productForm.description.$invalid && !productForm.description.$pristine }">
-                    <label>Description</label>
-                    <textarea name="description" ng-minlength="1" ng-maxlength="1000" class="form-control" ng-model="product.description" required></textarea>
-                    <p ng-show="productForm.description.$error.minlength && !productForm.description.$pristine" class="help-block">Description is too short</p>
-                    <p ng-show="productForm.description.$error.maxlength && !productForm.description.$pristine" class="help-block">Description is too long</p>
-                </div>
-                <div class="form-group">
-                    <label>Add description image (optional)</label>
-                    <div class="dropzone" id="dropzoneProduct" ng-show="creatingMode"></div>
-                    <div class="dropzone" id="dropzoneUpdate" ng-show="!creatingMode"></div>
-                </div>
-                <input type="submit" class="btn btn-primary" ng-disabled="productForm.$invalid || disable" value="Create product">
-            </form>
-            <div ng-show="showError" class="alert alert-danger">
-                <strong>Error! </strong>Impossible to create the product.
-            </div>
-            <div ng-show="showWaiting" class="alert alert-info">
-                Please wait <span us-spinner="{}" spinner-key="spinner-1" style="position: relative; margin-left: 30px"></span>
             </div>
         </div>
     </div>
