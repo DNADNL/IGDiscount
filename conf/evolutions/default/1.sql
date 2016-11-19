@@ -4,7 +4,7 @@
 # --- !Ups
 
 create table admin (
-  id                            bigserial not null,
+  id                            bigint auto_increment not null,
   email                         varchar(255),
   password                      varchar(255),
   first_name                    varchar(255),
@@ -18,7 +18,7 @@ create table admin (
 );
 
 create table basket_row (
-  id                            bigserial not null,
+  id                            bigint auto_increment not null,
   quantity                      integer,
   product_id                    bigint,
   simple_user_id                bigint,
@@ -27,17 +27,17 @@ create table basket_row (
 );
 
 create table image (
-  id                            bigserial not null,
+  id                            bigint auto_increment not null,
   name                          varchar(255),
   mime                          varchar(255),
-  content                       bytea,
+  content                       blob,
   product_id                    bigint,
   constraint uq_image_product_id unique (product_id),
   constraint pk_image primary key (id)
 );
 
 create table orderproduct (
-  id                            bigserial not null,
+  id                            bigint auto_increment not null,
   quantity                      integer,
   state_date                    timestamp,
   state                         varchar(255),
@@ -48,7 +48,7 @@ create table orderproduct (
 );
 
 create table product (
-  id                            bigserial not null,
+  id                            bigint auto_increment not null,
   description                   varchar(1000),
   name                          varchar(255),
   price                         float,
@@ -61,7 +61,7 @@ create table product (
 );
 
 create table seller_company (
-  id                            bigserial not null,
+  id                            bigint auto_increment not null,
   email                         varchar(255),
   password                      varchar(255),
   postal_code                   varchar(255),
@@ -79,7 +79,7 @@ create table seller_company (
 );
 
 create table simple_user (
-  id                            bigserial not null,
+  id                            bigint auto_increment not null,
   email                         varchar(255),
   password                      varchar(255),
   postal_code                   varchar(255),
@@ -98,7 +98,7 @@ create table simple_user (
 );
 
 create table token (
-  id                            bigserial not null,
+  id                            bigint auto_increment not null,
   expiration_date               timestamp,
   token                         varchar(255),
   constraint uq_token_token unique (token),
@@ -139,50 +139,50 @@ alter table simple_user add constraint fk_simple_user_token_reinitialisation_ema
 
 # --- !Downs
 
-alter table if exists admin drop constraint if exists fk_admin_token_authentification_id;
+alter table admin drop constraint if exists fk_admin_token_authentification_id;
 
-alter table if exists admin drop constraint if exists fk_admin_token_reinitialisation_email_id;
+alter table admin drop constraint if exists fk_admin_token_reinitialisation_email_id;
 
-alter table if exists basket_row drop constraint if exists fk_basket_row_product_id;
+alter table basket_row drop constraint if exists fk_basket_row_product_id;
 drop index if exists ix_basket_row_product_id;
 
-alter table if exists basket_row drop constraint if exists fk_basket_row_simple_user_id;
+alter table basket_row drop constraint if exists fk_basket_row_simple_user_id;
 drop index if exists ix_basket_row_simple_user_id;
 
-alter table if exists image drop constraint if exists fk_image_product_id;
+alter table image drop constraint if exists fk_image_product_id;
 
-alter table if exists orderproduct drop constraint if exists fk_orderproduct_product_id;
+alter table orderproduct drop constraint if exists fk_orderproduct_product_id;
 drop index if exists ix_orderproduct_product_id;
 
-alter table if exists orderproduct drop constraint if exists fk_orderproduct_simple_user_id;
+alter table orderproduct drop constraint if exists fk_orderproduct_simple_user_id;
 drop index if exists ix_orderproduct_simple_user_id;
 
-alter table if exists product drop constraint if exists fk_product_seller_company_id;
+alter table product drop constraint if exists fk_product_seller_company_id;
 drop index if exists ix_product_seller_company_id;
 
-alter table if exists product drop constraint if exists fk_product_image_id;
+alter table product drop constraint if exists fk_product_image_id;
 
-alter table if exists seller_company drop constraint if exists fk_seller_company_token_authentification_id;
+alter table seller_company drop constraint if exists fk_seller_company_token_authentification_id;
 
-alter table if exists seller_company drop constraint if exists fk_seller_company_token_reinitialisation_email_id;
+alter table seller_company drop constraint if exists fk_seller_company_token_reinitialisation_email_id;
 
-alter table if exists simple_user drop constraint if exists fk_simple_user_token_authentification_id;
+alter table simple_user drop constraint if exists fk_simple_user_token_authentification_id;
 
-alter table if exists simple_user drop constraint if exists fk_simple_user_token_reinitialisation_email_id;
+alter table simple_user drop constraint if exists fk_simple_user_token_reinitialisation_email_id;
 
-drop table if exists admin cascade;
+drop table if exists admin;
 
-drop table if exists basket_row cascade;
+drop table if exists basket_row;
 
-drop table if exists image cascade;
+drop table if exists image;
 
-drop table if exists orderproduct cascade;
+drop table if exists orderproduct;
 
-drop table if exists product cascade;
+drop table if exists product;
 
-drop table if exists seller_company cascade;
+drop table if exists seller_company;
 
-drop table if exists simple_user cascade;
+drop table if exists simple_user;
 
-drop table if exists token cascade;
+drop table if exists token;
 

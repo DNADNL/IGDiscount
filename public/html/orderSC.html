@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>My cart</title>
 
-    <link rel="import" href="/assets/html/header.html">
+    <div id="header"></div>
 
 </head>
 <body ng-app="app" ng-controller="listProduct">
@@ -73,7 +73,7 @@
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"   integrity="sha256-DI6NdAhhFRnO2k51mumYeDShet3I8AKCQf/tf7ARNhI="   crossorigin="anonymous"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="/lib/bootstrap.min.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 <script src="/lib/jquery.cookie.js"></script>
@@ -88,8 +88,9 @@
 <script src="/js/orderSC.js"></script>
 
 <script>
+        $( "#header" ).load( "/assets/html/header.html" );
         $( "#headtitle" ).load( "/assets/html/headtitle.html" );
         $( "#footer" ).load( "/assets/html/footer.html" );
-    </script>
+</script>
 </body>
 </html>

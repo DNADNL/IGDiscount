@@ -18,3 +18,8 @@ footer p {
     margin: 0;
     padding: 15px 0;
 }
+
+a.neutral-link:link, a.neutral-link:visited, a.neutral-link:hover, a.neutral-link:active  {
+    color: #fff;
+    text-decoration: none;
+}
