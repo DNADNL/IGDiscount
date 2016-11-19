@@ -58,3 +58,10 @@ tr > td {
 .modal-content {
     padding: 20px;
 }
+
+.cart input, .order  {
+    margin: 0 auto;
+    margin-top : 5px;
+    text-align: center;
+    display: block;
+}

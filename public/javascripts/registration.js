@@ -1,4 +1,4 @@
-app.controller('registration', function($scope, $http, $window, facebookServices, Notification) {
+app.controller('registration', function($scope, $http, $window, $location, facebookServices, Notification) {
 
     $scope.enableSimpleUserForm = false
     $scope.enableSellerCompanyForm = false
@@ -15,6 +15,15 @@ app.controller('registration', function($scope, $http, $window, facebookServices
         else {
             $scope.adminMode = false
             $scope.createOrBecome = 'Become'
+        }
+
+        if (!angular.isUndefined($location.search().token)) {
+            $scope.tokenFacebook = $location.search().token
+            $scope.user.email = $location.search().email
+            $scope.disableFacebook = true
+            $scope.enableSimpleUserForm = true
+            $scope.simpleUser.firstName = $location.search().firstName
+            $scope.simpleUser.lastName = $location.search().lastName
         }
 
     })
@@ -76,7 +85,7 @@ app.controller('registration', function($scope, $http, $window, facebookServices
             $http(rqt)
                 .success(function(data){
                     facebookServices.clearCache()
-                    Notification.success('Your account has been created <br> You are going be redirected automaticaly');
+                    Notification.success('Your account has been created <br> You will be soon redirected...');
                     setTimeout(function(){
                          $window.location.href = '/';
                     }, 2000);
@@ -103,7 +112,7 @@ app.controller('registration', function($scope, $http, $window, facebookServices
             $http(rqt)
                 .success(function(data){
                     facebookServices.clearCache()
-                    Notification.success('Your account has been created <br> You are going be redirected automaticaly');
+                    Notification.success('Your account has been created <br> You will be soon redirected...');
                     setTimeout(function(){
                          $window.location.href = '/';
                     }, 2000);
@@ -134,7 +143,7 @@ app.controller('registration', function($scope, $http, $window, facebookServices
         $http(rqt)
             .success(function(data){
                 facebookServices.clearCache()
-                Notification.success('Your account has been created <br> You are going be redirected automaticaly');
+                Notification.success('Your account has been created <br> You will be soon redirected...');
                 setTimeout(function(){
                      $window.location.href = '/';
                 }, 2000);
@@ -159,7 +168,7 @@ app.controller('registration', function($scope, $http, $window, facebookServices
             $http(rqt)
                 .success(function(data){
                     facebookServices.clearCache()
-                    Notification.success('Account has been created <br> You are going be redirected automaticaly');
+                    Notification.success('Account has been created <br> You will be soon redirected...');
                     setTimeout(function(){
                          $window.location.href = '/';
                     }, 2000);

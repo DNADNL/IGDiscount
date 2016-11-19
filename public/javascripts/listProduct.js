@@ -33,6 +33,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
                 $scope.productRows.push({
                     id : data[i].id,
                     image: imageUrl,
+                    imageName : data[i].image.name,
                     seller: data[i].seller.companyName,
                     name : data[i].name,
                     price : (Math.round(data[i].price*100)/100) + "€",

@@ -5,12 +5,12 @@ app.controller('connection', function($scope, $http, $window, facebookServices, 
     $scope.linkFacebook = function() {
         facebookServices.connectFacebook().then(function(dataToken) {
             if (facebookServices.isReady()) {
-                facebookServices.getInformation().then(function(data) {
+                facebookServices.getInformation().then(function(dataFacebook) {
                     var rqt = {
                         method : 'POST',
                         url : '/signinFacebook',
                         data : $.param({
-                            email: data.email,
+                            email: dataFacebook.email,
                             tokenFacebook: dataToken.access_token
                         }),
                         headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
@@ -22,7 +22,8 @@ app.controller('connection', function($scope, $http, $window, facebookServices, 
                         })
                         .error(function(data){
                             facebookServices.clearCache()
-                            $window.location.href = '/registration';
+                            $window.location.href = '/registration#?firstName=' + dataFacebook.name.split(" ")[0] +
+                                '&lastName=' + dataFacebook.name.split(" ")[1] + '&email=' + dataFacebook.email + '&token=' + dataToken.access_token;
                         })
                 });
             }

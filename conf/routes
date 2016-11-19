@@ -87,6 +87,7 @@ GET		/manage/order/completed      controllers.Assets.at(path="/public/html", fil
 GET		/manage/order/confirmed      controllers.Assets.at(path="/public/html", file="orderConfirmed.html")
 GET		/js/*file				    controllers.Assets.at(path="/public/javascripts", file)
 GET		/lib/*file				    controllers.Assets.at(path="/public/lib", file)
+GET		/fonts/*file				controllers.Assets.at(path="/public/fonts", file)
 GET		/images/*file				controllers.Assets.at(path="/public/images", file)
 
 # A supprimer
