@@ -49,23 +49,21 @@
                         <thead>
                         <tr>
                             <th>Image</th>
-                            <th st-sort="name">Name<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
-                            <th st-sort="price">Price<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
-                            <th st-sort="quantity">Quantity<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
+                            <th st-sort="name"><a href="#" class="link-table">Name</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
+                            <th st-sort="price"><a href="#" class="link-table">Price</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
+                            <th st-sort="quantity"><a href="#" class="link-table">Quantity</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
                             <th>Update</th>
                             <th>Delete</th>
                         </tr>
                         <tr>
-                            <th></th>
-                            <th>
+                            <td colspan="6">
                                 <input st-search="name" placeholder="Search for name" class="input-sm form-control" type="search"/>
-                            </th>
-                            <th>
-                                <input st-search="price" placeholder="Search for price" class="input-sm form-control" type="search"/>
-                            </th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                <input st-search="seller" placeholder="Search for seller" class="input-sm form-control" type="search"/>
+                            </td>
                         </tr>
                         </thead>
                         <tbody>

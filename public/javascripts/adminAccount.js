@@ -50,6 +50,7 @@ app.controller('adminAccount', function($scope, $filter, $http, $window, Notific
                         });
                     }
                     usSpinnerService.stop('spinner-1');
+                    $scope.groupProperty = "kindOfUser"
                 })
             })
         }).error(function(data){

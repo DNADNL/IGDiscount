@@ -40,29 +40,53 @@
         <div class="box">
             <div class="col-lg-12">
                 <hr>
-                <h2 class="intro-text text-center">Manage accounts</h2>
+                    <h2 class="intro-text text-center">Manage accounts</h2>
                 <hr>
+                <div class="form-group">
+                    <label>Group by</label>
+                    <select class="form-control" name="group" ng-model="groupProperty">
+                        <option value="">No group</option>
+                        <option value="kindOfUser">Kind of user</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Filter by</label>
+                    <select class="form-control" name="group" ng-model="filterProperty">
+                        <option value="">No filter</option>
+                        <option value="Seller Company">Seller Company</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Simple User">Simple User</option>
+                    </select>
+                </div>
                 <div style="overflow-x:auto;">
                     <table st-table="displayedCollection" st-safe-src="userRows" class="table table-condensed">
                         <span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner-1"></span>
                         <thead>
                         <tr>
-                            <th st-sort="name">Name<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
-                            <th st-sort="email">Email<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
-                            <th st-sort="getters.kindOfUser">Kind of user<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
+                            <th st-sort="name"><a href="#" class="link-table">Name</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
+                            <th st-sort="email"><a href="#" class="link-table">Email</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
+                            <th st-sort="getters.kindOfUser"><a href="#" class="link-table">Kind of user</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
+                            <th>Update</th>
+                            <th>Delete</th>
                         </tr>
                         <tr>
-                            <th>
+                            <td colspan="5">
                                 <input st-search="name" placeholder="Search for name" class="input-sm form-control" type="search"/>
-                            </th>
-                            <th>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
                                 <input st-search="email" placeholder="Search for email" class="input-sm form-control" type="search"/>
-                            </th>
-                            <th></th>
+                            </td>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr ng-repeat="row in displayedCollection">
+                        <tbody ng-if="!mc.isLoading" ng-repeat="(key, value) in displayedCollection | groupBy: groupProperty">
+                        <tr ng-if="key !== 'undefined'" class="text-center text-uppercase">
+                            <td colspan="6">
+                                {{key}}
+                            </td>
+                        </tr>
+                        <tr ng-repeat="row in value | filterBy: ['kindOfUser']: filterProperty">
                             <td>{{row.name}}</td>
                             <td>{{row.email}}</td>
                             <td>{{row.kindOfUser}}</td>
@@ -80,12 +104,6 @@
                             </td>
                         </tr>
                         </tbody>
-                        <tfoot>
-                        <tr>
-                            <td class="text-center" st-pagination="" st-items-by-page="10" colspan="5">
-                            </td>
-                        </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>

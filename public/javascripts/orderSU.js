@@ -25,7 +25,6 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
                 $scope.idSimpleUser = data.id
 
                 $http(rqtProduct).success(function(data){
-                    console.log(data)
                     var xhr = new XMLHttpRequest();
                     for (var i = 0; i < data.length; i++) {
                         var arrayBuffer = data[i].product.image.content;

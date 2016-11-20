@@ -58,9 +58,9 @@
                         <input type="password" name="repeatPassword" class="form-control" ng-model="user.repeatPassword" ng-disabled="disableFacebook" required>
                         <p ng-show="user.repeatPassword != user.password && !userForm.repeatPassword.$pristine" class="help-block">The password must be equal</p>
                     </div>
-                    <input type="submit" class="btn btn-primary" ng-disabled="(userForm.$invalid || user.repeatPassword != user.password)" value="{{createOrBecome}} simple user">
-                    <input type="button" ng-click="clickCreateSellerAccount()" class="btn btn-primary" ng-disabled="(userForm.$invalid || user.repeatPassword != user.password)" value="{{createOrBecome}} seller account">
-                    <input type="button" ng-click="linkFacebook()" class="btn btn-primary" value="Become with facebook" ng-hide="adminMode">
+                    <input type="submit" class="btn btn-primary" ng-disabled="(userForm.$invalid || user.repeatPassword != user.password)" value="{{createOrBecome}} a user">
+                    <input type="button" ng-click="clickCreateSellerAccount()" class="btn btn-primary" ng-disabled="(userForm.$invalid || user.repeatPassword != user.password)" value="{{createOrBecome}} a seller company">
+                    <input type="button" ng-click="linkFacebook()" class="btn btn-primary" value="Become facebook user" ng-hide="adminMode">
                     <input type="button" ng-click="clickCreateAdmin()" class="btn btn-primary" ng-disabled="(userForm.$invalid || user.repeatPassword != user.password)" ng-show="adminMode" value="{{createOrBecome}} administrator">
                 </form>
                 <form name="simpleUserForm" ng-submit="submitSimpleUserForm()" ng-show="enableSimpleUserForm" novalidate>

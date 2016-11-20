@@ -1,4 +1,4 @@
-app.controller('productAdmin', function($scope, $filter, $http, $window) {
+app.controller('productAdmin', function($scope, $filter, $http, $window, usSpinnerService) {
 
     $scope.productRows = []
     $scope.product = {}
@@ -10,6 +10,9 @@ app.controller('productAdmin', function($scope, $filter, $http, $window) {
             url : '/product',
             headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
         };
+
+        usSpinnerService.spin('spinner-1');
+        $scope.startcounter++;
 
         $http(rqt).success(function(data){
             var xhr = new XMLHttpRequest();
@@ -32,6 +35,8 @@ app.controller('productAdmin', function($scope, $filter, $http, $window) {
                     description : data[i].description
                 });
             }
+            $scope.groupProperty = "seller"
+            usSpinnerService.stop('spinner-1');
          })
     })
 

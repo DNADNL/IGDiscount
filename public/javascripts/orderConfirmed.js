@@ -54,7 +54,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
                             day : date + " " + month + " " + year,
                             date: date + " " + month + " " + year + ", " + hour + ":" +min,
                             name : data[i].product.name,
-                            price : (Math.round(data[i].product.price*100)/100) * data[i].quantity,
+                            price : (Math.round((data[i].product.price*data[i].quantity)*100)/100),
                             disabled : false
                         });
                     }

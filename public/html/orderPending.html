@@ -65,42 +65,45 @@
                         <thead>
                         <tr>
                             <th>Image</th>
-                            <th st-sort="customer">Customer&nbsp<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
-                            <th st-sort="name">Name<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
-                            <th st-sort="price">Price<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
-                            <th st-sort="quantity">Quantity<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
-                            <th st-sort="state">State<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
-                            <th st-sort="date">Date<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
+                            <th st-sort="customer"><a href="#" class="link-table">Customer</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
+                            <th st-sort="name"><a href="#" class="link-table">Name</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
+                            <th st-sort="price"><a href="#" class="link-table">Price</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
+                            <th st-sort="quantity"><a href="#" class="link-table">Quantity</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
+                            <th st-sort="state"><a href="#" class="link-table">State</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
+                            <th st-sort="date"><a href="#" class="link-table">Date</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
                             <th>Confirm?</th>
                             <th>Cancel?</th>
                             <th>Ship?</th>
                         </tr>
                         <tr>
-                            <th></th>
-                            <th>
-                                <input st-search="seller" placeholder="Search for seller" class="input-sm form-control" type="search"/>
-                            </th>
-                            <th>
+                            <td colspan="10">
                                 <input st-search="name" placeholder="Search for name" class="input-sm form-control" type="search"/>
-                            </th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="10">
+                                <input st-search="seller" placeholder="Search for seller" class="input-sm form-control" type="search"/>
+                            </td>
                         </tr>
                         </thead>
                         <tbody ng-if="!mc.isLoading" ng-repeat="(key, value) in displayedCollection | groupBy: groupProperty">
                         <tr ng-if="key !== 'undefined'" class="text-center text-uppercase">
-                            <td colspan="10">
+                            <td colspan="7">
                                 {{key}}
-                                <button class="btn btn-primary" ng-if="groupProperty=='customer' || groupProperty=='day'" ng-click="confirmAll(value)">Mark confirm all</button>
-                                <button class="btn btn-warning" ng-if="groupProperty=='customer' || groupProperty=='day'" ng-click="shipAll(value)">Mark ship all</button>
                             </td>
+                            <th>
+                                <button class="btn btn-primary btn-sm" ng-click="confirmAll(value)">
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                </button>
+                            </th>
+                            <th></th>
+                            <th>
+                                <button class="btn btn-warning btn-sm" ng-click="shipAll(value)">
+                                    <i class="glyphicon glyphicon-envelope"></i>
+                                </button>
+                            </th>
                         </tr>
-                        <tr ng-repeat="row in value" ng-click="show($index)">
+                        <tr ng-repeat="row in value | filterBy: ['state']: filterProperty" ng-click="show($index)">
                             <td class="col-md-2"><img ng-src="{{row.image}}" class="img-responsive"></td>
                             <td>{{row.customer}}</td>
                             <td>{{row.name}}</td>

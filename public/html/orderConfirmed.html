@@ -57,33 +57,34 @@
                         <thead>
                         <tr>
                             <th>Image</th>
-                            <th st-sort="name">Name<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
-                            <th st-sort="seller">Seller<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
-                            <th st-sort="customer">Customer<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
-                            <th st-sort="price">Price<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
-                            <th st-sort="date">Date<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
+                            <th st-sort="name"><a href="#" class="link-table">Name</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
+                            <th st-sort="seller"><a href="#" class="link-table">Seller</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
+                            <th st-sort="customer"><a href="#" class="link-table">Customer</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
+                            <th st-sort="price"><a href="#" class="link-table">Price</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
+                            <th st-sort="date"><a href="#" class="link-table">Date</a><i class="leftalign hidden-xs glyphicon glyphicon-sort" aria-hidden="true"></i></th>
                             <th>Confirm payment</th>
                         </tr>
                         <tr>
-                            <th></th>
-                            <th></th>
-                            <th>
+                            <td colspan="7">
                                 <input st-search="seller" placeholder="Search for seller" class="input-sm form-control" type="search"/>
-                            </th>
-                            <th>
-                                <input st-search="name" placeholder="Search for name" class="input-sm form-control" type="search"/>
-                            </th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="7">
+                                <input st-search="customer" placeholder="Search for customer" class="input-sm form-control" type="search"/>
+                            </td>
                         </tr>
                         </thead>
                         <tbody ng-if="!mc.isLoading" ng-repeat="(key, value) in displayedCollection | groupBy: groupProperty">
                         <tr ng-if="key !== 'undefined'" class="text-center text-uppercase">
-                            <td colspan="10">
+                            <td colspan="6">
                                 {{key}}
-                                <button class="btn btn-primary" ng-if="groupProperty != ''" ng-click="confirmAll(value)">Accept all payment</button>
                             </td>
+                            <th>
+                                <button class="btn btn-primary btn-sm" ng-click="confirmAll(value)">
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                </button>
+                            </th>
                         </tr>
                         <tr ng-repeat="row in value" ng-click="show($index)">
                             <td class="col-md-2"><img ng-src="{{row.image}}" class="img-responsive"></td>
@@ -94,8 +95,7 @@
                             <td>{{row.date}}</td>
                             <td>
                                 <button ng-disabled="row.disabled" type="button" ng-click="confirm(row)" class="btn btn-sm btn-success">
-                                    <i class="glyphicon glyphicon-ok">
-                                    </i>
+                                    <i class="glyphicon glyphicon-ok"></i>
                                 </button>
                             </td>
                         </tr>
