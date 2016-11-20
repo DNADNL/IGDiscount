@@ -61,4 +61,10 @@ tr > td {
 
 .center-text {
     text-align:center;
+
+.cart input, .order  {
+    margin: 0 auto;
+    margin-top : 5px;
+    text-align: center;
+    display: block;
 }

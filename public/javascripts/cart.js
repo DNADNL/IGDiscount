@@ -90,7 +90,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
     $scope.computeTotalAmount = function() {
         $scope.totalAmount = 0
         for (var i = 0; i < $scope.productRows.length; i++) {
-            $scope.totalAmount += (Math.round($scope.productRows[i].price*100)/100) * $scope.productRows[i].quantity
+            $scope.totalAmount += $scope.productRows[i].price
         }
     }
 

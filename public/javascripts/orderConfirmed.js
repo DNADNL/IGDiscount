@@ -78,7 +78,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
         Notification.info({message: 'Payment '+ row.price +'€ waiting...', delay: 4000});
         setTimeout(function(){
             $http(rqt).success(function(data){
-                Notification.success('Your account has been credited : ' + row.price + ' €');
+                Notification.success('Account ' + row.seller + ' has been credited : ' + row.price + ' €');
             })
         }, 4000);
     }

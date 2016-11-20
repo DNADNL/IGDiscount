@@ -75,14 +75,7 @@ class SignInController @Inject() (ws: WSClient, configuration: Configuration) ex
               case Some(emailRes) => {
                 if (publicKey.toString() == '"'+configuration.underlying.getString("facebook.publicKey")+'"' && emailRes.toString() == '"'+email+'"' ) {
                   SimpleUser.findByEmail(email) match {
-                    case None => SellerCompany.findByEmail(email) match {
-                      case Some(sc) => {
-                        val t = Token()
-                        Token.save(t)
-                        SellerCompany.updateTokenAuthentification(sc, t)
-                        Ok(jsonConnection.deepMerge(kindOfSellerCompany)).withCookies(Cookie("token", t.token))
-                      }
-                    }
+                    case None => NotFound(errorConnection)
                     case Some(su) => {
                       val t = Token()
                       Token.save(t)

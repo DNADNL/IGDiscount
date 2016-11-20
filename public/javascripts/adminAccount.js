@@ -14,10 +14,10 @@ app.controller('adminAccount', function($scope, $filter, $http, $window, Notific
             headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
         };
         var rqtSellerCompany = {
-                    method : 'GET',
-                    url : '/sellerCompany',
-                    headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
-                };
+            method : 'GET',
+            url : '/sellerCompany',
+            headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+        };
         $scope.jsonUsers = []
         usSpinnerService.spin('spinner-1');
         $scope.startcounter++;

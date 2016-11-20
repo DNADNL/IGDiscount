@@ -23,7 +23,7 @@ app.controller('headerController', function($scope, $http, $compile, $window, fa
     $scope.logout = function() {
         $.removeCookie("token", { path: '/' });
         $.removeCookie("kindofuser", { path: '/' });
-        Notification.success('You are going be redirected automaticaly');
+        Notification.success('You will be soon redirected...');
         setTimeout(function(){
              $window.location.href = '/';
         }, 2000);
