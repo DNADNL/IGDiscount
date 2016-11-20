@@ -88,10 +88,20 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
     }
 
     $scope.computeTotalAmount = function() {
-        $scope.totalAmount = 0
-        for (var i = 0; i < $scope.productRows.length; i++) {
-            $scope.totalAmount += $scope.productRows[i].price
+        var rqtProduct = {
+            method : 'GET',
+            url : '/simpleUser/'+ $scope.idSimpleUser +'/product',
+            headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
         }
+
+        $http(rqtProduct).success(function(data){
+            $scope.totalAmount = 0
+            for (var i = 0; i < data.length; i++) {
+                $scope.totalAmount += (Math.round(data[i].product.price*100)/100) * data[i].quantity
+            }
+            usSpinnerService.stop('spinner-1');
+
+        })
     }
 
     $scope.submitForm = function(idProduct, quantity) {
@@ -120,7 +130,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
         };
 
         $http(rqtUpdateCart).success(function(data){
-            $scope.totalAmount -= quantity*price
+            $scope.computeTotalAmount()
             var index = $scope.displayedCollection.indexOf(row);
             if (index !== -1) {
                 $scope.displayedCollection.splice(index, 1);
