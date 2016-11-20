@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My cart</title>
+    <title>My Cart - IGDiscount</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,60 +42,63 @@
                 <hr>
                 <h2 class="intro-text text-center">My cart</h2>
                 <hr>
-                <table st-table="displayedCollection" st-safe-src="productRows" class="table table-striped">
-                    <span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner-1"></span>
-                    <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th st-sort="seller">Seller</th>
-                        <th st-sort="name">Name</th>
-                        <th st-sort="price">Price by item</th>
-                        <th>Quantity</th>
-                        <th>Remove</th>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <th>
-                            <input st-search="seller" placeholder="Search for seller" class="input-sm form-control" type="search"/>
-                        </th>
-                        <th>
-                            <input st-search="name" placeholder="Search for name" class="input-sm form-control" type="search"/>
-                        </th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="row in displayedCollection" ng-click="show($index)">
-                        <td class="col-md-2"><img ng-src="{{row.image}}" class="img-responsive"></td>
-                        <td>{{row.seller}}</td>
-                        <td>{{row.name}}</td>
-                        <td>{{row.price}} €</td>
-                        <td>
-                            <form name="cartForm" ng-submit="submitForm(row.id, row.quantity, row.price)" novalidate>
-                                <div class="form-group" ng-class="">
-                                    <input type="number" min="1" max="{{row.quantityMax}}" ng-minlength="1" ng-maxlength="row.quantityMax" name="quantity" class="form-control" ng-model="row.quantity" required>
-                                    <p ng-show="cartForm.$invalid && !cartForm.quantity.$pristine" class="text-danger">Quantity is not available</p>
-                                    <input type="submit" class="btn btn-primary" value="Update quantity">
-                                </div>
-                            </form>
-                        </td>
-                        <td>
-                            <button type="button" ng-click="removeRow(row.id, row.quantity, row.price, row)" class="btn btn-sm btn-danger">
-                                <i class="glyphicon glyphicon-remove-circle">
-                                </i>
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td class="text-center" st-pagination="" st-items-by-page="10" colspan="5">
-                        </td>
-                    </tr>
-                    </tfoot>
-                </table>
+                <div style="overflow-x:auto;">
+                    <table st-table="displayedCollection" st-safe-src="productRows" class="table table-striped">
+                        <span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner-1"></span>
+                        <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th st-sort="seller">Seller<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
+                            <th st-sort="name">Name<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
+                            <th st-sort="price">Price by item<span class="rightalign glyphicon glyphicon-sort" aria-hidden="true"></span></th>
+                            <th>Quantity</th>
+                            <th>Remove</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th>
+                                <input st-search="seller" placeholder="Search for seller" class="input-sm form-control" type="search"/>
+                            </th>
+                            <th>
+                                <input st-search="name" placeholder="Search for name" class="input-sm form-control" type="search"/>
+                            </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="row in displayedCollection" ng-click="show($index)">
+                            <td class="col-md-2"><img ng-src="{{row.image}}" class="img-responsive"></td>
+                            <td>{{row.seller}}</td>
+                            <td>{{row.name}}</td>
+                            <td>{{row.price}} €</td>
+                            <td>
+                                <form name="cartForm" ng-submit="submitForm(row.id, row.quantity, row.price)" novalidate>
+                                    <div class="form-group" ng-class="">
+                                        <span style="display: inline-block;"><input type="number" min="1" max="{{row.quantityMax}}" ng-minlength="1" ng-maxlength="row.quantityMax" name="quantity" class="form-control" ng-model="row.quantity" required>
+                                        <input type="submit" class="btn-qty btn btn-primary" value="Update quantity">
+                                        </span><p ng-show="cartForm.$invalid && !cartForm.quantity.$pristine" class="text-danger">Quantity is not available</p>
+
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                <button type="button" ng-click="removeRow(row.id, row.quantity, row.price, row)" class="btn btn-sm btn-danger">
+                                    <i class="glyphicon glyphicon-trash">
+                                    </i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td class="text-center" st-pagination="" st-items-by-page="10" colspan="5">
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
                 <h1>Total amount : {{totalAmount}} €</h1>
                 <button type="button" ng-click="order()" class="btn btn-info order">Make an order</button>
             </div>

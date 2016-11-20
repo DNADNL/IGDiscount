@@ -5,9 +5,21 @@ body {
   background-size: cover;
   -o-background-size: cover;
 }
+.rightalign {
+    float:right;
+}
+
+.btnjoin {
+    padding:35px 60px;
+    font-size: 175%;
+}
 
 .btn {
   margin-bottom: 4px;
+}
+
+.btn-qty {
+   margin-top: 4px;
 }
 
 .nav>li>a {
@@ -29,8 +41,8 @@ tr > td {
 }
 
 .modal-content > img {
-    margin: 0 auto;
-    width: 20%;
+    margin: 5px auto;
+    width: 40%;
 }
 
 .modal-content > h2 {
@@ -68,3 +80,5 @@ tr > td {
     text-align: center;
     display: block;
 }
+
+

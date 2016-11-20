@@ -68,7 +68,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
      }
 
     $scope.quantityConflict = function(productName) {
-        Notification.warning('Insufficient stock of ' + productName);
+        Notification.warning(productName + " : low quantities available");
     }
 
     $scope.confirm = function(row) {

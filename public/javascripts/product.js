@@ -45,14 +45,14 @@ app.controller('product', function($scope, $http, $window, $location, usSpinnerS
 
           },
           success: function(file, response){
-            Notification.success('Product created! <br> You are going be redirected automaticaly');
+            Notification.success('Product created! <br> You will be soon redirected...');
             setTimeout(function(){
-                 $window.location.href = '/';
+                 $window.location.href = '/product/manage/sellercompany';
             }, 2000);
             return response;
           },
           addRemoveLinks: true,
-          dictDefaultMessage: 'Please put picture (JPG, PNG, JPEG), less than 100 Ko'
+          dictDefaultMessage: 'Please put a JPG/JPEG or PNG picture (less than 100 Ko)'
         });
 
         if (!angular.isUndefined($scope.id)) {
@@ -81,7 +81,7 @@ app.controller('product', function($scope, $http, $window, $location, usSpinnerS
               },
               sending: function(file, xhr, formData) {},
               addRemoveLinks: true,
-              dictDefaultMessage: 'Please put picture (JPG, PNG, JPEG), less than 100 Ko'
+              dictDefaultMessage: 'Please put a JPG/JPEG or PNG picture (less than 100 Ko)'
             });
 
             var rqt = {
@@ -137,7 +137,7 @@ app.controller('product', function($scope, $http, $window, $location, usSpinnerS
             };
 
             $http(rqtUpdate).success(function(data){
-                Notification.success('Product updated! <br> You are going be redirected automaticaly');
+                Notification.success('Product updated! <br> You will be soon redirected...');
                 setTimeout(function(){
                      $window.location.href = '/';
                 }, 2000);

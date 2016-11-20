@@ -75,10 +75,10 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
             headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
         };
         row.disabled = true
-        Notification.info({message: 'Payment '+ row.price +'€ waiting...', delay: 4000});
+        Notification.info({message: 'Waiting for payment : '+ row.price +' €', delay: 4000});
         setTimeout(function(){
             $http(rqt).success(function(data){
-                Notification.success('Account ' + row.seller + ' has been credited : ' + row.price + ' €');
+                Notification.success('Account "' + row.seller + '" has been credited with ' + row.price + ' €');
             })
         }, 4000);
     }

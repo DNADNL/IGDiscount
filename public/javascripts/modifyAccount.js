@@ -73,7 +73,7 @@ app.controller('modifyAccount', function($scope, $http, $window, $location, face
         };
         $http(rqt)
             .success(function(data){
-                Notification.success("Password of the account updated")
+                Notification.success("Password updated!")
             })
     }
 
@@ -158,7 +158,7 @@ app.controller('modifyAccount', function($scope, $http, $window, $location, face
         };
         $http(rqt)
             .success(function(data){
-                Notification.success("Information of the account are updated")
+                Notification.success("Your data has been updated")
             })
     };
 
@@ -179,7 +179,7 @@ app.controller('modifyAccount', function($scope, $http, $window, $location, face
             };
             $http(rqt)
                 .success(function(data){
-                    Notification.success("Information of the account are updated")
+                    Notification.success("Your data has been updated")
                 })
         };
 
@@ -200,7 +200,7 @@ app.controller('modifyAccount', function($scope, $http, $window, $location, face
                 };
                 $http(rqt)
                     .success(function(data){
-                        Notification.success("Information of the account are updated")
+                        Notification.success("Your data has been updated")
                     })
             };
 })

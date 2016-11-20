@@ -39,7 +39,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
                         $scope.error = false
                         if (data[i].quantity > data[i].product.quantity) {
                             $scope.error = true
-                            Notification.warning({message: 'Quantity of '+ data[i].product.name + ' is not available, please change quantity', delay: 20000});
+                            Notification.warning({message: 'Quantity of '+ data[i].product.name + ' is not available, please lower it', delay: 20000});
                         }
 
                         $scope.productRows.push({
@@ -82,7 +82,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
         for (var i = 0; i < $scope.productRows.length; i++) {
             if ($scope.productRows.quantity > $scope.productRows.quantityMax) {
                 $scope.error = true
-                Notification.warning({message: 'Quantity of '+ data[i].product.name + ' is not available, please change quantity', delay: 20000});
+                Notification.warning({message: 'Quantity of '+ data[i].product.name + ' is not available, please lower it', delay: 20000});
             }
         }
     }
