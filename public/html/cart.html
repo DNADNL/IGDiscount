@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="IGDicount">
     <meta name="author" content="IGDicount">
-    <link rel="icon" type="image/png" href="/images/logo.png" />
+    <link rel="icon" href="/images/logo.ico" />
     <!-- Bootstrap CSS -->
     <link href="/lib/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -73,7 +73,7 @@
                         <td>{{row.name}}</td>
                         <td>{{row.price}} €</td>
                         <td>
-                            <form name="cartForm" ng-submit="submitForm(row.id, row.quantity)" novalidate>
+                            <form name="cartForm" ng-submit="submitForm(row.id, row.quantity, row.price)" novalidate>
                                 <div class="form-group" ng-class="">
                                     <input type="number" min="1" max="{{row.quantityMax}}" ng-minlength="1" ng-maxlength="row.quantityMax" name="quantity" class="form-control" ng-model="row.quantity" required>
                                     <p ng-show="cartForm.$invalid && !cartForm.quantity.$pristine" class="text-danger">Quantity is not available</p>

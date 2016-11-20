@@ -9,7 +9,6 @@
     <meta name="description" content="IGDicount">
     <meta name="author" content="IGDicount">
     <link rel="icon" type="image/png" href="/images/logo.png" />
-    <link href="/lib/lightbox.min.css" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="/lib/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -86,9 +85,7 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <h2>{{product.name}}</h2>
-                            <a data-lightbox="{{product.imageName}}" href="{{product.image}}">
-                                <img ng-src="{{product.image}}" class="img-responsive">
-                            </a>
+                            <img ng-src="{{product.image}}" class="img-responsive">
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
@@ -135,7 +132,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 <script src="/lib/jquery.cookie.js"></script>
 <script src="/lib/angular-ui-notification.min.js"></script>
-<script src="/lib/lightbox.min.js"></script>
 <script src="/lib/smart-table.min.js"></script>
 <script src="/lib/spin.min.js"></script>
 <script src="/lib/angular-filter.min.js"></script>
