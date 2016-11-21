@@ -63,6 +63,11 @@ class ManageBasketRowController @Inject() extends Controller {
     "quantity" -> number(min = 0)
   )
 
+  /**
+    *
+    * @param idSimpleUser
+    * @return
+    */
   def getBasket(idSimpleUser : Long) = Action { implicit request =>
     request.cookies.get("token") match {
       case Some(c) => Token.isValid(c.value) match {
@@ -91,7 +96,7 @@ class ManageBasketRowController @Inject() extends Controller {
             SimpleUser.tokenConform(c.value, u) match {
               case true => {
                 Product.find(idProduct) match {
-                  case Some(p) => BasketRow.findByProduct(p) match {
+                  case Some(p) => BasketRow.findByProductAndSimpleUser(p, u) match {
                     case Some(br) => {
                       br.delete()
                       Ok(jsonBasketRowDelete)
@@ -124,7 +129,7 @@ class ManageBasketRowController @Inject() extends Controller {
                 SimpleUser.tokenConform(c.value, u) match {
                   case true => {
                     Product.find(idProduct) match {
-                      case Some(p) => BasketRow.findByProduct(p) match {
+                      case Some(p) => BasketRow.findByProductAndSimpleUser(p, u) match {
                         case Some(br) => {
                           br.quantity = quantity
                           br.update()

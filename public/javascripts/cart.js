@@ -35,7 +35,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
                         var urlCreator = window.URL || window.webkitURL;
                         var imageUrl = urlCreator.createObjectURL( blob );
 
-                        $scope.totalAmount += (Math.round(data[i].product.price*100)/100) * data[i].quantity
+                        $scope.totalAmount += Math.round(data[i].product.price*data[i].quantity*100)/100
                         $scope.error = false
                         if (data[i].quantity > data[i].product.quantity) {
                             $scope.error = true
@@ -97,7 +97,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
         $http(rqtProduct).success(function(data){
             $scope.totalAmount = 0
             for (var i = 0; i < data.length; i++) {
-                $scope.totalAmount += (Math.round(data[i].product.price*100)/100) * data[i].quantity
+                $scope.totalAmount += Math.round(data[i].product.price* data[i].quantity*100)/100
             }
             usSpinnerService.stop('spinner-1');
 

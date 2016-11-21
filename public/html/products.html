@@ -42,6 +42,13 @@
                 <hr>
                 <h2 class="intro-text text-center">Marketplace</h2>
                 <hr>
+                <div class="form-group">
+                    <label>Exernal sellers</label>
+                    <select class="form-control" name="group" ng-model="filterProperty">
+                        <option value="">True</option>
+                        <option value="false" selected>False</option>
+                    </select>
+                </div>
                 <div style="overflow-x:auto;">
                     <table st-table="displayedCollection" st-safe-src="productRows" class="table table-striped">
                         <span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner-1"></span>
@@ -65,7 +72,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="row in displayedCollection" ng-click="show($index)">
+                        <tr ng-repeat="row in displayedCollection | filterBy: ['external']: filterProperty" ng-click="show($index)">
                             <td class="col-md-2"><img ng-src="{{row.image}}" class="img-responsive"></td>
                             <td>{{row.seller}}</td>
                             <td>{{row.name}}</td>
@@ -103,14 +110,15 @@
                                     </table>
                                 </div>
                             <span>{{product.description}}</span>
-                            <form name="cartForm" ng-submit="submitForm(product.id)" ng-show="cartMode" novalidate>
+                            <form name="cartForm" ng-submit="submitForm(product.id)" ng-show="cartMode && !product.external" novalidate>
                                 <div class="form-group">
                                     <label>Quantity</label>
                                     <input type="number" min="1" max="{{product.quantity}}" ng-minlength="1" ng-maxlength="product.quantity" name="quantity" class="form-control" ng-model="quantityCart" required>
                                     <p ng-show="cartForm.$invalid && !cartForm.quantity.$pristine" class="text-danger">Quantity is not available</p>
-                                    <input type="submit" class="btn btn-primary" value="Add cart">
+                                    <input type="submit" class="btn btn-primary" value="Add to cart">
                                 </div>
                             </form>
+                            <input ng-click="externalSeller()" class="btn btn-primary" value="Go to Sellbook website" ng-show="product.external">
                         </div>
                     </div>
                 </div>

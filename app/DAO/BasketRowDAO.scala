@@ -12,8 +12,8 @@ class BasketRowDAO extends DAO(classOf[BasketRow], classOf[Long]) {
 
   def findAllBasket(su : SimpleUser): List[BasketRow] = Ebean.find(classOf[BasketRow]).where(Expr.eq("simpleUser",su)).findList().asScala.toList
 
-  def findByProduct(product : Product) : Option[BasketRow] = {
-    Ebean.find(classOf[BasketRow]).where(Expr.eq("product", product)).findUnique() match {
+  def findByProductAndSimpleUser(product : Product, su : SimpleUser) : Option[BasketRow] = {
+    Ebean.find(classOf[BasketRow]).where(Expr.and(Expr.eq("product", product), Expr.eq("simpleUser", su))).findUnique() match {
       case br => Some(br)
       case null => None
     }

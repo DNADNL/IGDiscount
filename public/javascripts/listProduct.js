@@ -38,11 +38,37 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
                     name : data[i].name,
                     price : (Math.round(data[i].price*100)/100) + "€",
                     quantity : data[i].quantity,
-                    description : data[i].description
+                    description : data[i].description,
+                    external : "false"
                 });
             }
             usSpinnerService.stop('spinner-1');
+            $scope.filterProperty = "false"
          })
+
+         var rqtSellebook = {
+             method : 'GET',
+             url : 'https://sellbook-polytech.eu-gb.mybluemix.net/products',
+             headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+         };
+         Notification.info('Waiting external sellers products ...');
+
+         $http(rqtSellebook).success(function(data){
+             for (var i = 0; i < data.length; i++) {
+                 $scope.productRows.push({
+                     id : data[i].idProduct,
+                     image: "images/no-image.png",
+                     imageName : "no image",
+                     seller: "Sellbook",
+                     name : data[i].nameProduct,
+                     price : (Math.round(data[i].priceSeller*100)/100) + "€",
+                     quantity : data[i].quantityStock,
+                     description : data[i].descriptionProduct,
+                     external : "true"
+                 });
+             }
+             Notification.success('Enable external sellers to show theirs products');
+          })
 
          $http(rqtKindOfUser).success(function(data){
             if (data.kindOfUser == "Simple User") {
@@ -62,6 +88,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
                 })
             }
          })
+
     })
 
     $scope.submitForm = function(idProduct) {
@@ -107,8 +134,14 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
         $scope.product.quantity = $scope.productRows[id].quantity
         $scope.product.seller = $scope.productRows[id].seller
         $scope.product.description = $scope.productRows[id].description
+        $scope.product.external = $scope.productRows[id].external
         $('#modal-product').modal();
         $('#modal-product').modal('show');
+    }
+
+    $scope.externalSeller = function() {
+        console.log("toto")
+        $window.location.href = 'https://sellbook-polytech.eu-gb.mybluemix.net';
     }
 
      $scope.displayedCollection = [].concat($scope.productRows);
