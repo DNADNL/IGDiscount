@@ -125,16 +125,16 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
         }
     }
 
-    $scope.show = function(id) {
+    $scope.show = function(row) {
         $scope.quantityCart = 1
-        $scope.product.id = $scope.productRows[id].id
-        $scope.product.name = $scope.productRows[id].name
-        $scope.product.image = $scope.productRows[id].image
-        $scope.product.price = $scope.productRows[id].price
-        $scope.product.quantity = $scope.productRows[id].quantity
-        $scope.product.seller = $scope.productRows[id].seller
-        $scope.product.description = $scope.productRows[id].description
-        $scope.product.external = $scope.productRows[id].external
+        $scope.product.id = row.id
+        $scope.product.name = row.name
+        $scope.product.image = row.image
+        $scope.product.price = row.price
+        $scope.product.quantity = row.quantity
+        $scope.product.seller = row.seller
+        $scope.product.description = row.description
+        $scope.product.external = row.external
         $('#modal-product').modal();
         $('#modal-product').modal('show');
     }

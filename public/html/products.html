@@ -72,7 +72,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="row in displayedCollection | filterBy: ['external']: filterProperty" ng-click="show($index)">
+                        <tr ng-repeat="row in displayedCollection | filterBy: ['external']: filterProperty" ng-click="show(row)">
                             <td class="col-md-2"><img ng-src="{{row.image}}" class="img-responsive"></td>
                             <td>{{row.seller}}</td>
                             <td>{{row.name}}</td>
@@ -110,7 +110,7 @@
                                     </table>
                                 </div>
                             <span>{{product.description}}</span>
-                            <form name="cartForm" ng-submit="submitForm(product.id)" ng-show="cartMode && !product.external" novalidate>
+                            <form name="cartForm" ng-submit="submitForm(product.id)" ng-show="cartMode && product.external == 'false'" novalidate>
                                 <div class="form-group">
                                     <label>Quantity</label>
                                     <input type="number" min="1" max="{{product.quantity}}" ng-minlength="1" ng-maxlength="product.quantity" name="quantity" class="form-control" ng-model="quantityCart" required>
@@ -118,7 +118,7 @@
                                     <input type="submit" class="btn btn-primary" value="Add to cart">
                                 </div>
                             </form>
-                            <input ng-click="externalSeller()" class="btn btn-primary" value="Go to Sellbook website" ng-show="product.external">
+                            <input ng-click="externalSeller()" class="btn btn-primary" value="Go to Sellbook website" ng-show="product.external == 'true'">
                         </div>
                     </div>
                 </div>

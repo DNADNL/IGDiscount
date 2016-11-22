@@ -52,7 +52,7 @@ tr > td {
     font-size: 40px;
 }
 
-.modal-content > form > div > input {
+.modal-content input {
     text-align: center;
     margin: 0 auto;
     display: block;

@@ -10,7 +10,7 @@ import controllers.{UserIdentification, UserName}
 import play.api.libs.json.{Json, Writes}
 
 /**
-  * Created by kevin on 30/10/16.
+  *
   */
 @Entity
 case class Admin() extends Model with UserIdentification with UserName
