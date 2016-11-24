@@ -7,27 +7,58 @@ import com.avaje.ebean.Model
 import play.api.libs.json.{Json, Writes}
 
 /**
-  * Created by kevin on 05/11/16.
+  * Entity Product
   */
 @Entity
 case class Product() extends Model {
 
+  /**
+    * ID of product
+    */
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   var id : Long =_
+  /**
+    * Description of product
+    */
   @Column(length=1000)
   var description : String =_
+  /**
+    * Name of product
+    */
   var name : String =_
+  /**
+    * Price of product
+    */
   var price : Float =_
+  /**
+    * Quantity of product
+    */
   var quantity : Long =_
+  /**
+    * True if the product is available
+    */
   var available : Boolean=_
 
+  /**
+    * Owner of product
+    */
   @ManyToOne
   var sellerCompany : SellerCompany =_
+  /**
+    * Image of product
+    */
   @OneToOne(cascade = Array(CascadeType.ALL))
   var image : Image =_
+  /**
+    * List of basket row which contains the product
+    */
   @OneToMany(cascade = Array(CascadeType.ALL))
   var basketRow : java.util.List[BasketRow] =_
+
+  /**
+    * List of order which contains the product
+    */
   @OneToMany(cascade = Array(CascadeType.ALL))
   var orders : java.util.List[BasketRow] =_
 
@@ -69,6 +100,9 @@ object Product extends ProductDAO {
     return p
   }
 
+  /**
+    * JSon product
+    */
   implicit val taskWrites = new Writes[Product] {
     def writes(p: Product) = Json.obj(
       "id" -> p.id,

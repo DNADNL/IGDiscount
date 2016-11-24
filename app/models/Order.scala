@@ -9,21 +9,42 @@ import com.avaje.ebean.Model
 import play.api.libs.json.{Json, Writes}
 
 /**
-  * Created by kevin on 18/11/16.
+  * Entity Order
   */
 @Entity
 @Table(name = "orderProduct")
 class Order extends Model {
 
+  /**
+    * ID of order
+    */
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   var id : Long =_
+  /**
+    * Quantity of order
+    */
   var quantity : Int =_
+  /**
+    * Update date of order
+    */
   var stateDate : Timestamp = _
+  /**
+    * Sate of order
+    */
   var state : String =_
+  /**
+    * Price of order
+    */
   var priceOrder : Float=_
+  /**
+    * Product of order
+    */
   @ManyToOne
   var product : Product =_
+  /**
+    * Owner of order
+    */
   @ManyToOne
   var simpleUser : SimpleUser =_
 
@@ -48,6 +69,9 @@ object Order extends OrderDAO {
     o
   }
 
+  /**
+    * JSon order
+    */
   implicit val taskWrites = new Writes[Order] {
     def writes(o: Order) = Json.obj(
       "id" -> o.id,
@@ -62,6 +86,9 @@ object Order extends OrderDAO {
 
 }
 
+/**
+  * Enumeration state can be take an order
+  */
 object OrderState {
   val PENDING = "Pending"
   val CONFIRMED_BY_SELLER = "Confirmed by seller"

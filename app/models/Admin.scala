@@ -10,27 +10,52 @@ import controllers.{UserIdentification, UserName}
 import play.api.libs.json.{Json, Writes}
 
 /**
-  *
+  * Entity Admin
   */
 @Entity
 case class Admin() extends Model with UserIdentification with UserName
 {
 
+  /**
+    * Id of admin
+    */
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   var id : Long =_
+  /**
+    * Email of admin
+    */
   @Column(unique=true)
   var email : String =_
+  /**
+    * Password of admin
+    */
   var password : String =_
+  /**
+    * First name of Admin
+    */
   var firstName : String =_
+  /**
+    * Last name of admin
+    */
   var lastName : String =_
 
+  /**
+    * Token to identificate an admin
+    */
   @OneToOne
   var tokenAuthentification : Token =_
+
+  /**
+    * Token to reinitialize the email of admin
+    */
   @OneToOne
   var tokenReinitialisationEmail : Token =_
 }
 
+/**
+  * Object Admin
+  */
 object Admin extends AdminDAO {
 
   def apply(
@@ -61,6 +86,9 @@ object Admin extends AdminDAO {
     return a
   }
 
+  /**
+    * JSon Admin
+    */
   implicit val taskWrites = new Writes[Admin] {
     def writes(a: Admin) = Json.obj(
       "id" -> a.id,

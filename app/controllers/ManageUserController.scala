@@ -9,51 +9,84 @@ import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 
 /**
-  * Created by kevin on 31/10/16.
+  * Controller to manage users
   */
 @Singleton
 class ManageUserController @Inject() extends Controller {
 
+  /**
+    * JSon : Authentification required
+    */
   val jsonNoToken =Json.obj(
     "error" -> true,
     "message" -> "Authentification required"
   )
 
+  /**
+    * JSon : You cannot the permission
+    */
   val jsonRequiredAdmin = Json.obj(
     "error" -> true,
     "message" -> "You cannot the permission"
   )
 
+  /**
+    * JSon : Your session is expired
+    */
   val jsonTokenExpired = Json.obj(
     "error" -> true,
     "message" -> "Your session is expired"
   )
 
+  /**
+    * JSon : Parameter error
+    */
   val jsonErrorParameter = Json.obj(
     "error" -> true,
     "message" -> "Parameter error"
   )
 
+  /**
+    * JSon : User deleted
+    */
   val jsonUserDeleted = Json.obj(
     "error" -> false,
     "message" -> "User deleted"
   )
 
+  /**
+    * JSon : User not deleted
+    */
   val jsonUserNoDeleted = Json.obj(
     "error" -> true,
-    "message" -> "User not deleted"
+    "message" -> "User no deleted"
   )
 
+  /**
+    * JSon : User updated
+    */
   val jsonUserUpdated = Json.obj(
     "error" -> false,
     "message" -> "User updated"
   )
 
+  /**
+    * JSon : Email already exists
+    */
   val jsonErrorEmail = Json.obj(
     "error" -> true,
     "message" -> "Email already exists"
   )
 
+  /**
+    * Take "email" -> email
+    *  "postalCode" -> nonEmptyText
+    * "street" -> nonEmptyText
+    * "city" -> nonEmptyText
+    * "streetNumber" -> nonEmptyText
+    * "firstName" -> nonEmptyTex,
+    * "lastName" -> nonEmptyText
+    */
   val parameterSimpleUserWithoutPassword = Form(
     tuple(
       "email" -> email,
@@ -66,6 +99,15 @@ class ManageUserController @Inject() extends Controller {
     )
   )
 
+  /**
+    * Take "email" -> email
+    * "postalCode" -> nonEmptyText
+    * "street" -> nonEmptyText
+    * "city" -> nonEmptyText
+    * "streetNumber" -> nonEmptyText
+    * "siret" -> nonEmptyText
+    * "companyName" -> nonEmptyText
+    */
   val parameterSellerCompanyWithoutPassword = Form(
     tuple(
       "email" -> email,
@@ -78,6 +120,11 @@ class ManageUserController @Inject() extends Controller {
     )
   )
 
+  /**
+    * Take "email" -> email,
+    * "firstName" -> nonEmptyText
+    * "lastName" -> nonEmptyText
+    */
   val parameterAdminWithoutPassword = Form(
     tuple(
       "email" -> email,
@@ -86,10 +133,18 @@ class ManageUserController @Inject() extends Controller {
     )
   )
 
+  /**
+    * Take "password" -> nonEmptyText(minLength = 5)
+    */
   val parameterChangePassword = Form(
     "password" -> nonEmptyText(minLength = 5)
   )
 
+  /**
+    * Get information of a simple user, user must be connected or an admin connected
+    * @param id ID SimpleUser
+    * @return SimpleUser information or HTTP error code
+    */
   def getSimpleUser(id : Long) = Action { implicit request =>
     request.cookies.get("token") match {
       case Some(c) => Token.isValid(c.value) match {
@@ -107,6 +162,11 @@ class ManageUserController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Get information of a seller company, seller must be connected or an admin connected
+    * @param id ID SellerCompany
+    * @return SellerCompany information or HTTP error code
+    */
   def getSellerCompany(id : Long) = Action { implicit request =>
     request.cookies.get("token") match {
       case Some(c) => Token.isValid(c.value) match {
@@ -124,6 +184,11 @@ class ManageUserController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Get information of a admin connected
+    * @param id ID Admin
+    * @return Admin information or HTTP error code
+    */
   def getAdmin(id : Long) = Action { implicit request =>
     request.cookies.get("token") match {
       case Some(c) => Token.isValid(c.value) match {
@@ -137,6 +202,10 @@ class ManageUserController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Get all information of a simple user, an admin must be connnected
+    * @return List SimpleUser or HTTP error code
+    */
   def getAllSimpleUser = Action { implicit request =>
     request.cookies.get("token") match {
       case Some(c) => Token.isValid(c.value) match {
@@ -150,6 +219,10 @@ class ManageUserController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Get all information of a seller company, an admin must be connnected
+    * @return List SellerCompany or HTTP error code
+    */
   def getAllSellerCompany = Action { implicit request =>
     request.cookies.get("token") match {
       case Some(c) => Token.isValid(c.value) match {
@@ -163,6 +236,10 @@ class ManageUserController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Get all information of a admin, an admin must be connnected
+    * @return List Admin or HTTP error code
+    */
   def getAllAdmin = Action { implicit request =>
     request.cookies.get("token") match {
       case Some(c) => Token.isValid(c.value) match {
@@ -176,6 +253,11 @@ class ManageUserController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Delete simple user, an admin must be connnected
+    * @param id ID SimpleUser
+    * @return HTTP code
+    */
   def deleteSimpleUser(id: Long) = Action { implicit request =>
     request.cookies.get("token") match {
       case Some(c) => Token.isValid(c.value) match {
@@ -194,6 +276,11 @@ class ManageUserController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Delete seller company, an admin must be connnected
+    * @param id ID SellerCompany
+    * @return HTTP code
+    */
   def deleteSellerCompany(id: Long) = Action { implicit request =>
     request.cookies.get("token") match {
       case Some(c) => Token.isValid(c.value) match {
@@ -212,6 +299,11 @@ class ManageUserController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Delete admin, an admin must be connnected
+    * @param id ID Admin
+    * @return HTTP code
+    */
   def deleteAdmin(id: Long) = Action { implicit request =>
     request.cookies.get("token") match {
       case Some(c) => Token.isValid(c.value) match {
@@ -230,6 +322,11 @@ class ManageUserController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Update simple user without password, the user must be connected or an admin connnected
+    * @param id ID SimpleUser
+    * @return HTTP code
+    */
   def updateSimpleUserWithoutPassword(id : Long) = Action { implicit request =>
     parameterSimpleUserWithoutPassword.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorParameter),
@@ -272,6 +369,11 @@ class ManageUserController @Inject() extends Controller {
     )
   }
 
+  /**
+    * Update seller company without password, the seller must be connected or an admin connnected
+    * @param id ID SellerCompany
+    * @return HTTP code
+    */
   def updateSellerCompanyWithoutPassword(id : Long) = Action { implicit request =>
     parameterSellerCompanyWithoutPassword.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorParameter),
@@ -308,6 +410,11 @@ class ManageUserController @Inject() extends Controller {
     )
   }
 
+  /**
+    * Update admin without password, an admin must be connnected
+    * @param id ID Admin
+    * @return HTTP code
+    */
   def updateAdminWithoutPassword(id : Long) = Action { implicit request =>
     parameterAdminWithoutPassword.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorParameter),
@@ -333,6 +440,11 @@ class ManageUserController @Inject() extends Controller {
     )
   }
 
+  /**
+    * Update simple' password, the user must be connected or an admin connnected
+    * @param id ID SimpleUser
+    * @return HTTP code
+    */
   def updateSimpleUserPassword(id : Long) = Action { implicit request =>
     parameterChangePassword.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorParameter),
@@ -369,6 +481,11 @@ class ManageUserController @Inject() extends Controller {
     )
   }
 
+  /**
+    * Update seller company's password, the seller must be connected or an admin connnected
+    * @param id ID SellerCompany
+    * @return HTTP code
+    */
   def updateSellerCompanyPassword(id : Long) = Action { implicit request =>
     parameterChangePassword.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorParameter),
@@ -404,7 +521,11 @@ class ManageUserController @Inject() extends Controller {
       }
     )
   }
-
+4/**
+    * Update admin's password, an admin must be connnected
+    * @param id ID Admin
+    * @return HTTP code
+    */
   def updateAdminPassword(id : Long) = Action { implicit request =>
     parameterChangePassword.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorParameter),

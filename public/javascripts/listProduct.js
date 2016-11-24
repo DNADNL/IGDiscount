@@ -30,7 +30,7 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
                 var imageUrl = urlCreator.createObjectURL( blob );
 
 
-                $scope.productRows.push({
+                $scope.productRows.unshift({
                     id : data[i].id,
                     image: imageUrl,
                     imageName : data[i].image.name,
@@ -51,11 +51,11 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
              url : 'https://sellbook-polytech.eu-gb.mybluemix.net/products',
              headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
          };
-         Notification.info('Waiting external sellers products ...');
+         Notification.success('Enable external sellers to show theirs products');
 
          $http(rqtSellebook).success(function(data){
              for (var i = 0; i < data.length; i++) {
-                 $scope.productRows.push({
+                 $scope.productRows.unshift({
                      id : data[i].idProduct,
                      image: "images/no-image.png",
                      imageName : "no image",
@@ -67,8 +67,33 @@ app.controller('listProduct', function($scope, $filter, $http, $window, usSpinne
                      external : "true"
                  });
              }
-             Notification.success('Enable external sellers to show theirs products');
-          })
+          }).error(function (error, status){
+                Notification.error('Sellbook market is unavailable');
+             });
+
+          var rqtAwiProject = {
+               method : 'GET',
+               url : 'https://awimarket.herokuapp.com/api/products',
+               headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+           };
+
+           $http(rqtAwiProject).success(function(data){
+               for (var i = 0; i < data.length; i++) {
+                   $scope.productRows.unshift({
+                       id : data[i].product.id,
+                       image: data[i].product.image,
+                       imageName : "image",
+                       seller: "AWIProject",
+                       name : data[i].product.Name,
+                       price : (Math.round(data[i].product.price*100)/100) + "€",
+                       quantity : data[i].product.quantity,
+                       description : data[i].product.desc,
+                       external : "true"
+                   });
+               }
+            }).error(function (error, status){
+                Notification.error('AWI market is unavailable');
+             });
 
          $http(rqtKindOfUser).success(function(data){
             if (data.kindOfUser == "Simple User") {

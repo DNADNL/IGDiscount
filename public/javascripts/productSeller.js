@@ -63,6 +63,7 @@ app.controller('productSeller', function($scope, $filter, $http, $window, usSpin
             if (index !== -1) {
                 $scope.displayedCollection.splice(index, 1);
             }
+            Notification.success('Product ' + row.name + ' deleted');
         });
     }
 

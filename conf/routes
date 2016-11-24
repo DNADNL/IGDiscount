@@ -89,6 +89,3 @@ GET		/js/*file				    controllers.Assets.at(path="/public/javascripts", file)
 GET		/lib/*file				    controllers.Assets.at(path="/public/lib", file)
 GET		/fonts/*file				controllers.Assets.at(path="/public/fonts", file)
 GET		/images/*file				controllers.Assets.at(path="/public/images", file)
-
-# A supprimer
-GET     /install                    controllers.HomeController.createUser

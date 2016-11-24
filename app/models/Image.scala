@@ -8,18 +8,33 @@ import DAO.ImageDAO
 import com.avaje.ebean.Model
 import play.api.libs.json.{Json, Writes}
 /**
-  * Created by kevin on 06/11/16.
+  * Entity image
   */
 @Entity
 case class Image() extends Model {
 
+  /**
+    * ID of image
+    */
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   var id : Long =_
+  /**
+    * Name of image
+    */
   var name : String =_
+  /**
+    * Mime type of image
+    */
   var mime : String =_
+  /**
+    * Content of image
+    */
   @Lob
   var content : Array[Byte] =_
+  /**
+    * Product of image
+    */
   @OneToOne
   var product : Product =_
 }
@@ -54,6 +69,9 @@ object Image extends ImageDAO {
     return i
   }
 
+  /**
+    * JSon of image
+    */
   implicit val taskWrites = new Writes[Image] {
     def writes(i: Image) = Json.obj(
       "id" -> i.id,

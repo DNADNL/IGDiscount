@@ -15,6 +15,12 @@ import play.api.mvc.{Action, Controller}
 @Singleton
 class ManageProductController @Inject() extends Controller {
 
+  /**
+    * Take "description" -> nonEmptyText(minLength = 1, maxLength = 1000)
+    * "name" -> nonEmptyText(minLength = 1, maxLength = 40)
+    * "price" -> bigDecimal(precision=6,scale=2)
+    * "quantity" -> number(min=0, max=10000)
+    */
   val parameterCreateProduct = Form(
     tuple(
       "description" -> nonEmptyText(minLength = 1, maxLength = 1000),
@@ -24,65 +30,104 @@ class ManageProductController @Inject() extends Controller {
     )
   )
 
+  /**
+    * Take "id" -> number
+    */
   val parameterId = Form(
     "id" -> number
   )
 
+  /**
+    * Json : Parameters error
+    */
   val jsonErrorForm = Json.obj(
     "error" -> true,
     "message" -> "Parameters error"
   )
 
+  /**
+    * Json : Authentification required
+    */
   val jsonNoToken =Json.obj(
     "error" -> true,
     "message" -> "Authentification required"
   )
 
+  /**
+    * Json : Seller not found
+    */
   val jsonNoSeller =Json.obj(
     "error" -> true,
     "message" -> "Seller not found"
   )
 
+  /**
+    * Json : You cannot the permission
+    */
   val jsonPermission = Json.obj(
     "error" -> true,
     "message" -> "You cannot the permission"
   )
 
+  /**
+    * Json : Your session is expired
+    */
   val jsonTokenExpired = Json.obj(
     "error" -> true,
     "message" -> "Your session is expired"
   )
 
+  /**
+    * Json : Image updated
+    */
   val imageUpdated = Json.obj(
     "error" -> false,
     "message" -> "Image updated"
   )
 
+  /**
+    * Json : Product created
+    */
   val jsonProductCreated = Json.obj(
     "error" -> false,
     "message" -> "Product created"
   )
 
+  /**
+    * Json : Product deleted
+    */
   val jsonProductDeleted = Json.obj(
     "error" -> false,
     "message" -> "Product deleted"
   )
 
+  /**
+    * Json : You cannot the permission
+    */
   val jsonRequiredAdmin = Json.obj(
     "error" -> true,
     "message" -> "You cannot the permission"
   )
 
+  /**
+    * Json : id
+    */
   val jsonImageCreated = Json.obj(
     "error" -> true,
     "id" -> "id"
   )
 
+  /**
+    * Json : Product not found
+    */
   val jsonProductNotFound = Json.obj(
     "error" -> true,
     "message" -> "Product not found"
   )
 
+  /**
+    * Json : Product updated
+    */
   val jsonProductUpdated = Json.obj(
     "error" -> false,
     "message" -> "Product updated"
@@ -90,14 +135,27 @@ class ManageProductController @Inject() extends Controller {
 
   val imageMime = List("image/jpg", "image/png", "image/jpeg")
 
+  /**
+    * Get all products
+    * @return List products
+    */
   def allProducts = Action{implicit request =>
     Ok(Json.toJson(Product.findAll()))
   }
 
+  /**
+    * Get all available products
+    * @return List available products
+    */
   def allProductsByAvailable = Action{implicit request =>
     Ok(Json.toJson(Product.findAll(true)))
   }
 
+  /**
+    * Get all products of a seller company
+    * @param id id seller company
+    * @return List products
+    */
   def allProductsBySeller(id: Long) = Action{implicit request =>
     SellerCompany.find(id) match {
       case None => NotFound(jsonNoSeller)
@@ -105,6 +163,11 @@ class ManageProductController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Get all available product of a seller company
+    * @param id id seller company
+    * @return List availabe products
+    */
   def allProductsBySellerAndAvailable(id: Long) = Action{implicit request =>
     SellerCompany.find(id) match {
       case None => NotFound(jsonNoSeller)
@@ -112,10 +175,19 @@ class ManageProductController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Get all images
+    * @return List images
+    */
   def allImages = Action{implicit request =>
     Ok(Json.toJson(Image.findAll()))
   }
 
+  /**
+    * Get image
+    * @param id ID image
+    * @return Image
+    */
   def image(id: Long) = Action{implicit request =>
     Product.find(id) match {
       case Some(p) => Ok(Json.toJson(p.image))
@@ -123,6 +195,11 @@ class ManageProductController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Get product
+    * @param id ID Product
+    * @return Product
+    */
   def product(id: Long) = Action{implicit request =>
     Product.find(id) match {
       case Some(p) => {Ok(Json.toJson(p))}
@@ -130,6 +207,11 @@ class ManageProductController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Delete Product of an Seller Company connected or an admin connected
+    * @param id ID product
+    * @return HTTP code
+    */
   def deleteProduct(id: Long) = Action {implicit request =>
     Product.find(id) match {
       case None => NotFound(jsonProductNotFound)
@@ -161,6 +243,11 @@ class ManageProductController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Update Product's Image of an Seller Company connected or an admin connected
+    * @param id ID product
+    * @return HTTP code
+    */
   def updateImage(id: Long) = Action {implicit request =>
     Product.find(id) match {
       case None => NotFound(jsonProductNotFound)
@@ -192,13 +279,13 @@ class ManageProductController @Inject() extends Controller {
                   case true => {
                     i.update()
                     p.update()
-                    Created(imageUpdated)
+                    Ok(imageUpdated)
                   }
                 }
               case a : Admin => {
                 i.update()
                 p.update()
-                Created(imageUpdated)
+                Ok(imageUpdated)
               }
               case _ => Forbidden(jsonRequiredAdmin)
             }
@@ -210,6 +297,11 @@ class ManageProductController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Update Product of an Seller Company connected or an admin connected
+    * @param id ID product
+    * @return HTTP code
+    */
   def updateProduct(id : Long) = Action {implicit request =>
     request.cookies.get("token") match {
       case Some(c) => Token.isValid(c.value) match {
@@ -265,6 +357,10 @@ class ManageProductController @Inject() extends Controller {
     }
   }
 
+  /**
+    * Create Product of an Seller Company connected or an admin connected
+    * @return HTTP code
+    */
   def createProduct = Action {implicit request =>
     request.cookies.get("token") match {
       case Some(c) => Token.isValid(c.value) match {

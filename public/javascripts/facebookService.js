@@ -32,5 +32,4 @@ angular.module('app.facebookServices', []).factory('facebookServices', function(
             return deferred.promise;
         }
     }
-
 });

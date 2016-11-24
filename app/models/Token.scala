@@ -9,20 +9,32 @@ import com.avaje.ebean.Model
 import play.api.libs.json.{Json, Writes}
 
 /**
-  * Created by kevin on 30/10/16.
+  * Entity token
   */
 @Entity
 class Token extends Model {
 
+  /**
+    * ID of token
+    */
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   var id : Long =_
+  /**
+    * Expiration date of token
+    */
   var expirationDate : Timestamp = _
+  /**
+    * Unique token content
+    */
   @Column(unique=true)
   var token : String =_
 
 }
 
+/**
+  * Object token
+  */
 object Token extends TokenDAO {
 
   def apply(): Token = {
@@ -45,6 +57,9 @@ object Token extends TokenDAO {
     }
   }
 
+  /**
+    * JSon token
+    */
   implicit val taskWrites = new Writes[Token] {
     def writes(t: Token) = Json.obj(
       "id" -> t.id,

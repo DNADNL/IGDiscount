@@ -19,6 +19,17 @@ import scala.concurrent.{Await, Future}
 @Singleton
 class RegistrationUserController @Inject() (ws: WSClient, configuration: Configuration) extends Controller {
 
+  /**
+    * Take
+    * "email" -> email
+    * "password" -> nonEmptyText(minLength = 5)
+    * "postalCode" -> nonEmptyText(minLength = 5)
+    * "street" -> nonEmptyText(minLength = 1)
+    * "city" -> nonEmptyText(minLength = 1)
+    * "streetNumber" -> nonEmptyText(minLength = 1)
+    * "firstName" -> nonEmptyText(minLength = 1)
+    * "lastName" -> nonEmptyText(minLength = 1)
+    */
   val parameterRegistrationSimpleUser = Form(
     tuple(
       "email" -> email,
@@ -32,6 +43,16 @@ class RegistrationUserController @Inject() (ws: WSClient, configuration: Configu
     )
   )
 
+  /**
+    * Take
+    * "tokenFacebook" -> nonEmptyText
+    * "postalCode" -> nonEmptyText(minLength = 5)
+    * "street" -> nonEmptyText(minLength = 1)
+    * "city" -> nonEmptyText(minLength = 1)
+    * "streetNumber" -> nonEmptyText(minLength = 1),
+    * "firstName" -> nonEmptyText(minLength = 1)
+    * "lastName" -> nonEmptyText(minLength = 1)
+    */
   val parameterRegistrationSimpleUserFacebook = Form(
     tuple(
       "tokenFacebook" -> nonEmptyText,
@@ -44,6 +65,17 @@ class RegistrationUserController @Inject() (ws: WSClient, configuration: Configu
     )
   )
 
+  /**
+    * Take
+    * "email" -> email
+    * "password" -> nonEmptyText(minLength = 5)
+    * "postalCode" -> nonEmptyText(minLength = 5)
+    * "street" -> nonEmptyText(minLength = 1)
+    * "city" -> nonEmptyText(minLength = 1)
+    * "streetNumber" -> nonEmptyText(minLength = 1)
+    * "siret" -> nonEmptyText(minLength = 14)
+    * "companyName" -> nonEmptyText(minLength = 1)
+    */
   val parameterRegistrationSellerCompany = Form(
     tuple(
       "email" -> email,
@@ -57,6 +89,13 @@ class RegistrationUserController @Inject() (ws: WSClient, configuration: Configu
     )
   )
 
+  /**
+    * Take
+    * "email" -> email
+    * "password" -> nonEmptyText(minLength = 5)
+    * "firstName" -> nonEmptyText(minLength = 1)
+    * "lastName" -> nonEmptyText(minLength = 1)
+    */
   val parameterRegistrationAdmin = Form(
     tuple(
       "email" -> email,
@@ -66,41 +105,66 @@ class RegistrationUserController @Inject() (ws: WSClient, configuration: Configu
     )
   )
 
+  /**
+    * JSon : Parameters error
+    */
   val jsonErrorForm = Json.obj(
     "error" -> true,
     "message" -> "Parameters error"
   )
 
+  /**
+    * JSon : User already exists
+    */
   val jsonErrorUserExist = Json.obj(
     "error" -> true,
     "message" -> "User already exists"
   )
 
+  /**
+    * JSon : User created
+    */
   val jsonUserCreated = Json.obj(
     "error" -> false,
     "message" -> "User created"
   )
 
+  /**
+    * JSon : You cannot create admin
+    */
   val jsonRequiredAdminCreateAdmin = Json.obj(
     "error" -> true,
     "message" -> "You cannot create admin"
   )
 
+  /**
+    * JSon : Your session is expired
+    */
   val jsonTokenExpired = Json.obj(
     "error" -> true,
     "message" -> "Your session is expired"
   )
 
+  /**
+    * JSon : Authentification required
+    */
   val jsonNoToken =Json.obj(
     "error" -> true,
     "message" -> "Authentification required"
   )
 
+  /**
+    * JSon : Facebook failed
+    */
   val jsonFacebookError =Json.obj(
     "error" -> true,
     "message" -> "Facebook failed"
   )
 
+  /**
+    * Register a simple user
+    * @return HTTP code
+    */
   def registrationSimpleUser = Action { implicit request =>
     parameterRegistrationSimpleUser.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorForm),
@@ -115,6 +179,10 @@ class RegistrationUserController @Inject() (ws: WSClient, configuration: Configu
     )
   }
 
+  /**
+    * Register a simple user with facebook
+    * @return HTTP code
+    */
   def registrationSimpleUserFacebook = Action { implicit request =>
     parameterRegistrationSimpleUserFacebook.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorForm),
@@ -143,6 +211,10 @@ class RegistrationUserController @Inject() (ws: WSClient, configuration: Configu
     )
   }
 
+  /**
+    * Register a seller company
+    * @return HTTP code
+    */
   def registrationSellerCompany = Action { implicit request =>
     parameterRegistrationSellerCompany.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorForm),
@@ -157,6 +229,10 @@ class RegistrationUserController @Inject() (ws: WSClient, configuration: Configu
     )
   }
 
+  /**
+    * Register a admin
+    * @return HTTP code
+    */
   def registrationAdmin = Action { implicit request =>
     request.cookies.get("token") match {
       case Some(c) => Token.isValid(c.value) match {

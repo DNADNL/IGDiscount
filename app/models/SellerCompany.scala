@@ -1,8 +1,5 @@
 package models
 
-/**
-  * Created by kevin on 30/10/16.
-  */
 import java.nio.charset.StandardCharsets
 import javax.persistence._
 
@@ -13,34 +10,73 @@ import controllers.{UserAdress, UserIdentification}
 import play.api.libs.json.{Json, Writes}
 
 /**
-  * Created by kevin on 24/10/16.
+  * Entity seller company
   */
-
 @Entity
 case class SellerCompany() extends Model with UserIdentification with UserAdress
 {
 
+  /**
+    * ID of seller company
+    */
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   var id : Long =_
+  /**
+    * Email of seller company
+    */
   @Column(unique=true)
   var email : String =_
+  /**
+    * Password of seller company
+    */
   var password : String =_
+  /**
+    * Postal code of seller company
+    */
   var postalCode : String =_
+  /**
+    * Street of seller company
+    */
   var street : String =_
+  /**
+    * City of seller company
+    */
   var city : String =_
+  /**
+    * Street number of seller company
+    */
   var streetNumber : String =_
+  /**
+    * SIRET of seller company
+    */
   var siret : String =_
+  /**
+    * Company name of seller company
+    */
   var companyName : String =_
 
+  /**
+    * Token to authentificate a seller
+    */
   @OneToOne
   var tokenAuthentification : Token =_
+  /**
+    * Token to reinitialize a password
+    */
   @OneToOne
   var tokenReinitialisationEmail : Token =_
+
+  /**
+    * List of product on sale
+    */
   @OneToMany(cascade = Array(CascadeType.ALL))
   var products : java.util.List[Product] =_
 }
 
+/**
+  * Object seller company
+  */
 object SellerCompany extends SellerCompanyDAO {
 
   def apply(
@@ -87,6 +123,9 @@ object SellerCompany extends SellerCompanyDAO {
     return sc
   }
 
+  /**
+    * JSon seller company
+    */
   implicit val taskWrites = new Writes[SellerCompany] {
     def writes(sc: SellerCompany) = Json.obj(
       "id" -> sc.id,

@@ -14,18 +14,14 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 
 /**
-  * Created by kevin on 30/10/16.
+  * Controller to log an user
   */
 @Singleton
 class SignInController @Inject() (ws: WSClient, configuration: Configuration) extends Controller {
 
-  val parameterSignIn = Form(
-    tuple(
-      "email" -> nonEmptyText,
-      "password" -> nonEmptyText
-    )
-  )
-
+  /**
+    * JSon : Parameters error
+    */
   val jsonErrorForm = Json.obj(
     "error" -> true,
     "message" -> "Parameters error"
@@ -35,23 +31,52 @@ class SignInController @Inject() (ws: WSClient, configuration: Configuration) ex
     "error" -> false
   )
 
+  /**
+    * JSon : Login invalid
+    */
   val errorConnection = Json.obj(
     "error" -> true,
     "message" -> "Login invalid"
   )
 
+  /**
+    * JSon : Simple User
+    */
   val kindOfSimpleUser = Json.obj(
     "kindOfUser" -> "Simple User"
   )
 
+  /**
+    * JSon : Seller Company
+    */
   val kindOfSellerCompany = Json.obj(
     "kindOfUser" -> "Seller Company"
   )
 
+  /**
+    * JSon : Admin
+    */
   val kindOfAdmin = Json.obj(
     "kindOfUser" -> "Admin"
   )
 
+  /**
+    * Take
+    * "email" -> nonEmptyText
+    * "password" -> nonEmptyText
+    */
+  val parameterSignIn = Form(
+    tuple(
+      "email" -> nonEmptyText,
+      "password" -> nonEmptyText
+    )
+  )
+
+  /**
+    * Take
+    * "email" -> nonEmptyText
+    * "tokenFacebook" -> nonEmptyText
+    */
   val parameterSignInFacebook = Form(
     tuple(
       "email" -> nonEmptyText,
@@ -59,6 +84,10 @@ class SignInController @Inject() (ws: WSClient, configuration: Configuration) ex
     )
   )
 
+  /**
+    * Sign in an user with Facebook app, with a facebook access token
+    * @return HTTP Code with token access
+    */
   def signInFacebook = Action {implicit request =>
     parameterSignInFacebook.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorForm),
@@ -66,7 +95,6 @@ class SignInController @Inject() (ws: WSClient, configuration: Configuration) ex
         val (email, tokenFacebook) = formData
         val futureResultEmail: Future[WSResponse] = ws.url("https://graph.facebook.com/me").withQueryString("fields" -> "email").withQueryString("access_token" -> tokenFacebook).get()
         val futureResultId: Future[WSResponse] = ws.url("https://graph.facebook.com/app").withQueryString("fields" -> "id").withQueryString("access_token" -> tokenFacebook).get()
-
         val jsonEmail = Await.result(futureResultEmail, Duration.Inf).json
         val jsonId = Await.result(futureResultId, Duration.Inf).json
         (jsonId \ ("id")).toOption match {
@@ -97,6 +125,10 @@ class SignInController @Inject() (ws: WSClient, configuration: Configuration) ex
     )
   }
 
+  /**
+    * Sign in an user with Facebook app, with a facebook access token
+    * @return HTTP Code with token access
+    */
   def signIn = Action { implicit request =>
     parameterSignIn.bindFromRequest.fold(
       formWithErrors => BadRequest(jsonErrorForm),
