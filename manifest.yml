@@ -2,7 +2,7 @@ applications:
   - host: IGDiscount
     name: IGDiscount
     buildpack: java_buildpack
-    path: ./target/universal/awi-1.0-SNAPSHOT.zip
+    path: ./target/universal/awi-1.0-SNAPSHOT.zip 
     instances: 1
     memory: 512M
     env:
