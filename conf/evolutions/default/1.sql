@@ -1,6 +1,55 @@
 # --- Created by Ebean DDL
 # To stop Ebean DDL generation, remove this comment and start using Evolutions
 
+# --- !Downs
+
+alter table if exists admin drop constraint if exists fk_admin_token_authentification_id;
+
+alter table if exists admin drop constraint if exists fk_admin_token_reinitialisation_email_id;
+
+alter table if exists basket_row drop constraint if exists fk_basket_row_product_id;
+drop index if exists ix_basket_row_product_id;
+
+alter table if exists basket_row drop constraint if exists fk_basket_row_simple_user_id;
+drop index if exists ix_basket_row_simple_user_id;
+
+alter table if exists image drop constraint if exists fk_image_product_id;
+
+alter table if exists orderproduct drop constraint if exists fk_orderproduct_product_id;
+drop index if exists ix_orderproduct_product_id;
+
+alter table if exists orderproduct drop constraint if exists fk_orderproduct_simple_user_id;
+drop index if exists ix_orderproduct_simple_user_id;
+
+alter table if exists product drop constraint if exists fk_product_seller_company_id;
+drop index if exists ix_product_seller_company_id;
+
+alter table if exists product drop constraint if exists fk_product_image_id;
+
+alter table if exists seller_company drop constraint if exists fk_seller_company_token_authentification_id;
+
+alter table if exists seller_company drop constraint if exists fk_seller_company_token_reinitialisation_email_id;
+
+alter table if exists simple_user drop constraint if exists fk_simple_user_token_authentification_id;
+
+alter table if exists simple_user drop constraint if exists fk_simple_user_token_reinitialisation_email_id;
+
+drop table if exists admin cascade;
+
+drop table if exists basket_row cascade;
+
+drop table if exists image cascade;
+
+drop table if exists orderproduct cascade;
+
+drop table if exists product cascade;
+
+drop table if exists seller_company cascade;
+
+drop table if exists simple_user cascade;
+
+drop table if exists token cascade;
+
 # --- !Ups
 
 create table admin (
@@ -137,52 +186,4 @@ alter table simple_user add constraint fk_simple_user_token_authentification_id 
 alter table simple_user add constraint fk_simple_user_token_reinitialisation_email_id foreign key (token_reinitialisation_email_id) references token (id) on delete restrict on update restrict;
 
 
-# --- !Downs
-
-alter table if exists admin drop constraint if exists fk_admin_token_authentification_id;
-
-alter table if exists admin drop constraint if exists fk_admin_token_reinitialisation_email_id;
-
-alter table if exists basket_row drop constraint if exists fk_basket_row_product_id;
-drop index if exists ix_basket_row_product_id;
-
-alter table if exists basket_row drop constraint if exists fk_basket_row_simple_user_id;
-drop index if exists ix_basket_row_simple_user_id;
-
-alter table if exists image drop constraint if exists fk_image_product_id;
-
-alter table if exists orderproduct drop constraint if exists fk_orderproduct_product_id;
-drop index if exists ix_orderproduct_product_id;
-
-alter table if exists orderproduct drop constraint if exists fk_orderproduct_simple_user_id;
-drop index if exists ix_orderproduct_simple_user_id;
-
-alter table if exists product drop constraint if exists fk_product_seller_company_id;
-drop index if exists ix_product_seller_company_id;
-
-alter table if exists product drop constraint if exists fk_product_image_id;
-
-alter table if exists seller_company drop constraint if exists fk_seller_company_token_authentification_id;
-
-alter table if exists seller_company drop constraint if exists fk_seller_company_token_reinitialisation_email_id;
-
-alter table if exists simple_user drop constraint if exists fk_simple_user_token_authentification_id;
-
-alter table if exists simple_user drop constraint if exists fk_simple_user_token_reinitialisation_email_id;
-
-drop table if exists admin cascade;
-
-drop table if exists basket_row cascade;
-
-drop table if exists image cascade;
-
-drop table if exists orderproduct cascade;
-
-drop table if exists product cascade;
-
-drop table if exists seller_company cascade;
-
-drop table if exists simple_user cascade;
-
-drop table if exists token cascade;
 
